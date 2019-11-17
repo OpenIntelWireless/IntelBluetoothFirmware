@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */; };
+		F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */; };
+		F834E46A237C3250000CB269 /* ibt-17-0-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E424237C3249000CB269 /* ibt-17-0-1.ddc */; };
+		F834E46C237C3250000CB269 /* ibt-18-2.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E426237C3249000CB269 /* ibt-18-2.sfi */; };
+		F834E46D237C3250000CB269 /* ibt-11-5.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E427237C3249000CB269 /* ibt-11-5.sfi */; };
+		F834E46F237C3250000CB269 /* ibt-18-2.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E429237C3249000CB269 /* ibt-18-2.ddc */; };
+		F834E470237C3250000CB269 /* ibt-20-1-3.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E42A237C3249000CB269 /* ibt-20-1-3.ddc */; };
+		F834E472237C3250000CB269 /* ibt-17-0-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E42C237C3249000CB269 /* ibt-17-0-1.sfi */; };
+		F834E475237C3250000CB269 /* ibt-20-1-3.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E42F237C324A000CB269 /* ibt-20-1-3.sfi */; };
+		F834E476237C3250000CB269 /* ibt-19-0-0.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E430237C324A000CB269 /* ibt-19-0-0.sfi */; };
+		F834E477237C3250000CB269 /* ibt-18-0-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E431237C324A000CB269 /* ibt-18-0-1.ddc */; };
+		F834E479237C3250000CB269 /* ibt-18-16-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E433237C324A000CB269 /* ibt-18-16-1.sfi */; };
+		F834E47A237C3250000CB269 /* ibt-19-0-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E434237C324A000CB269 /* ibt-19-0-1.sfi */; };
+		F834E47B237C3250000CB269 /* ibt-19-16-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E435237C324A000CB269 /* ibt-19-16-4.sfi */; };
+		F834E47D237C3250000CB269 /* ibt-20-0-3.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E437237C324B000CB269 /* ibt-20-0-3.sfi */; };
+		F834E47E237C3250000CB269 /* ibt-17-16-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E438237C324B000CB269 /* ibt-17-16-1.ddc */; };
+		F834E47F237C3250000CB269 /* ibt-20-1-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E439237C324B000CB269 /* ibt-20-1-4.sfi */; };
+		F834E480237C3250000CB269 /* ibt-19-32-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E43A237C324B000CB269 /* ibt-19-32-1.sfi */; };
+		F834E481237C3250000CB269 /* ibt-20-1-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E43B237C324B000CB269 /* ibt-20-1-4.ddc */; };
+		F834E483237C3250000CB269 /* ibt-17-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E43D237C324B000CB269 /* ibt-17-1.ddc */; };
+		F834E484237C3250000CB269 /* ibt-19-32-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E43E237C324B000CB269 /* ibt-19-32-4.ddc */; };
+		F834E485237C3250000CB269 /* ibt-11-5.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E43F237C324B000CB269 /* ibt-11-5.ddc */; };
+		F834E486237C3250000CB269 /* ibt-17-2.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E440237C324B000CB269 /* ibt-17-2.sfi */; };
+		F834E488237C3250000CB269 /* ibt-17-2.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E442237C324C000CB269 /* ibt-17-2.ddc */; };
+		F834E489237C3250000CB269 /* ibt-17-16-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E443237C324C000CB269 /* ibt-17-16-1.sfi */; };
+		F834E48D237C3250000CB269 /* ibt-19-0-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E447237C324C000CB269 /* ibt-19-0-4.ddc */; };
+		F834E48E237C3250000CB269 /* ibt-18-16-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E448237C324C000CB269 /* ibt-18-16-1.ddc */; };
+		F834E48F237C3250000CB269 /* ibt-17-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E449237C324C000CB269 /* ibt-17-1.sfi */; };
+		F834E491237C3250000CB269 /* ibt-19-0-0.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E44B237C324D000CB269 /* ibt-19-0-0.ddc */; };
+		F834E492237C3250000CB269 /* ibt-19-32-0.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E44C237C324D000CB269 /* ibt-19-32-0.sfi */; };
+		F834E494237C3250000CB269 /* ibt-12-16.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E44E237C324D000CB269 /* ibt-12-16.sfi */; };
+		F834E497237C3250000CB269 /* ibt-19-32-0.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E451237C324E000CB269 /* ibt-19-32-0.ddc */; };
+		F834E499237C3250000CB269 /* ibt-18-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E453237C324E000CB269 /* ibt-18-1.ddc */; };
+		F834E4A1237C3250000CB269 /* ibt-19-32-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E45B237C324F000CB269 /* ibt-19-32-1.ddc */; };
+		F834E4A2237C3250000CB269 /* ibt-20-0-3.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E45C237C324F000CB269 /* ibt-20-0-3.ddc */; };
+		F834E4A4237C3250000CB269 /* ibt-19-16-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E45E237C324F000CB269 /* ibt-19-16-4.ddc */; };
+		F834E4A5237C3250000CB269 /* ibt-19-0-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E45F237C324F000CB269 /* ibt-19-0-1.ddc */; };
+		F834E4A7237C3250000CB269 /* ibt-18-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E461237C3250000CB269 /* ibt-18-1.sfi */; };
+		F834E4A8237C3250000CB269 /* ibt-19-0-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E462237C3250000CB269 /* ibt-19-0-4.sfi */; };
+		F834E4A9237C3250000CB269 /* ibt-18-0-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E463237C3250000CB269 /* ibt-18-0-1.sfi */; };
+		F834E4AA237C3250000CB269 /* ibt-12-16.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F834E464237C3250000CB269 /* ibt-12-16.ddc */; };
+		F834E4AE237C3250000CB269 /* ibt-19-32-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F834E468237C3250000CB269 /* ibt-19-32-4.sfi */; };
+		F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelBluetoothFirmware.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntelBluetoothFirmware.hpp; sourceTree = "<group>"; };
+		F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntelBluetoothFirmware.cpp; sourceTree = "<group>"; };
+		F834E41C237C20FF000CB269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F834E424237C3249000CB269 /* ibt-17-0-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-0-1.ddc"; sourceTree = "<group>"; };
+		F834E426237C3249000CB269 /* ibt-18-2.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-2.sfi"; sourceTree = "<group>"; };
+		F834E427237C3249000CB269 /* ibt-11-5.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-11-5.sfi"; sourceTree = "<group>"; };
+		F834E429237C3249000CB269 /* ibt-18-2.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-2.ddc"; sourceTree = "<group>"; };
+		F834E42A237C3249000CB269 /* ibt-20-1-3.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-3.ddc"; sourceTree = "<group>"; };
+		F834E42C237C3249000CB269 /* ibt-17-0-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-0-1.sfi"; sourceTree = "<group>"; };
+		F834E42F237C324A000CB269 /* ibt-20-1-3.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-3.sfi"; sourceTree = "<group>"; };
+		F834E430237C324A000CB269 /* ibt-19-0-0.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-0.sfi"; sourceTree = "<group>"; };
+		F834E431237C324A000CB269 /* ibt-18-0-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-0-1.ddc"; sourceTree = "<group>"; };
+		F834E433237C324A000CB269 /* ibt-18-16-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-16-1.sfi"; sourceTree = "<group>"; };
+		F834E434237C324A000CB269 /* ibt-19-0-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-1.sfi"; sourceTree = "<group>"; };
+		F834E435237C324A000CB269 /* ibt-19-16-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-16-4.sfi"; sourceTree = "<group>"; };
+		F834E437237C324B000CB269 /* ibt-20-0-3.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-0-3.sfi"; sourceTree = "<group>"; };
+		F834E438237C324B000CB269 /* ibt-17-16-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-16-1.ddc"; sourceTree = "<group>"; };
+		F834E439237C324B000CB269 /* ibt-20-1-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-4.sfi"; sourceTree = "<group>"; };
+		F834E43A237C324B000CB269 /* ibt-19-32-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-1.sfi"; sourceTree = "<group>"; };
+		F834E43B237C324B000CB269 /* ibt-20-1-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-4.ddc"; sourceTree = "<group>"; };
+		F834E43D237C324B000CB269 /* ibt-17-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-1.ddc"; sourceTree = "<group>"; };
+		F834E43E237C324B000CB269 /* ibt-19-32-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-4.ddc"; sourceTree = "<group>"; };
+		F834E43F237C324B000CB269 /* ibt-11-5.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-11-5.ddc"; sourceTree = "<group>"; };
+		F834E440237C324B000CB269 /* ibt-17-2.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-2.sfi"; sourceTree = "<group>"; };
+		F834E442237C324C000CB269 /* ibt-17-2.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-2.ddc"; sourceTree = "<group>"; };
+		F834E443237C324C000CB269 /* ibt-17-16-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-16-1.sfi"; sourceTree = "<group>"; };
+		F834E447237C324C000CB269 /* ibt-19-0-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-4.ddc"; sourceTree = "<group>"; };
+		F834E448237C324C000CB269 /* ibt-18-16-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-16-1.ddc"; sourceTree = "<group>"; };
+		F834E449237C324C000CB269 /* ibt-17-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-1.sfi"; sourceTree = "<group>"; };
+		F834E44B237C324D000CB269 /* ibt-19-0-0.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-0.ddc"; sourceTree = "<group>"; };
+		F834E44C237C324D000CB269 /* ibt-19-32-0.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-0.sfi"; sourceTree = "<group>"; };
+		F834E44E237C324D000CB269 /* ibt-12-16.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-12-16.sfi"; sourceTree = "<group>"; };
+		F834E451237C324E000CB269 /* ibt-19-32-0.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-0.ddc"; sourceTree = "<group>"; };
+		F834E453237C324E000CB269 /* ibt-18-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-1.ddc"; sourceTree = "<group>"; };
+		F834E45B237C324F000CB269 /* ibt-19-32-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-1.ddc"; sourceTree = "<group>"; };
+		F834E45C237C324F000CB269 /* ibt-20-0-3.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-0-3.ddc"; sourceTree = "<group>"; };
+		F834E45E237C324F000CB269 /* ibt-19-16-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-16-4.ddc"; sourceTree = "<group>"; };
+		F834E45F237C324F000CB269 /* ibt-19-0-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-1.ddc"; sourceTree = "<group>"; };
+		F834E461237C3250000CB269 /* ibt-18-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-1.sfi"; sourceTree = "<group>"; };
+		F834E462237C3250000CB269 /* ibt-19-0-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-4.sfi"; sourceTree = "<group>"; };
+		F834E463237C3250000CB269 /* ibt-18-0-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-0-1.sfi"; sourceTree = "<group>"; };
+		F834E464237C3250000CB269 /* ibt-12-16.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-12-16.ddc"; sourceTree = "<group>"; };
+		F834E468237C3250000CB269 /* ibt-19-32-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-4.sfi"; sourceTree = "<group>"; };
+		F8C3BFCC2380DA75006000F5 /* BtIntel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BtIntel.h; sourceTree = "<group>"; };
+		F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BtIntel.cpp; sourceTree = "<group>"; };
+		F8C3BFCF2380E5FC006000F5 /* Hci.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hci.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F834E412237C20FF000CB269 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F834E40B237C20FF000CB269 = {
+			isa = PBXGroup;
+			children = (
+				F834E417237C20FF000CB269 /* IntelBluetoothFirmware */,
+				F834E416237C20FF000CB269 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F834E416237C20FF000CB269 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F834E417237C20FF000CB269 /* IntelBluetoothFirmware */ = {
+			isa = PBXGroup;
+			children = (
+				F834E422237C2FF1000CB269 /* fw */,
+				F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */,
+				F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */,
+				F834E41C237C20FF000CB269 /* Info.plist */,
+				F8C3BFCC2380DA75006000F5 /* BtIntel.h */,
+				F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */,
+				F8C3BFCF2380E5FC006000F5 /* Hci.h */,
+			);
+			path = IntelBluetoothFirmware;
+			sourceTree = "<group>";
+		};
+		F834E422237C2FF1000CB269 /* fw */ = {
+			isa = PBXGroup;
+			children = (
+				F834E43F237C324B000CB269 /* ibt-11-5.ddc */,
+				F834E427237C3249000CB269 /* ibt-11-5.sfi */,
+				F834E464237C3250000CB269 /* ibt-12-16.ddc */,
+				F834E44E237C324D000CB269 /* ibt-12-16.sfi */,
+				F834E424237C3249000CB269 /* ibt-17-0-1.ddc */,
+				F834E42C237C3249000CB269 /* ibt-17-0-1.sfi */,
+				F834E43D237C324B000CB269 /* ibt-17-1.ddc */,
+				F834E449237C324C000CB269 /* ibt-17-1.sfi */,
+				F834E442237C324C000CB269 /* ibt-17-2.ddc */,
+				F834E440237C324B000CB269 /* ibt-17-2.sfi */,
+				F834E438237C324B000CB269 /* ibt-17-16-1.ddc */,
+				F834E443237C324C000CB269 /* ibt-17-16-1.sfi */,
+				F834E431237C324A000CB269 /* ibt-18-0-1.ddc */,
+				F834E463237C3250000CB269 /* ibt-18-0-1.sfi */,
+				F834E453237C324E000CB269 /* ibt-18-1.ddc */,
+				F834E461237C3250000CB269 /* ibt-18-1.sfi */,
+				F834E429237C3249000CB269 /* ibt-18-2.ddc */,
+				F834E426237C3249000CB269 /* ibt-18-2.sfi */,
+				F834E448237C324C000CB269 /* ibt-18-16-1.ddc */,
+				F834E433237C324A000CB269 /* ibt-18-16-1.sfi */,
+				F834E44B237C324D000CB269 /* ibt-19-0-0.ddc */,
+				F834E430237C324A000CB269 /* ibt-19-0-0.sfi */,
+				F834E45F237C324F000CB269 /* ibt-19-0-1.ddc */,
+				F834E434237C324A000CB269 /* ibt-19-0-1.sfi */,
+				F834E447237C324C000CB269 /* ibt-19-0-4.ddc */,
+				F834E462237C3250000CB269 /* ibt-19-0-4.sfi */,
+				F834E45E237C324F000CB269 /* ibt-19-16-4.ddc */,
+				F834E435237C324A000CB269 /* ibt-19-16-4.sfi */,
+				F834E451237C324E000CB269 /* ibt-19-32-0.ddc */,
+				F834E44C237C324D000CB269 /* ibt-19-32-0.sfi */,
+				F834E45B237C324F000CB269 /* ibt-19-32-1.ddc */,
+				F834E43A237C324B000CB269 /* ibt-19-32-1.sfi */,
+				F834E43E237C324B000CB269 /* ibt-19-32-4.ddc */,
+				F834E468237C3250000CB269 /* ibt-19-32-4.sfi */,
+				F834E45C237C324F000CB269 /* ibt-20-0-3.ddc */,
+				F834E437237C324B000CB269 /* ibt-20-0-3.sfi */,
+				F834E42A237C3249000CB269 /* ibt-20-1-3.ddc */,
+				F834E42F237C324A000CB269 /* ibt-20-1-3.sfi */,
+				F834E43B237C324B000CB269 /* ibt-20-1-4.ddc */,
+				F834E439237C324B000CB269 /* ibt-20-1-4.sfi */,
+			);
+			path = fw;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F834E410237C20FF000CB269 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F834E414237C20FF000CB269 /* IntelBluetoothFirmware */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F834E41F237C20FF000CB269 /* Build configuration list for PBXNativeTarget "IntelBluetoothFirmware" */;
+			buildPhases = (
+				F834E410237C20FF000CB269 /* Headers */,
+				F834E411237C20FF000CB269 /* Sources */,
+				F834E412237C20FF000CB269 /* Frameworks */,
+				F834E413237C20FF000CB269 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntelBluetoothFirmware;
+			productName = IntelBluetoothFirmware;
+			productReference = F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */;
+			productType = "com.apple.product-type.kernel-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F834E40C237C20FF000CB269 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1110;
+				ORGANIZATIONNAME = zxystd;
+				TargetAttributes = {
+					F834E414237C20FF000CB269 = {
+						CreatedOnToolsVersion = 11.1;
+					};
+				};
+			};
+			buildConfigurationList = F834E40F237C20FF000CB269 /* Build configuration list for PBXProject "IntelBluetoothFirmware" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F834E40B237C20FF000CB269;
+			productRefGroup = F834E416237C20FF000CB269 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F834E414237C20FF000CB269 /* IntelBluetoothFirmware */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F834E413237C20FF000CB269 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F834E494237C3250000CB269 /* ibt-12-16.sfi in Resources */,
+				F834E485237C3250000CB269 /* ibt-11-5.ddc in Resources */,
+				F834E492237C3250000CB269 /* ibt-19-32-0.sfi in Resources */,
+				F834E47A237C3250000CB269 /* ibt-19-0-1.sfi in Resources */,
+				F834E4A2237C3250000CB269 /* ibt-20-0-3.ddc in Resources */,
+				F834E47E237C3250000CB269 /* ibt-17-16-1.ddc in Resources */,
+				F834E481237C3250000CB269 /* ibt-20-1-4.ddc in Resources */,
+				F834E4AA237C3250000CB269 /* ibt-12-16.ddc in Resources */,
+				F834E46C237C3250000CB269 /* ibt-18-2.sfi in Resources */,
+				F834E480237C3250000CB269 /* ibt-19-32-1.sfi in Resources */,
+				F834E46F237C3250000CB269 /* ibt-18-2.ddc in Resources */,
+				F834E470237C3250000CB269 /* ibt-20-1-3.ddc in Resources */,
+				F834E4A8237C3250000CB269 /* ibt-19-0-4.sfi in Resources */,
+				F834E497237C3250000CB269 /* ibt-19-32-0.ddc in Resources */,
+				F834E491237C3250000CB269 /* ibt-19-0-0.ddc in Resources */,
+				F834E46A237C3250000CB269 /* ibt-17-0-1.ddc in Resources */,
+				F834E479237C3250000CB269 /* ibt-18-16-1.sfi in Resources */,
+				F834E4A1237C3250000CB269 /* ibt-19-32-1.ddc in Resources */,
+				F834E4AE237C3250000CB269 /* ibt-19-32-4.sfi in Resources */,
+				F834E484237C3250000CB269 /* ibt-19-32-4.ddc in Resources */,
+				F834E472237C3250000CB269 /* ibt-17-0-1.sfi in Resources */,
+				F834E47B237C3250000CB269 /* ibt-19-16-4.sfi in Resources */,
+				F834E475237C3250000CB269 /* ibt-20-1-3.sfi in Resources */,
+				F834E477237C3250000CB269 /* ibt-18-0-1.ddc in Resources */,
+				F834E476237C3250000CB269 /* ibt-19-0-0.sfi in Resources */,
+				F834E483237C3250000CB269 /* ibt-17-1.ddc in Resources */,
+				F834E47F237C3250000CB269 /* ibt-20-1-4.sfi in Resources */,
+				F834E489237C3250000CB269 /* ibt-17-16-1.sfi in Resources */,
+				F834E48E237C3250000CB269 /* ibt-18-16-1.ddc in Resources */,
+				F834E488237C3250000CB269 /* ibt-17-2.ddc in Resources */,
+				F834E4A4237C3250000CB269 /* ibt-19-16-4.ddc in Resources */,
+				F834E48F237C3250000CB269 /* ibt-17-1.sfi in Resources */,
+				F834E486237C3250000CB269 /* ibt-17-2.sfi in Resources */,
+				F834E46D237C3250000CB269 /* ibt-11-5.sfi in Resources */,
+				F834E4A5237C3250000CB269 /* ibt-19-0-1.ddc in Resources */,
+				F834E4A7237C3250000CB269 /* ibt-18-1.sfi in Resources */,
+				F834E499237C3250000CB269 /* ibt-18-1.ddc in Resources */,
+				F834E48D237C3250000CB269 /* ibt-19-0-4.ddc in Resources */,
+				F834E4A9237C3250000CB269 /* ibt-18-0-1.sfi in Resources */,
+				F834E47D237C3250000CB269 /* ibt-20-0-3.sfi in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F834E411237C20FF000CB269 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */,
+				F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F834E41D237C20FF000CB269 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F834E41E237C20FF000CB269 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F834E420237C20FF000CB269 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = YXX7XALBVX;
+				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Debug;
+		};
+		F834E421237C20FF000CB269 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = YXX7XALBVX;
+				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F834E40F237C20FF000CB269 /* Build configuration list for PBXProject "IntelBluetoothFirmware" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F834E41D237C20FF000CB269 /* Debug */,
+				F834E41E237C20FF000CB269 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F834E41F237C20FF000CB269 /* Build configuration list for PBXNativeTarget "IntelBluetoothFirmware" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F834E420237C20FF000CB269 /* Debug */,
+				F834E421237C20FF000CB269 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F834E40C237C20FF000CB269 /* Project object */;
+}
