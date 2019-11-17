@@ -1,0 +1,2 @@
+# IntelBluetoothFirmware
+尝试加载Intel蓝牙驱动固件
