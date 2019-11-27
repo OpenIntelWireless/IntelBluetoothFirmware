@@ -20,7 +20,24 @@
 	<string>1</string>
 	<key>IOKitPersonalities</key>
 	<dict>
-		<key>IntelBluetoothFirmware</key>
+		<key>IntelBluetoothFirmware_common</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>bDeviceClass</key>
+			<string>224</string>
+			<key>bDeviceProtocol</key>
+			<string>1</string>
+			<key>bDeviceSubClass</key>
+			<string>1</string>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>rtltest</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
 			<string>com.zxystd.IntelBluetoothFirmware</string>
@@ -33,22 +50,9 @@
 			<key>idVendor</key>
 			<integer>5263</integer>
 		</dict>
-		<key>IntelBluetoothFirmware3165ngw</key>
-		<dict>
-			<key>CFBundleIdentifier</key>
-			<string>com.zxystd.IntelBluetoothFirmware</string>
-			<key>IOClass</key>
-			<string>IntelBluetoothFirmware</string>
-			<key>IOProviderClass</key>
-			<string>IOUSBHostDevice</string>
-			<key>idProduct</key>
-			<integer>2602</integer>
-			<key>idVendor</key>
-			<integer>32903</integer>
-		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2019 zxystd. All rights reserved.</string>
+	<string>Copyright © 2019 钟先耀. All rights reserved.</string>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>com.apple.iokit.IOACPIFamily</key>

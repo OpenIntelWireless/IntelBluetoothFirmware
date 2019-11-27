@@ -21,6 +21,13 @@ typedef struct __attribute__((packed))
     uint8_t plen;
 } HciEventHdr;
 
+struct __attribute__((packed)) HciResponse: HciEventHdr
+{
+    uint8_t numCommands;
+    uint16_t opcode;
+    uint8_t status;
+};
+
 /* ---- HCI Events ---- */
 #define HCI_EV_INQUIRY_COMPLETE        0x01
 #define HCI_EV_INQUIRY_RESULT        0x02
@@ -172,5 +179,8 @@ enum {
 #define hci_opcode_pack(ogf, ocf)    ((__u16) ((ocf & 0x03ff)|(ogf << 10)))
 #define hci_opcode_ogf(op)        (op >> 10)
 #define hci_opcode_ocf(op)        (op & 0x03ff)
+
+
+#define HCI_OP_INTEL_VERSION 0xfc05
 
 #endif /* Hci_h */

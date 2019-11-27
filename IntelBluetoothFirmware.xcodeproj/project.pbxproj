@@ -100,6 +100,8 @@
 		F8C3BFCC2380DA75006000F5 /* BtIntel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BtIntel.h; sourceTree = "<group>"; };
 		F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BtIntel.cpp; sourceTree = "<group>"; };
 		F8C3BFCF2380E5FC006000F5 /* Hci.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hci.h; sourceTree = "<group>"; };
+		F8F14753238432A000FD1335 /* IOBluetoothHostControllerTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOBluetoothHostControllerTransport.h; sourceTree = "<group>"; };
+		F8F14754238432C100FD1335 /* IOBluetoothHostControllerUSBTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOBluetoothHostControllerUSBTransport.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,8 @@
 				F8C3BFCC2380DA75006000F5 /* BtIntel.h */,
 				F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */,
 				F8C3BFCF2380E5FC006000F5 /* Hci.h */,
+				F8F14753238432A000FD1335 /* IOBluetoothHostControllerTransport.h */,
+				F8F14754238432C100FD1335 /* IOBluetoothHostControllerUSBTransport.h */,
 			);
 			path = IntelBluetoothFirmware;
 			sourceTree = "<group>";
@@ -434,11 +438,13 @@
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				DEVELOPMENT_TEAM = YXX7XALBVX;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.14;
+				SUPPORTED_PLATFORMS = macosx;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -451,11 +457,13 @@
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				DEVELOPMENT_TEAM = YXX7XALBVX;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.14;
+				SUPPORTED_PLATFORMS = macosx;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;

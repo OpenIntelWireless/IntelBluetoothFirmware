@@ -7,8 +7,9 @@
 //
 
 #include "BtIntel.h"
+#include <IOKit/IOLib.h>
 
-uint8_t BtIntel::IntelConvertSpeed(unsigned int speed)
+uint8_t BtIntel::intelConvertSpeed(unsigned int speed)
 {
     switch (speed) {
     case 9600:
@@ -38,4 +39,24 @@ uint8_t BtIntel::IntelConvertSpeed(unsigned int speed)
     default:
         return 0xff;
     }
+}
+
+void BtIntel::printIntelVersion(IntelVersion *ver)
+{
+    const char *variant;
+
+    switch (ver->fw_variant) {
+    case 0x06:
+        variant = "Bootloader";
+        break;
+    case 0x23:
+        variant = "Firmware";
+        break;
+    default:
+        return;
+    }
+    IOLog("%s revision %u.%u build %u week %u %u",
+    variant, ver->fw_revision >> 4, ver->fw_revision & 0x0f,
+    ver->fw_build_num, ver->fw_build_ww,
+          2000 + ver->fw_build_yy);
 }

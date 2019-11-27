@@ -43,7 +43,9 @@ class BtIntel {
     
 public:
     
-    static uint8_t IntelConvertSpeed(unsigned int speed);
+    static uint8_t intelConvertSpeed(unsigned int speed);
+    
+    static void printIntelVersion(IntelVersion* ver);
 };
 
 #endif /* BtIntel_h */
