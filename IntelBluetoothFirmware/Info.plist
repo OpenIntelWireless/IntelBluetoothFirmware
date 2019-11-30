@@ -28,12 +28,8 @@
 			<string>IntelBluetoothFirmware</string>
 			<key>IOProviderClass</key>
 			<string>IOUSBHostDevice</string>
-			<key>bDeviceClass</key>
-			<string>224</string>
-			<key>bDeviceProtocol</key>
-			<string>1</string>
-			<key>bDeviceSubClass</key>
-			<string>1</string>
+			<key>idProduct</key>
+			<integer>2602</integer>
 			<key>idVendor</key>
 			<integer>32903</integer>
 		</dict>

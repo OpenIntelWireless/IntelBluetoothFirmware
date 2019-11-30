@@ -8,6 +8,7 @@
 
 #include "BtIntel.h"
 #include <IOKit/IOLib.h>
+#include <string.h>
 
 uint8_t BtIntel::intelConvertSpeed(unsigned int speed)
 {
@@ -53,10 +54,28 @@ void BtIntel::printIntelVersion(IntelVersion *ver)
         variant = "Firmware";
         break;
     default:
-        return;
+        variant = "Unknown";
+        break;
     }
     IOLog("%s revision %u.%u build %u week %u %u",
     variant, ver->fw_revision >> 4, ver->fw_revision & 0x0f,
     ver->fw_build_num, ver->fw_build_ww,
           2000 + ver->fw_build_yy);
+}
+
+
+void BtIntel::printAllByte(void *addr, int size)
+{
+    unsigned char *ptr = (unsigned char*)addr;
+    int print_bytes = 0;
+ 
+    if(NULL == ptr) {
+        return;
+    }
+    
+    while(print_bytes < size) {
+        IOLog("%02x", *ptr);
+        ptr++;
+        print_bytes++;
+    }
 }

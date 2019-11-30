@@ -13,6 +13,7 @@ typedef struct __attribute__((packed))
 {
     uint16_t opcode;    /* OCF & OGF */
     uint8_t plen;
+    void* pData;
 } HciCommandHdr;
 
 typedef struct __attribute__((packed))
@@ -182,5 +183,6 @@ enum {
 
 
 #define HCI_OP_INTEL_VERSION 0xfc05
+#define HCI_OP_READ_INTEL_BOOT_PARAMS 0xfc0d
 
 #endif /* Hci_h */

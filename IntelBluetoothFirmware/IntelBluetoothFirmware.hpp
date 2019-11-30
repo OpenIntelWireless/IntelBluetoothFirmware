@@ -34,9 +34,11 @@ public:
     
     static void onRead(void* owner, void* parameter, IOReturn status, uint32_t bytesTransferred);
     
+    IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, void *param);
+    
     void parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength);
     
-    void onHCICommandSucceed(HciResponse *command);
+    void onHCICommandSucceed(HciResponse *command, int length);
     
     IOReturn getDeviceStatus(USBStatus *status);
     
@@ -53,6 +55,10 @@ public:
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
+    
+    int mDeviceState;
+    IntelVersion *ver;
+    IntelBootParams *params;
     
     IOBufferMemoryDescriptor* mReadBuffer;
 };
