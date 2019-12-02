@@ -183,6 +183,9 @@ enum {
 
 
 #define HCI_OP_INTEL_VERSION 0xfc05
+#define HCI_OP_INTEL_RESET 0xfc52
+#define HCI_OP_INTEL_ENTER_MFG 0xfc11
 #define HCI_OP_READ_INTEL_BOOT_PARAMS 0xfc0d
+#define HCI_OP_INTEL_EVENT_MASK 0xfc52
 
 #endif /* Hci_h */

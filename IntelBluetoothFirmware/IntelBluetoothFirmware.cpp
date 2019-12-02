@@ -20,8 +20,10 @@ enum { kMyOffPowerState = 0, kMyOnPowerState = 1 };
 enum {
     kReset,
     kGetIntelVersion,
-    kGetBootParams,
-    
+    kEnterMfg,
+    kLoadFW,
+    kExitMfg,
+    kSetEventMask,
     kUpdateAbort,
     kUpdateDone
 };
@@ -62,6 +64,11 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     if (!completion) {
         return false;
     }
+    
+    resourceCompletion = IOLockAlloc();
+    if (!resourceCompletion) {
+        return false;
+    }
 
     mReadBuffer = IOBufferMemoryDescriptor::inTaskWithOptions(kernel_task
                                                               , kIODirectionIn, kReadBufferSize);
@@ -94,25 +101,6 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         cleanUp();
         return false;
     }
-    
-//    StandardUSB::DeviceRequest deviceRequest =
-//    {
-//        .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
-//        .bRequest = 0,
-//        .wValue = 0,
-//        .wIndex = 0,
-//        .wLength = 2
-//    };
-//    IntelVersion recv;
-//    bzero(&recv, sizeof(recv));
-//    uint32_t bts = 0;
-//    int opcode = HCI_RESET;
-//    if (m_pDevice->deviceRequest(this, deviceRequest, (void *)&opcode, bts, kUSBHostClassRequestCompletionTimeout))
-//    {
-//        IOLog("get version fail\n");
-//        return false;
-//    }
-//    IOLog("get length %d, %d-%d-%d\n", bts, recv.hw_revision, recv.hw_platform, recv.status);
     if (!initInterface()) {
         IOLog("init usb interface failed\n");
         cleanUp();
@@ -242,7 +230,8 @@ void IntelBluetoothFirmware::beginDownload()
     IOLockLock(completion);
     mDeviceState = kReset;
     while (true) {
-        if (mDeviceState == kUpdateDone) {
+        
+        if (mDeviceState == kUpdateDone || mDeviceState == kUpdateAbort) {
             break;
         }
         
@@ -251,40 +240,71 @@ void IntelBluetoothFirmware::beginDownload()
             case kReset:
             {
                 IOLog("HCI_RESET\n");
-                uint8_t mask[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-                if ((ret = sendHCIRequest(0xfc52, 8, &mask)) != kIOReturnSuccess) {
-                    IOLog("Setting Intel event mask failed (%d), %s\n ", ret, stringFromReturn(ret));
+                if ((ret = sendHCIRequest(HCI_OP_RESET, 0, NULL)) != kIOReturnSuccess) {
+                    IOLog("sending initial HCI reset command failed (%d), %s\n ", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
-//                if ((ret = sendHCIRequest(HCI_OP_READ_INTEL_BOOT_PARAMS, 2, NULL)) != kIOReturnSuccess) {
-//                    IOLog("Reading Intel boot parameters failed, ret=%d\n %s", ret, stringFromReturn(ret));
-//                    goto done;
-//                    break;
-//                }
                 mDeviceState = kGetIntelVersion;
                 break;
             }
             case kGetIntelVersion:
             {
                 IOLog("HCI_OP_INTEL_VERSION\n");
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_VERSION, 2, NULL)) != kIOReturnSuccess) {
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_VERSION, 0, NULL)) != kIOReturnSuccess) {
                     IOLog("Reading Intel version information failed, ret=%d\n %s", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
-                mDeviceState = kGetBootParams;
                 break;
             }
-            case kGetBootParams:
-                IOLog("HCI_OP_READ_INTEL_BOOT_PARAMS\n");
-                if ((ret = sendHCIRequest(HCI_OP_READ_INTEL_BOOT_PARAMS, 2, NULL)) != kIOReturnSuccess) {
-                    IOLog("Reading Intel boot parameters failed, ret=%d\n %s", ret, stringFromReturn(ret));
+            case kEnterMfg:
+            {
+                uint8_t param[2] = { 0x01, 0x00 };
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)param)) != kIOReturnSuccess) {
+                    IOLog("Entering manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
+                    goto done;
+                    break;
+                }
+                mDeviceState = kExitMfg;
+                break;
+            }
+            case kLoadFW:
+                
+                
+                mDeviceState = kExitMfg;
+                break;
+            case kExitMfg:
+            {
+                uint8_t param[] = { 0x00, 0x00 };
+                bool reset = true;
+                bool patched = true;
+               /* The 2nd command parameter specifies the manufacturing exit method:
+                * 0x00: Just disable the manufacturing mode (0x00).
+                * 0x01: Disable manufacturing mode and reset with patches deactivated.
+                * 0x02: Disable manufacturing mode and reset with patches activated.
+                */
+                if (reset)
+                    param[1] |= patched ? 0x02 : 0x01;
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)param)) != kIOReturnSuccess) {
+                    IOLog("Exiting manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
+                    goto done;
+                    break;
+                }
+                mDeviceState = kSetEventMask;
+                break;
+            }
+            case kSetEventMask:
+            {
+                uint8_t mask[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)mask)) != kIOReturnSuccess) {
+                    IOLog("Setting Intel event mask failed (%d)\n %s", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
                 mDeviceState = kUpdateDone;
                 break;
+            }
             default:
                 break;
         }
@@ -315,7 +335,7 @@ done:
     m_pDevice  = NULL;
 }
 
-IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, void *param)
+IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, void * param)
 {
     StandardUSB::DeviceRequest request =
     {
@@ -338,7 +358,6 @@ IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLe
 void IntelBluetoothFirmware::onRead(void *owner, void *parameter, IOReturn status, uint32_t bytesTransferred)
 {
     IntelBluetoothFirmware* that = (IntelBluetoothFirmware*)owner;
-    
     IOLockLock(that->completion);
     
     switch (status) {
@@ -377,64 +396,42 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
     IOLog("recv command opcode=0x%04x\n", command->opcode);
     BtIntel::printAllByte(command, length);
     switch (command->opcode) {
-        case 0xfc52:
+        case HCI_OP_INTEL_RESET:
             mDeviceState = kGetIntelVersion;
             break;
         case HCI_OP_INTEL_VERSION:
         {
             ver = (IntelVersion*)((uint8_t*)command + 5);
-            BtIntel::printIntelVersion(ver);
-            switch (ver->hw_variant) {
-                case 0x0b:    /* LnP */
-                case 0x0c:    /* WsP */
-                case 0x12:    /* ThP */
-                    break;
-                default:
-                    IOLog("Unsupported Intel hardware variant (%u)",
-                           ver->hw_variant);
-                    break;
+           /* fw_patch_num indicates the version of patch the device currently
+            * have. If there is no patch data in the device, it is always 0x00.
+            * So, if it is other than 0x00, no need to patch the device again.
+            */
+            if (ver->fw_patch_num) {
+                IOLog("Intel device is already patched. "
+                        "patch num: %02x", ver->fw_patch_num);
+                mDeviceState = kSetEventMask;
+                break;
             }
+            char fwname[64];
+            snprintf(fwname, sizeof(fwname),
+            "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x.bseq",
+            ver->hw_platform, ver->hw_variant, ver->hw_revision,
+            ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
+            ver->fw_build_ww, ver->fw_build_yy);
+            IOLog("request firmware %s \n", fwname);
+            if (!fwData) {
+                fwData = requestFirmware(fwname);
+                if (!fwData) {
+                    IOLog("no firmware, stop\n");
+                    mDeviceState = kUpdateAbort;
+                    break;
+                }
+            }
+            mDeviceState = kUpdateDone;
             break;
         }
-        case HCI_OP_READ_INTEL_BOOT_PARAMS:
+        case HCI_OP_INTEL_ENTER_MFG:
         {
-            params = (IntelBootParams*)((uint8_t*)command + 5);
-            IOLog("Device revision is %u",
-                  USBToHost16(params->dev_revid));
-            IOLog("Secure boot is %s",
-                    params->secure_boot ? "enabled" : "disabled");
-            IOLog("OTP lock is %s",
-                    params->otp_lock ? "enabled" : "disabled");
-            IOLog("API lock is %s",
-                    params->api_lock ? "enabled" : "disabled");
-            IOLog("Debug lock is %s",
-                    params->debug_lock ? "enabled" : "disabled");
-            IOLog("Minimum firmware build %u week %u %u",
-                    params->min_fw_build_nn, params->min_fw_build_cw,
-                    2000 + params->min_fw_build_yy);
-            
-            char fwname[64] = {0};
-            switch (ver->hw_variant) {
-                case 0x0b:      /* SfP */
-                case 0x0c:      /* WsP */
-                    snprintf(fwname, sizeof(fwname), "ibt-%u-%u.sfi",
-                         USBToHost16(ver->hw_variant),
-                         USBToHost16(params->dev_revid));
-                    break;
-                case 0x12:      /* ThP */
-                    snprintf(fwname, sizeof(fwname), "ibt-%u-%u-%u.sfi",
-                         USBToHost16(ver->hw_variant),
-                         USBToHost16(ver->hw_revision),
-                         USBToHost16(ver->fw_revision));
-                    break;
-                default:
-                    IOLog("Unsupported Intel hardware variant (%u)",
-                           ver->hw_variant);
-                    break;
-            }
-            IOLog("fwname=%s\n", fwname);
-            
-//            mDeviceState = kUpdateDone;
             break;
         }
             
@@ -443,20 +440,37 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
     }
 }
 
-
-IOReturn IntelBluetoothFirmware::getDeviceStatus(USBStatus *status)
+OSData* IntelBluetoothFirmware::requestFirmware(const char* resourceName)
 {
-    uint16_t stat       = 0;
-    StandardUSB::DeviceRequest request;
-    request.bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionIn, kRequestTypeStandard, kRequestRecipientDevice);
-    request.bRequest      = kDeviceRequestGetStatus;
-    request.wValue        = 0;
-    request.wIndex        = 0;
-    request.wLength       = sizeof(stat);
-    uint32_t bytesTransferred = 0;
-    IOReturn result = m_pDevice->deviceRequest(this, request, &stat, bytesTransferred, kUSBHostStandardRequestCompletionTimeout);
-    *status = stat;
-    return result;
+    IOLockLock(resourceCompletion);
+    ResourceCallbackContext context =
+    {
+        .context = this,
+        .resource = NULL
+    };
+    OSKextRequestResource(OSKextGetCurrentIdentifier(), resourceName, onLoadFW, &context, NULL);
+    IOLog("request start.\n");
+    IOLockSleep(resourceCompletion, this, 0);
+    IOLockUnlock(resourceCompletion);
+    if (context.resource == NULL) {
+        IOLog("%s resource load fail.\n", resourceName);
+        return NULL;
+    }
+    IOLog("request resource succeed.");
+    return context.resource;
+}
+
+void IntelBluetoothFirmware::onLoadFW(OSKextRequestTag requestTag, OSReturn result, const void *resourceData, uint32_t resourceDataLength, void *context)
+{
+    IOLog("onLoadFW callback ret=%d\n length=%d", result, resourceDataLength);
+    ResourceCallbackContext *resourceContxt = (ResourceCallbackContext*)context;
+    IOLockLock(resourceContxt->context->resourceCompletion);
+    if (result == kOSReturnSuccess) {
+        IOLog("onLoadFW return success");
+        resourceContxt->resource = OSData::withBytes(resourceData, resourceDataLength);
+    }
+    IOLockUnlock(resourceContxt->context->resourceCompletion);
+    IOLockWakeup(resourceContxt->context->resourceCompletion, resourceContxt->context, true);
 }
 
 IOReturn IntelBluetoothFirmware::getConfiguration(UInt8 *configNumber)
@@ -484,6 +498,10 @@ void IntelBluetoothFirmware::stop(IOService *provider)
 {
     IOLog("Driver Stop()\n");
     PMstop();
+    if (fwData) {
+        fwData->release();
+        fwData = NULL;
+    }
     if (mReadBuffer) {
         mReadBuffer->complete(kIODirectionIn);
         usbCompletion.owner = NULL;
@@ -494,6 +512,10 @@ void IntelBluetoothFirmware::stop(IOService *provider)
     if (completion) {
         IOLockFree(completion);
         completion = NULL;
+    }
+    if (resourceCompletion) {
+        IOLockFree(resourceCompletion);
+        resourceCompletion = NULL;
     }
     cleanUp();
     super::stop(provider);

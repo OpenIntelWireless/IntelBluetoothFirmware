@@ -5,6 +5,7 @@
 #include <IOKit/IOLib.h>
 #include <IOKit/IOService.h>
 #include <IOKit/usb/USB.h>
+#include <libkern/OSKextLib.h>
 #include <IOKit/usb/IOUSBHostDevice.h>
 #include <IOKit/usb/IOUSBHostInterface.h>
 
@@ -34,19 +35,26 @@ public:
     
     static void onRead(void* owner, void* parameter, IOReturn status, uint32_t bytesTransferred);
     
-    IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, void *param);
+    IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, void * param);
     
     void parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength);
     
     void onHCICommandSucceed(HciResponse *command, int length);
-    
-    IOReturn getDeviceStatus(USBStatus *status);
     
     IOReturn getConfiguration(UInt8 *configNumber);
     
     bool initUSBConfiguration();
     
     bool initInterface();
+    
+    OSData *requestFirmware(const char* resourceName);
+    
+    static void onLoadFW(
+    OSKextRequestTag                requestTag,
+    OSReturn                        result,
+    const void                    * resourceData,
+    uint32_t                        resourceDataLength,
+                         void                          * context);
     
 public:
     IOUSBHostDevice* m_pDevice;
@@ -55,12 +63,21 @@ public:
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
+    IOLock* resourceCompletion;
     
     int mDeviceState;
     IntelVersion *ver;
     IntelBootParams *params;
     
     IOBufferMemoryDescriptor* mReadBuffer;
+    
+private:
+    OSData *fwData;
+    struct ResourceCallbackContext
+    {
+        IntelBluetoothFirmware* context;
+        OSData* resource;
+    };
 };
 
 #endif
