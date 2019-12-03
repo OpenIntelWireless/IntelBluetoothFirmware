@@ -8,6 +8,7 @@
 #include <libkern/OSKextLib.h>
 #include <IOKit/usb/IOUSBHostDevice.h>
 #include <IOKit/usb/IOUSBHostInterface.h>
+#include "Log.h"
 
 class IntelBluetoothFirmware : public IOService
 {

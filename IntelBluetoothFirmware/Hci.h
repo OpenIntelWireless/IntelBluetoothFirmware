@@ -13,6 +13,12 @@ typedef struct __attribute__((packed))
 {
     uint16_t opcode;    /* OCF & OGF */
     uint8_t plen;
+} FWCommandHdr;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t opcode;    /* OCF & OGF */
+    uint8_t plen;
     void* pData;
 } HciCommandHdr;
 
@@ -181,6 +187,11 @@ enum {
 #define hci_opcode_ogf(op)        (op >> 10)
 #define hci_opcode_ocf(op)        (op & 0x03ff)
 
+/* ---- HCI Packet structures ---- */
+#define HCI_COMMAND_HDR_SIZE 3
+#define HCI_EVENT_HDR_SIZE   2
+#define HCI_ACL_HDR_SIZE     4
+#define HCI_SCO_HDR_SIZE     3
 
 #define HCI_OP_INTEL_VERSION 0xfc05
 #define HCI_OP_INTEL_RESET 0xfc52

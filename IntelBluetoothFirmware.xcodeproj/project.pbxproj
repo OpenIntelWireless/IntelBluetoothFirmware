@@ -115,6 +115,7 @@
 		F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntelBluetoothFirmware.hpp; sourceTree = "<group>"; };
 		F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntelBluetoothFirmware.cpp; sourceTree = "<group>"; };
 		F834E41C237C20FF000CB269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8BD1B3C2396ACAB0088EBE4 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		F8C3BFCC2380DA75006000F5 /* BtIntel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BtIntel.h; sourceTree = "<group>"; };
 		F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BtIntel.cpp; sourceTree = "<group>"; };
 		F8C3BFCF2380E5FC006000F5 /* Hci.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hci.h; sourceTree = "<group>"; };
@@ -152,6 +153,7 @@
 		F834E417237C20FF000CB269 /* IntelBluetoothFirmware */ = {
 			isa = PBXGroup;
 			children = (
+				F8BD1B3C2396ACAB0088EBE4 /* Log.h */,
 				F834E422237C2FF1000CB269 /* fw */,
 				F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */,
 				F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */,

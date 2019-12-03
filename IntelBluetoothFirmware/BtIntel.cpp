@@ -9,6 +9,7 @@
 #include "BtIntel.h"
 #include <IOKit/IOLib.h>
 #include <string.h>
+#include "Log.h"
 
 uint8_t BtIntel::intelConvertSpeed(unsigned int speed)
 {
@@ -57,7 +58,7 @@ void BtIntel::printIntelVersion(IntelVersion *ver)
         variant = "Unknown";
         break;
     }
-    IOLog("%s revision %u.%u build %u week %u %u",
+    XYLog("%s revision %u.%u build %u week %u %u",
     variant, ver->fw_revision >> 4, ver->fw_revision & 0x0f,
     ver->fw_build_num, ver->fw_build_ww,
           2000 + ver->fw_build_yy);
