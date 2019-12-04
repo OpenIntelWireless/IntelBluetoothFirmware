@@ -69,6 +69,11 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     if (!resourceCompletion) {
         return false;
     }
+    
+    resourceCallbackCompletion = IOLockAlloc();
+    if (!resourceCallbackCompletion) {
+        return false;
+    }
 
     mReadBuffer = IOBufferMemoryDescriptor::inTaskWithOptions(kernel_task
                                                               , kIODirectionIn, kReadBufferSize);
@@ -110,7 +115,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     beginDownload();
     PMstop();
     cleanUp();
-    return false;
+    return true;
 }
 
 bool IntelBluetoothFirmware::initUSBConfiguration()
@@ -260,8 +265,7 @@ void IntelBluetoothFirmware::beginDownload()
             }
             case kEnterMfg:
             {
-                uint8_t param[2] = { 0x01, 0x00 };
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)param)) != kIOReturnSuccess) {
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)ENTER_MFG_PARAM)) != kIOReturnSuccess) {
                     XYLog("Entering manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
                     goto done;
                     break;
@@ -362,7 +366,6 @@ void IntelBluetoothFirmware::beginDownload()
             }
             case kExitMfg:
             {
-                uint8_t param[] = { 0x00, 0x00 };
                 bool reset = true;
                 bool patched = true;
                /* The 2nd command parameter specifies the manufacturing exit method:
@@ -370,9 +373,9 @@ void IntelBluetoothFirmware::beginDownload()
                 * 0x01: Disable manufacturing mode and reset with patches deactivated.
                 * 0x02: Disable manufacturing mode and reset with patches activated.
                 */
-                if (reset)
-                    param[1] |= patched ? 0x02 : 0x01;
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)param)) != kIOReturnSuccess) {
+//                if (reset)
+//                    EXIT_MFG_PARAM[1] |= patched ? 0x02 : 0x01;
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)EXIT_MFG_PARAM)) != kIOReturnSuccess) {
                     XYLog("Exiting manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
                     goto done;
                     break;
@@ -382,8 +385,7 @@ void IntelBluetoothFirmware::beginDownload()
             }
             case kSetEventMask:
             {
-                uint8_t mask[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)mask)) != kIOReturnSuccess) {
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)EVENT_MASK)) != kIOReturnSuccess) {
                     XYLog("Setting Intel event mask failed (%d)\n %s", ret, stringFromReturn(ret));
                     goto done;
                     break;
@@ -395,13 +397,16 @@ void IntelBluetoothFirmware::beginDownload()
                 break;
         }
 
-        if (!interruptPipeRead()) {
-            XYLog("hci read pipe fail. stop\n");
-            break;
+        if (mDeviceState != kExitMfg && mDeviceState != kSetEventMask) {
+            if (!interruptPipeRead())
+            {
+                XYLog("hci read pipe fail. stop\n");
+                break;
+            }
+            XYLog("interrupt wait");
+            IOLockSleep(completion, this, 0);
         }
-        
-        
-        IOLockSleep(completion, this, 0);
+        XYLog("interrupt continue");
     }
     
 done:
@@ -421,7 +426,7 @@ done:
     m_pDevice  = NULL;
 }
 
-IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, void * param)
+IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param)
 {
     StandardUSB::DeviceRequest request =
     {
@@ -436,9 +441,19 @@ IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLe
     bzero(&hdr, sizeof(HciCommandHdr));
     hdr.opcode = opCode;
     hdr.plen = paramLen;
-    hdr.pData = param;
+    uint8_t *cmd_param = NULL;
+    if (paramLen > 0) {
+        cmd_param = (uint8_t *)IOMalloc(paramLen);
+        memcpy(cmd_param, param, paramLen);
+        hdr.pData = cmd_param;
+    }
     BtIntel::printAllByte(&hdr, paramLen + 3);
-    return m_pInterface->deviceRequest(request, (void *)&hdr, bytesTransfered, 0);
+    IOReturn ret = m_pInterface->deviceRequest(request, (void *)&hdr, bytesTransfered, 0);
+    if (cmd_param) {
+        IOFree(cmd_param, paramLen);
+        cmd_param = NULL;
+    }
+    return ret;
 }
 
 void IntelBluetoothFirmware::onRead(void *owner, void *parameter, IOReturn status, uint32_t bytesTransferred)
@@ -513,6 +528,7 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
                     break;
                 }
             }
+            XYLog("request firmware success");
             mDeviceState = kEnterMfg;
             break;
         }
@@ -537,6 +553,7 @@ OSData* IntelBluetoothFirmware::requestFirmware(const char* resourceName)
     OSKextRequestResource(OSKextGetCurrentIdentifier(), resourceName, onLoadFW, &context, NULL);
     XYLog("request start.\n");
     IOLockSleep(resourceCompletion, this, 0);
+    XYLog("是谁叫醒了我.\n");
     IOLockUnlock(resourceCompletion);
     if (context.resource == NULL) {
         XYLog("%s resource load fail.\n", resourceName);
@@ -550,13 +567,14 @@ void IntelBluetoothFirmware::onLoadFW(OSKextRequestTag requestTag, OSReturn resu
 {
     XYLog("onLoadFW callback ret=%d\n length=%d", result, resourceDataLength);
     ResourceCallbackContext *resourceContxt = (ResourceCallbackContext*)context;
-    IOLockLock(resourceContxt->context->resourceCompletion);
+    IOLockLock(resourceContxt->context->resourceCallbackCompletion);
     if (result == kOSReturnSuccess) {
         XYLog("onLoadFW return success");
         resourceContxt->resource = OSData::withBytes(resourceData, resourceDataLength);
     }
-    IOLockUnlock(resourceContxt->context->resourceCompletion);
-    IOLockWakeup(resourceContxt->context->resourceCompletion, resourceContxt->context, true);
+    IOLockUnlock(resourceContxt->context->resourceCallbackCompletion);
+    IOLockWakeup(resourceContxt->context->resourceCompletion, resourceContxt->context, false);
+    XYLog("onLoadFW wakeup");
 }
 
 IOReturn IntelBluetoothFirmware::getConfiguration(UInt8 *configNumber)

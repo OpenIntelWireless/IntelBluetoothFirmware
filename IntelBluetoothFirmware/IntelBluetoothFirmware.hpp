@@ -36,7 +36,7 @@ public:
     
     static void onRead(void* owner, void* parameter, IOReturn status, uint32_t bytesTransferred);
     
-    IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, void * param);
+    IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param);
     
     void parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength);
     
@@ -65,6 +65,7 @@ public:
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
     IOLock* resourceCompletion;
+    IOLock* resourceCallbackCompletion;
     
     int mDeviceState;
     IntelVersion *ver;

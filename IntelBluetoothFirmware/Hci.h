@@ -199,4 +199,8 @@ enum {
 #define HCI_OP_READ_INTEL_BOOT_PARAMS 0xfc0d
 #define HCI_OP_INTEL_EVENT_MASK 0xfc52
 
+static uint8_t EXIT_MFG_PARAM[2] = { 0x00, 0x02 };
+static uint8_t ENTER_MFG_PARAM[2] = { 0x01, 0x00 };
+static uint8_t EVENT_MASK[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
 #endif /* Hci_h */
