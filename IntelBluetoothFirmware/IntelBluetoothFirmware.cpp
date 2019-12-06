@@ -53,6 +53,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         XYLog("super start failed. stop!\n");
         return false;
     }
+    m_pDevice = (IOUSBHostDevice *)provider;
     
     PMinit();
     registerPowerDriver(this, myTwoStates, 2);
@@ -89,7 +90,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
 //    return true;
     m_pDevice->setConfiguration(0);
     
-    IOSleep(300);
+    IOSleep(500);
     
     usbCompletion.owner = this;
     usbCompletion.action = onRead;
@@ -113,7 +114,6 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     }
     XYLog("usb init succeed\n");
     beginDownload();
-    PMstop();
     cleanUp();
     return true;
 }
@@ -200,6 +200,7 @@ bool IntelBluetoothFirmware::initInterface()
 void IntelBluetoothFirmware::cleanUp()
 {
     XYLog("Clean up...\n");
+    PMstop();
     if (m_pInterruptPipe) {
         m_pInterruptPipe->abort();
         m_pInterruptPipe->release();
@@ -428,6 +429,7 @@ done:
 
 IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param)
 {
+    XYLog("opCode=0x%02x, paramLen=%d\n", opCode, paramLen);
     StandardUSB::DeviceRequest request =
     {
         .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
@@ -447,7 +449,7 @@ IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLe
         memcpy(cmd_param, param, paramLen);
         hdr.pData = cmd_param;
     }
-    BtIntel::printAllByte(&hdr, paramLen + 3);
+//    BtIntel::printAllByte(&hdr, paramLen + 3);
     IOReturn ret = m_pInterface->deviceRequest(request, (void *)&hdr, bytesTransfered, 0);
     if (cmd_param) {
         IOFree(cmd_param, paramLen);
@@ -565,7 +567,7 @@ OSData* IntelBluetoothFirmware::requestFirmware(const char* resourceName)
 
 void IntelBluetoothFirmware::onLoadFW(OSKextRequestTag requestTag, OSReturn result, const void *resourceData, uint32_t resourceDataLength, void *context)
 {
-    XYLog("onLoadFW callback ret=%d\n length=%d", result, resourceDataLength);
+    XYLog("onLoadFW callback ret=0x%08x\n length=%d", result, resourceDataLength);
     ResourceCallbackContext *resourceContxt = (ResourceCallbackContext*)context;
     IOLockLock(resourceContxt->context->resourceCallbackCompletion);
     if (result == kOSReturnSuccess) {
@@ -638,9 +640,9 @@ IOService * IntelBluetoothFirmware::probe(IOService *provider, SInt32 *score)
         XYLog("%s -- %s is not usb device, class=%s\n", provider->getLocation(), provider->getName(), provider->metaClass->getClassName());
         return NULL;
     }
-    m_pDevice->retain();
     UInt16 vendorID = USBToHost16(m_pDevice->getDeviceDescriptor()->idVendor);
     UInt16 productID = USBToHost16(m_pDevice->getDeviceDescriptor()->idProduct);
     XYLog("name=%s, class=%s, vendorID=0x%04X, productID=0x%04X\n", m_pDevice->getName(), provider->metaClass->getClassName(), vendorID, productID);
+    m_pDevice = NULL;
     return this;
 }

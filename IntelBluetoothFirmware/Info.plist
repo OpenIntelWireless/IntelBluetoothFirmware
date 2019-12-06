@@ -13,11 +13,11 @@
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
-	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>IOKitPersonalities</key>
 	<dict>
 		<key>IntelBluetoothFirmware_common</key>
@@ -26,6 +26,10 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>4000</integer>
 			<key>IOProviderClass</key>
 			<string>IOUSBHostDevice</string>
 			<key>idProduct</key>
@@ -72,5 +76,7 @@
 		<key>com.apple.kpi.unsupported</key>
 		<string>19.0</string>
 	</dict>
+	<key>OSBundleRequired</key>
+	<string>Root</string>
 </dict>
 </plist>
