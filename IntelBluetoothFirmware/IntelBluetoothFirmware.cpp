@@ -98,23 +98,30 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     
     if (!m_pDevice->open(this)) {
         XYLog("start fail, can not open device\n");
+        PMstop();
+        super::stop(this);
         cleanUp();
         return false;
     }
 
     if (!initUSBConfiguration()) {
         XYLog("init usb configuration failed\"n");
+        PMstop();
+        super::stop(this);
         cleanUp();
         return false;
     }
     if (!initInterface()) {
         XYLog("init usb interface failed\n");
+        PMstop();
+        super::stop(this);
         cleanUp();
         return false;
     }
     XYLog("usb init succeed\n");
     beginDownload();
     cleanUp();
+    super::stop(this);
     return true;
 }
 
@@ -183,28 +190,38 @@ bool IntelBluetoothFirmware::initInterface()
         uint8_t epDirection = StandardUSB::getEndpointDirection(endpointDescriptor);
         uint8_t epType = StandardUSB::getEndpointType(endpointDescriptor);
         if (epDirection == kUSBIn && epType == kUSBInterrupt) {
-            XYLog("找到了找到了，找到端点了！！！\n");
-            m_pInterruptPipe = m_pInterface->copyPipe(StandardUSB::getEndpointAddress(endpointDescriptor));
-            if (m_pInterruptPipe == NULL) {
-                XYLog("copy pipe fail\n");
+            XYLog("找到了找到了，找到中断端点了！！！\n");
+            m_pInterruptReadPipe = m_pInterface->copyPipe(StandardUSB::getEndpointAddress(endpointDescriptor));
+            if (m_pInterruptReadPipe == NULL) {
+                XYLog("copy InterruptReadPipe pipe fail\n");
                 return false;
             }
-            m_pInterruptPipe->retain();
-            m_pInterruptPipe->release();
-            return (IOService*)m_pInterface != NULL;
+            m_pInterruptReadPipe->retain();
+            m_pInterruptReadPipe->release();
+        } else {
+            if (epDirection == kUSBOut && epType == kUSBBulk) {
+                XYLog("找到了找到了，找到Bulk端点了！！！\n");
+                m_pBulkWritePipe = m_pInterface->copyPipe(StandardUSB::getEndpointAddress(endpointDescriptor));
+                if (m_pBulkWritePipe == NULL) {
+                    XYLog("copy Bulk pipe fail\n");
+                    return false;
+                }
+                m_pBulkWritePipe->retain();
+                m_pBulkWritePipe->release();
+            }
         }
     }
-    return false;
+    return m_pInterruptReadPipe != NULL && m_pBulkWritePipe != NULL;
 }
 
 void IntelBluetoothFirmware::cleanUp()
 {
     XYLog("Clean up...\n");
     PMstop();
-    if (m_pInterruptPipe) {
-        m_pInterruptPipe->abort();
-        m_pInterruptPipe->release();
-        m_pInterruptPipe = NULL;
+    if (m_pInterruptReadPipe) {
+        m_pInterruptReadPipe->abort();
+        m_pInterruptReadPipe->release();
+        m_pInterruptReadPipe = NULL;
     }
     if (m_pInterface) {
         m_pInterface->close(this);
@@ -221,10 +238,10 @@ void IntelBluetoothFirmware::cleanUp()
 bool IntelBluetoothFirmware::interruptPipeRead()
 {
     IOReturn result;
-    if ((result = m_pInterruptPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), &usbCompletion, 0)) != kIOReturnSuccess) {
+    if ((result = m_pInterruptReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), &usbCompletion, 0)) != kIOReturnSuccess) {
         if (result == kIOUSBPipeStalled)
         {
-            m_pInterruptPipe->clearStall(false);
+            m_pInterruptReadPipe->clearStall(false);
         }
         return false;
     }
@@ -266,11 +283,21 @@ void IntelBluetoothFirmware::beginDownload()
             }
             case kEnterMfg:
             {
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)ENTER_MFG_PARAM)) != kIOReturnSuccess) {
-                    XYLog("Entering manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
-                    goto done;
-                    break;
-                }
+                StandardUSB::DeviceRequest request =
+                {
+                    .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
+                    .bRequest = 0,
+                    .wValue = 0,
+                    .wIndex = 0,
+                    .wLength = (uint16_t)sizeof(TEST_ENTER)
+                };
+                uint32_t bt = 0;
+                m_pInterface->deviceRequest(request, (void *)TEST_ENTER, bt, 0);
+//                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)ENTER_MFG_PARAM)) != kIOReturnSuccess) {
+//                    XYLog("Entering manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
+//                    goto done;
+//                    break;
+//                }
                 mDeviceState = kLoadFW;
                 break;
             }
@@ -327,9 +354,12 @@ void IntelBluetoothFirmware::beginDownload()
                     * can be sent with __hci_cmd_sync_ev() which returns the sk_buff of
                     * last expected event.
                     */
+                    int evt_times = 0;
                     while (remain > HCI_EVENT_HDR_SIZE && fw_ptr[0] == 0x02) {
                         fw_ptr++;
                         remain--;
+                        
+                        evt_times++;
 
                         evt = (HciEventHdr*)(fw_ptr);
                         fw_ptr += sizeof(*evt);
@@ -354,12 +384,23 @@ void IntelBluetoothFirmware::beginDownload()
                         goto done;
                         break;
                     }
+                    XYLog("ori=%02X\n", (uint8_t)*(uint8_t*)cmd_param);
+                    XYLog("evt=%02X\n", evt->evt);
+                    HciCommandHdr hdr;
+                    bzero(&hdr, sizeof(HciCommandHdr));
+                    hdr.opcode = USBToHost16(cmd->opcode);
+                    hdr.plen = cmd->plen;
+                    hdr.pData = (void *)cmd_param;
+//                    bulkWrite(&hdr, cmd->plen + HCI_COMMAND_HDR_SIZE);
                     if ((ret = sendHCIRequest(USBToHost16(cmd->opcode), cmd->plen, (void *)cmd_param)) != kIOReturnSuccess) {
                         XYLog("sending Intel patch command (0x%4.4x) failed (%d) %s",
                         cmd->opcode, ret, stringFromReturn(ret));
                         goto done;
                         break;
                     }
+
+                    interruptPipeRead();
+                    IOLockSleep(completion, this, 0);
                 }
                 
                 mDeviceState = kExitMfg;
@@ -376,21 +417,41 @@ void IntelBluetoothFirmware::beginDownload()
                 */
 //                if (reset)
 //                    EXIT_MFG_PARAM[1] |= patched ? 0x02 : 0x01;
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)EXIT_MFG_PARAM)) != kIOReturnSuccess) {
-                    XYLog("Exiting manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
-                    goto done;
-                    break;
-                }
+                StandardUSB::DeviceRequest request =
+                {
+                    .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
+                    .bRequest = 0,
+                    .wValue = 0,
+                    .wIndex = 0,
+                    .wLength = (uint16_t)sizeof(TEST_EXIT)
+                };
+                uint32_t bt = 0;
+                m_pInterface->deviceRequest(request, (void *)TEST_EXIT, bt, 0);
+//                if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)EXIT_MFG_PARAM)) != kIOReturnSuccess) {
+//                    XYLog("Exiting manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
+//                    goto done;
+//                    break;
+//                }
                 mDeviceState = kSetEventMask;
                 break;
             }
             case kSetEventMask:
             {
-                if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)EVENT_MASK)) != kIOReturnSuccess) {
-                    XYLog("Setting Intel event mask failed (%d)\n %s", ret, stringFromReturn(ret));
-                    goto done;
-                    break;
-                }
+                StandardUSB::DeviceRequest request =
+                {
+                    .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
+                    .bRequest = 0,
+                    .wValue = 0,
+                    .wIndex = 0,
+                    .wLength = (uint16_t)sizeof(TEST_EVENT)
+                };
+                uint32_t bt = 0;
+                m_pInterface->deviceRequest(request, (void *)TEST_EVENT, bt, 0);
+//                if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)EVENT_MASK)) != kIOReturnSuccess) {
+//                    XYLog("Setting Intel event mask failed (%d)\n %s", ret, stringFromReturn(ret));
+//                    goto done;
+//                    break;
+//                }
                 mDeviceState = kUpdateDone;
                 break;
             }
@@ -417,9 +478,12 @@ done:
     
     XYLog("End download\n");
     m_pInterface->close(this);
-    m_pInterruptPipe->abort();
-    m_pInterruptPipe->release();
-    m_pInterruptPipe = NULL;
+    m_pInterruptReadPipe->abort();
+    m_pInterruptReadPipe->release();
+    m_pInterruptReadPipe = NULL;
+    m_pBulkWritePipe->abort();
+    m_pBulkWritePipe->release();
+    m_pBulkWritePipe = NULL;
     m_pInterface->release();
     m_pInterface = NULL;
     m_pDevice->close(this);
@@ -430,30 +494,50 @@ done:
 IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param)
 {
     XYLog("opCode=0x%02x, paramLen=%d\n", opCode, paramLen);
+    if (paramLen > 0) {
+        XYLog("check=%02X\n", (uint8_t)*(uint8_t*)param);
+    }
     StandardUSB::DeviceRequest request =
     {
         .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
         .bRequest = 0,
         .wValue = 0,
         .wIndex = 0,
-        .wLength = (uint16_t)(3 + paramLen)
+        .wLength = (uint16_t)(HCI_COMMAND_HDR_SIZE + paramLen)
     };
     uint32_t bytesTransfered;
     HciCommandHdr hdr;
     bzero(&hdr, sizeof(HciCommandHdr));
     hdr.opcode = opCode;
     hdr.plen = paramLen;
-    uint8_t *cmd_param = NULL;
-    if (paramLen > 0) {
-        cmd_param = (uint8_t *)IOMalloc(paramLen);
-        memcpy(cmd_param, param, paramLen);
-        hdr.pData = cmd_param;
-    }
-//    BtIntel::printAllByte(&hdr, paramLen + 3);
+    hdr.pData = (void *)param;
+//    BtIntel::printAllByte(&hdr, paramLen + HCI_COMMAND_HDR_SIZE);
     IOReturn ret = m_pInterface->deviceRequest(request, (void *)&hdr, bytesTransfered, 0);
-    if (cmd_param) {
-        IOFree(cmd_param, paramLen);
-        cmd_param = NULL;
+    return ret;
+}
+
+IOReturn IntelBluetoothFirmware::bulkWrite(const void *data, uint16_t length)
+{
+    IOMemoryDescriptor* buffer = IOMemoryDescriptor::withAddress((void*)data, length, kIODirectionOut);
+    if (!buffer) {
+        XYLog("Unable to allocate bulk write buffer.\n");
+        return kIOReturnNoMemory;
+    }
+    IOReturn ret;
+    if ((ret = buffer->prepare(kIODirectionOut)) != kIOReturnSuccess) {
+        XYLog("Failed to prepare bulk write memory buffer, %s\n", stringFromReturn(ret));
+        buffer->release();
+        return ret;
+    }
+    if ((ret = m_pBulkWritePipe->io(buffer, buffer->getLength(), NULL, 0)) != kIOReturnSuccess) {
+        XYLog("Failed to write to bulk pipe, %s\n", stringFromReturn(ret));
+        buffer->release();
+        return ret;
+    }
+    if ((ret = buffer->complete(kIODirectionOut)) != kIOReturnSuccess) {
+        XYLog("Failed to complete bulk write memory buffer, %s\n", stringFromReturn(ret));
+        buffer->release();
+        return ret;
     }
     return ret;
 }
@@ -468,10 +552,11 @@ void IntelBluetoothFirmware::onRead(void *owner, void *parameter, IOReturn statu
             that->parseHCIResponse(that->mReadBuffer->getBytesNoCopy(), bytesTransferred, NULL, NULL);
             break;
         case kIOReturnNotResponding:
-            that->m_pInterruptPipe->clearStall(false);
+            that->m_pInterruptReadPipe->clearStall(false);
             break;
             
         default:
+            XYLog("咋了，这是咋了？\n");
             break;
     }
     
@@ -497,7 +582,7 @@ void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, voi
 void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int length)
 {
     XYLog("recv command opcode=0x%04x\n", command->opcode);
-    BtIntel::printAllByte(command, length);
+    BtIntel::printAllByte(command, length + HCI_COMMAND_HDR_SIZE);
     switch (command->opcode) {
         case HCI_OP_INTEL_RESET:
             mDeviceState = kGetIntelVersion;
@@ -634,7 +719,7 @@ IOService * IntelBluetoothFirmware::probe(IOService *provider, SInt32 *score)
         XYLog("super probe failed\n");
         return NULL;
     }
-    //*score = 3000;
+    *score = 3000;
     m_pDevice = OSDynamicCast(IOUSBHostDevice, provider);
     if (!m_pDevice) {
         XYLog("%s -- %s is not usb device, class=%s\n", provider->getLocation(), provider->getName(), provider->metaClass->getClassName());

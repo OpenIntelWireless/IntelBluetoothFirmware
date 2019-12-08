@@ -38,6 +38,8 @@ public:
     
     IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param);
     
+    IOReturn bulkWrite(const void* data, uint16_t length);
+    
     void parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength);
     
     void onHCICommandSucceed(HciResponse *command, int length);
@@ -60,7 +62,8 @@ public:
 public:
     IOUSBHostDevice* m_pDevice;
     IOUSBHostInterface* m_pInterface;
-    IOUSBHostPipe* m_pInterruptPipe;
+    IOUSBHostPipe* m_pInterruptReadPipe;
+    IOUSBHostPipe* m_pBulkWritePipe;
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
