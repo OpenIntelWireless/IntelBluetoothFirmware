@@ -77,6 +77,7 @@ public:
     IOBufferMemoryDescriptor* mReadBuffer;
     
 private:
+    bool isRequest;
     OSData *fwData;
     struct ResourceCallbackContext
     {
