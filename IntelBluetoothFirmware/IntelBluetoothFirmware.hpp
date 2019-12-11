@@ -79,6 +79,7 @@ public:
 private:
     bool isRequest;
     OSData *fwData;
+    HciCommandHdr *hciCommand;
     struct ResourceCallbackContext
     {
         IntelBluetoothFirmware* context;
