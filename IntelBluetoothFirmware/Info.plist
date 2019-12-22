@@ -26,12 +26,29 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
-			<key>IOMatchCategory</key>
-			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
-			<integer>4000</integer>
+			<integer>70000</integer>
 			<key>IOProviderClass</key>
 			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>2602</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_interface</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostInterface</string>
+			<key>bInterfaceClass</key>
+			<integer>224</integer>
+			<key>bInterfaceProtocol</key>
+			<integer>1</integer>
+			<key>bInterfaceSubClass</key>
+			<integer>1</integer>
 			<key>idProduct</key>
 			<integer>2602</integer>
 			<key>idVendor</key>
@@ -60,9 +77,9 @@
 		<key>com.apple.iokit.IOBluetoothFamily</key>
 		<string>2.0.0</string>
 		<key>com.apple.iokit.IOBluetoothHostControllerTransport</key>
-		<string>1.0.0</string>
+		<string>7.0f8</string>
 		<key>com.apple.iokit.IOBluetoothHostControllerUSBTransport</key>
-		<string>1.0.0</string>
+		<string>7.0f8</string>
 		<key>com.apple.iokit.IOUSBHostFamily</key>
 		<string>1.2</string>
 		<key>com.apple.kpi.bsd</key>
@@ -76,7 +93,5 @@
 		<key>com.apple.kpi.unsupported</key>
 		<string>19.0</string>
 	</dict>
-	<key>OSBundleRequired</key>
-	<string>Root</string>
 </dict>
 </plist>

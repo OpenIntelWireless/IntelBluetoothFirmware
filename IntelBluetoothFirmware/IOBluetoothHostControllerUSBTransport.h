@@ -13,16 +13,16 @@
 
 class IOBluetoothHostControllerUSBTransport : public IOBluetoothHostControllerTransport
 {
-    OSDeclareAbstractStructors(IOBluetoothHostControllerUSBTransport)
+    OSDeclareDefaultStructors(IOBluetoothHostControllerUSBTransport)
     
 public:
 
-    virtual bool init(OSDictionary *){return true;};
-    virtual void free(void){};
-    virtual IOService * probe(IOService *,int *){return NULL;};
-    virtual bool start(IOService *){return false;};
-    virtual void stop(IOService *) {};
-    virtual bool terminateWL(uint){return true;};
+    virtual bool init(OSDictionary *);
+    virtual void free(void);
+    virtual IOService * probe(IOService *,int *);
+    virtual bool start(IOService *);
+    virtual void stop(IOService *);
+    virtual bool terminateWL(uint);
     virtual IOReturn ProcessG3StandByWake(void) {return 0;};
     virtual IOReturn InitializeTransportWL(IOService *){return 0;};
     virtual int MessageReceiver(void *,void *,uint,IOService *,void *,ulong){return 0;};
@@ -44,10 +44,10 @@ public:
     virtual IOReturn PrepareControllerForPowerOn(void){return 0;};
     virtual bool SystemWakeCausedByBluetooth(void){return 0;};
     virtual IOReturn systemWillShutdownWL(uint,void *){return 0;};
-    virtual bool ConfigureDevice(void){return 0;};
+    virtual bool ConfigureDevice(void);
     virtual int GetInterfaceNumber(IOUSBHostInterface *){return 0;};
     virtual int FindNextInterface(IOUSBHostInterface *,ushort,ushort,ushort,ushort){return 0;};
-    virtual int FindNextPipe(IOUSBHostInterface *,uchar,uchar,ushort *){return 0;};
+    virtual int FindNextPipe(IOUSBHostInterface *,uchar,uchar,ushort *);
     virtual int FindInterfaces(void){return 0;};
     virtual IOReturn StartInterruptPipeRead(void){return 0;};
     virtual IOReturn InterruptReadHandler(void *,void *,int,uint){return 0;};
@@ -64,21 +64,21 @@ public:
     virtual IOReturn WaitForAllIOsToBeAborted(void){return 0;};
     virtual bool ReceiveInterruptData(void *,uint,bool){return 0;};
     virtual IOReturn TransportBulkOutWrite(void *) {return 1;};
-    virtual IOReturn BulkOutWrite(IOMemoryDescriptor *){return 0;};
+    virtual IOReturn BulkOutWrite(IOMemoryDescriptor *);
     virtual int BulkOutWriteTimerFired(OSObject *,IOTimerEventSource *){return 0;};
     virtual int BulkOutWriteCompleteHandler(void *,void *,int,uint){return 0;};
     virtual IOReturn BulkOutWriteCompleteAction(OSObject *,void *,void *,void *,void *,void *,void *){return 0;};
     virtual int HandleBulkOutWriteTimeout(IOBluetoothMemoryDescriptorRetainer *){return 0;};
     virtual int HandleIsochData(void *,int,IOUSBHostIsochronousFrame *){return 0;};
     virtual IOReturn TransportIsochOutWrite(void *,void *,int){return 0;};
-    virtual int IsochOutWrite(IOMemoryDescriptor *,IOBluetoothSCOMemoryDescriptorRetainer *,int){return 0;};
+    virtual int IsochOutWrite(IOMemoryDescriptor *,IOBluetoothSCOMemoryDescriptorRetainer *,int);
     virtual int IsochOutWriteCompleteHandler(void *,void *,int,IOUSBHostIsochronousFrame *){return 0;};
-    virtual IOReturn SendHCIRequest(uchar *,ulong long){return 0;};
+    virtual IOReturn SendHCIRequest(uchar *,ulong long);
     virtual IOReturn DeviceRequestCompleteHandler(void *,void *,int,uint){return 0;};
     virtual IOReturn DeviceRequestCompleteAction(OSObject *,void *,void *,void *,void *,void *,void *){return 0;};
     virtual IOReturn HandleMessageAction(OSObject *,void *,void *,void *,void *,void *,void *){return 0;};
     virtual IOReturn HandleMessage(uint,IOService *,void *,ulong){return 0;};
-    virtual IOReturn DoDeviceReset(ushort){return 0;};
+    virtual IOReturn DoDeviceReset(ushort);
     virtual IOReturn HardReset(void){return 0;};
     virtual IOReturn UpdateSCOConnections(uchar,uint){return 0;};
     virtual void SetupTransportSCOParameters(void){};

@@ -7,110 +7,71 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F804440A239562EB00A2C882 /* ibt-20-1-3.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443D9239562E600A2C882 /* ibt-20-1-3.ddc */; };
-		F804440B239562EB00A2C882 /* ibt-18-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443DA239562E600A2C882 /* ibt-18-1.ddc */; };
-		F804440C239562EB00A2C882 /* ibt-19-16-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443DB239562E600A2C882 /* ibt-19-16-4.sfi */; };
-		F804440D239562EB00A2C882 /* ibt-19-32-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443DC239562E600A2C882 /* ibt-19-32-4.ddc */; };
-		F804440E239562EB00A2C882 /* ibt-11-5.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443DD239562E600A2C882 /* ibt-11-5.sfi */; };
-		F804440F239562EB00A2C882 /* ibt-19-32-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443DE239562E700A2C882 /* ibt-19-32-1.ddc */; };
-		F8044410239562EB00A2C882 /* ibt-18-0-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443DF239562E700A2C882 /* ibt-18-0-1.ddc */; };
-		F8044411239562EB00A2C882 /* ibt-19-0-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443E0239562E700A2C882 /* ibt-19-0-4.sfi */; };
-		F8044412239562EB00A2C882 /* ibt-17-0-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443E1239562E700A2C882 /* ibt-17-0-1.sfi */; };
-		F8044413239562EB00A2C882 /* ibt-20-0-3.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443E2239562E700A2C882 /* ibt-20-0-3.ddc */; };
-		F8044414239562EB00A2C882 /* ibt-hw-37.8.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443E3239562E700A2C882 /* ibt-hw-37.8.bseq */; };
-		F8044415239562EB00A2C882 /* ibt-20-1-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443E4239562E700A2C882 /* ibt-20-1-4.ddc */; };
-		F8044416239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443E5239562E700A2C882 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.bseq */; };
-		F8044417239562EB00A2C882 /* ibt-11-5.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443E6239562E700A2C882 /* ibt-11-5.ddc */; };
-		F8044418239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.0.2.3.d.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443E7239562E700A2C882 /* ibt-hw-37.7.10-fw-1.0.2.3.d.bseq */; };
-		F8044419239562EB00A2C882 /* ibt-20-1-3.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443E8239562E800A2C882 /* ibt-20-1-3.sfi */; };
-		F804441A239562EB00A2C882 /* ibt-19-16-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443E9239562E800A2C882 /* ibt-19-16-4.ddc */; };
-		F804441B239562EB00A2C882 /* ibt-19-32-0.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443EA239562E800A2C882 /* ibt-19-32-0.sfi */; };
-		F804441C239562EB00A2C882 /* ibt-19-0-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443EB239562E800A2C882 /* ibt-19-0-1.sfi */; };
-		F804441D239562EB00A2C882 /* ibt-hw-37.7.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443EC239562E800A2C882 /* ibt-hw-37.7.bseq */; };
-		F804441E239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443ED239562E800A2C882 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.bseq */; };
-		F804441F239562EB00A2C882 /* ibt-18-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443EE239562E800A2C882 /* ibt-18-1.sfi */; };
-		F8044420239562EB00A2C882 /* ibt-18-0-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443EF239562E800A2C882 /* ibt-18-0-1.sfi */; };
-		F8044421239562EB00A2C882 /* ibt-18-2.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443F0239562E800A2C882 /* ibt-18-2.sfi */; };
-		F8044422239562EB00A2C882 /* ibt-18-2.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443F1239562E900A2C882 /* ibt-18-2.ddc */; };
-		F8044423239562EB00A2C882 /* ibt-17-16-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443F2239562E900A2C882 /* ibt-17-16-1.ddc */; };
-		F8044424239562EB00A2C882 /* ibt-17-0-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443F3239562E900A2C882 /* ibt-17-0-1.ddc */; };
-		F8044425239562EB00A2C882 /* ibt-20-1-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443F4239562E900A2C882 /* ibt-20-1-4.sfi */; };
-		F8044426239562EB00A2C882 /* ibt-hw-37.8.10-fw-1.10.2.27.d.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443F5239562E900A2C882 /* ibt-hw-37.8.10-fw-1.10.2.27.d.bseq */; };
-		F8044427239562EB00A2C882 /* ibt-hw-37.8.10-fw-1.10.3.11.e.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443F6239562E900A2C882 /* ibt-hw-37.8.10-fw-1.10.3.11.e.bseq */; };
-		F8044428239562EB00A2C882 /* ibt-19-0-0.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443F7239562E900A2C882 /* ibt-19-0-0.ddc */; };
-		F8044429239562EB00A2C882 /* ibt-12-16.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443F8239562E900A2C882 /* ibt-12-16.sfi */; };
-		F804442A239562EB00A2C882 /* ibt-17-2.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F80443F9239562E900A2C882 /* ibt-17-2.sfi */; };
-		F804442B239562EB00A2C882 /* ibt-hw-37.8.10-fw-22.50.19.14.f.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443FA239562E900A2C882 /* ibt-hw-37.8.10-fw-22.50.19.14.f.bseq */; };
-		F804442C239562EB00A2C882 /* ibt-12-16.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443FB239562E900A2C882 /* ibt-12-16.ddc */; };
-		F804442D239562EB00A2C882 /* ibt-17-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443FC239562E900A2C882 /* ibt-17-1.ddc */; };
-		F804442E239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.80.2.3.d.bseq in Resources */ = {isa = PBXBuildFile; fileRef = F80443FD239562EA00A2C882 /* ibt-hw-37.7.10-fw-1.80.2.3.d.bseq */; };
-		F804442F239562EB00A2C882 /* ibt-18-16-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443FE239562EA00A2C882 /* ibt-18-16-1.ddc */; };
-		F8044430239562EB00A2C882 /* ibt-19-32-0.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F80443FF239562EA00A2C882 /* ibt-19-32-0.ddc */; };
-		F8044431239562EB00A2C882 /* ibt-19-0-4.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F8044400239562EA00A2C882 /* ibt-19-0-4.ddc */; };
-		F8044432239562EB00A2C882 /* ibt-19-32-4.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044401239562EA00A2C882 /* ibt-19-32-4.sfi */; };
-		F8044433239562EB00A2C882 /* ibt-17-2.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F8044402239562EA00A2C882 /* ibt-17-2.ddc */; };
-		F8044434239562EB00A2C882 /* ibt-19-0-1.ddc in Resources */ = {isa = PBXBuildFile; fileRef = F8044403239562EA00A2C882 /* ibt-19-0-1.ddc */; };
-		F8044435239562EB00A2C882 /* ibt-17-16-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044404239562EA00A2C882 /* ibt-17-16-1.sfi */; };
-		F8044436239562EB00A2C882 /* ibt-18-16-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044405239562EA00A2C882 /* ibt-18-16-1.sfi */; };
-		F8044437239562EB00A2C882 /* ibt-20-0-3.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044406239562EB00A2C882 /* ibt-20-0-3.sfi */; };
-		F8044438239562EB00A2C882 /* ibt-19-0-0.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044407239562EB00A2C882 /* ibt-19-0-0.sfi */; };
-		F8044439239562EB00A2C882 /* ibt-19-32-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044408239562EB00A2C882 /* ibt-19-32-1.sfi */; };
-		F804443A239562EB00A2C882 /* ibt-17-1.sfi in Resources */ = {isa = PBXBuildFile; fileRef = F8044409239562EB00A2C882 /* ibt-17-1.sfi */; };
+		F83490FA23AF988F00551995 /* ibt-18-2.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490DB23AF988A00551995 /* ibt-18-2.h */; };
+		F83490FB23AF988F00551995 /* ibt-hw-37.8.10-fw-1.10.2.27.d.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490DC23AF988A00551995 /* ibt-hw-37.8.10-fw-1.10.2.27.d.h */; };
+		F83490FC23AF988F00551995 /* ibt-20-1-3.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490DD23AF988B00551995 /* ibt-20-1-3.h */; };
+		F83490FD23AF988F00551995 /* ibt-19-0-0.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490DE23AF988B00551995 /* ibt-19-0-0.h */; };
+		F83490FE23AF988F00551995 /* ibt-11-5.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490DF23AF988B00551995 /* ibt-11-5.h */; };
+		F83490FF23AF988F00551995 /* ibt-hw-37.8.10-fw-22.50.19.14.f.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E023AF988B00551995 /* ibt-hw-37.8.10-fw-22.50.19.14.f.h */; };
+		F834910023AF988F00551995 /* ibt-19-32-4.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E123AF988B00551995 /* ibt-19-32-4.h */; };
+		F834910123AF988F00551995 /* ibt-19-32-0.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E223AF988B00551995 /* ibt-19-32-0.h */; };
+		F834910223AF988F00551995 /* ibt-17-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E323AF988C00551995 /* ibt-17-1.h */; };
+		F834910323AF988F00551995 /* ibt-18-16-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E423AF988C00551995 /* ibt-18-16-1.h */; };
+		F834910423AF988F00551995 /* ibt-17-0-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E523AF988C00551995 /* ibt-17-0-1.h */; };
+		F834910523AF988F00551995 /* ibt-12-16.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E623AF988C00551995 /* ibt-12-16.h */; };
+		F834910623AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E723AF988C00551995 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.h */; };
+		F834910823AF988F00551995 /* ibt-hw-37.7.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490E923AF988C00551995 /* ibt-hw-37.7.h */; };
+		F834910923AF988F00551995 /* ibt-19-32-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490EA23AF988C00551995 /* ibt-19-32-1.h */; };
+		F834910A23AF988F00551995 /* ibt-18-0-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490EB23AF988D00551995 /* ibt-18-0-1.h */; };
+		F834910B23AF988F00551995 /* ibt-19-0-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490EC23AF988D00551995 /* ibt-19-0-1.h */; };
+		F834910C23AF988F00551995 /* ibt-19-0-4.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490ED23AF988D00551995 /* ibt-19-0-4.h */; };
+		F834910E23AF988F00551995 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490EF23AF988D00551995 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.h */; };
+		F834910F23AF988F00551995 /* ibt-hw-37.8.10-fw-1.10.3.11.e.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F023AF988D00551995 /* ibt-hw-37.8.10-fw-1.10.3.11.e.h */; };
+		F834911023AF988F00551995 /* ibt-17-2.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F123AF988D00551995 /* ibt-17-2.h */; };
+		F834911123AF988F00551995 /* ibt-18-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F223AF988E00551995 /* ibt-18-1.h */; };
+		F834911223AF988F00551995 /* ibt-19-16-4.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F323AF988E00551995 /* ibt-19-16-4.h */; };
+		F834911323AF988F00551995 /* ibt-20-0-3.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F423AF988E00551995 /* ibt-20-0-3.h */; };
+		F834911423AF988F00551995 /* ibt-hw-37.7.10-fw-1.80.2.3.d.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F523AF988E00551995 /* ibt-hw-37.7.10-fw-1.80.2.3.d.h */; };
+		F834911523AF988F00551995 /* ibt-20-1-4.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F623AF988E00551995 /* ibt-20-1-4.h */; };
+		F834911623AF988F00551995 /* ibt-hw-37.8.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F723AF988E00551995 /* ibt-hw-37.8.h */; };
+		F834911723AF988F00551995 /* ibt-17-16-1.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F823AF988F00551995 /* ibt-17-16-1.h */; };
+		F834911823AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.2.3.d.h in Headers */ = {isa = PBXBuildFile; fileRef = F83490F923AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.2.3.d.h */; };
 		F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */; };
 		F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */; };
 		F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F80443D9239562E600A2C882 /* ibt-20-1-3.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-3.ddc"; sourceTree = "<group>"; };
-		F80443DA239562E600A2C882 /* ibt-18-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-1.ddc"; sourceTree = "<group>"; };
-		F80443DB239562E600A2C882 /* ibt-19-16-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-16-4.sfi"; sourceTree = "<group>"; };
-		F80443DC239562E600A2C882 /* ibt-19-32-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-4.ddc"; sourceTree = "<group>"; };
-		F80443DD239562E600A2C882 /* ibt-11-5.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-11-5.sfi"; sourceTree = "<group>"; };
-		F80443DE239562E700A2C882 /* ibt-19-32-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-1.ddc"; sourceTree = "<group>"; };
-		F80443DF239562E700A2C882 /* ibt-18-0-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-0-1.ddc"; sourceTree = "<group>"; };
-		F80443E0239562E700A2C882 /* ibt-19-0-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-4.sfi"; sourceTree = "<group>"; };
-		F80443E1239562E700A2C882 /* ibt-17-0-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-0-1.sfi"; sourceTree = "<group>"; };
-		F80443E2239562E700A2C882 /* ibt-20-0-3.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-0-3.ddc"; sourceTree = "<group>"; };
-		F80443E3239562E700A2C882 /* ibt-hw-37.8.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.8.bseq"; sourceTree = "<group>"; };
-		F80443E4239562E700A2C882 /* ibt-20-1-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-4.ddc"; sourceTree = "<group>"; };
-		F80443E5239562E700A2C882 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.7.10-fw-1.80.1.2d.d.bseq"; sourceTree = "<group>"; };
-		F80443E6239562E700A2C882 /* ibt-11-5.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-11-5.ddc"; sourceTree = "<group>"; };
-		F80443E7239562E700A2C882 /* ibt-hw-37.7.10-fw-1.0.2.3.d.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.7.10-fw-1.0.2.3.d.bseq"; sourceTree = "<group>"; };
-		F80443E8239562E800A2C882 /* ibt-20-1-3.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-3.sfi"; sourceTree = "<group>"; };
-		F80443E9239562E800A2C882 /* ibt-19-16-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-16-4.ddc"; sourceTree = "<group>"; };
-		F80443EA239562E800A2C882 /* ibt-19-32-0.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-0.sfi"; sourceTree = "<group>"; };
-		F80443EB239562E800A2C882 /* ibt-19-0-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-1.sfi"; sourceTree = "<group>"; };
-		F80443EC239562E800A2C882 /* ibt-hw-37.7.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.7.bseq"; sourceTree = "<group>"; };
-		F80443ED239562E800A2C882 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.7.10-fw-1.0.1.2d.d.bseq"; sourceTree = "<group>"; };
-		F80443EE239562E800A2C882 /* ibt-18-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-1.sfi"; sourceTree = "<group>"; };
-		F80443EF239562E800A2C882 /* ibt-18-0-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-0-1.sfi"; sourceTree = "<group>"; };
-		F80443F0239562E800A2C882 /* ibt-18-2.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-2.sfi"; sourceTree = "<group>"; };
-		F80443F1239562E900A2C882 /* ibt-18-2.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-2.ddc"; sourceTree = "<group>"; };
-		F80443F2239562E900A2C882 /* ibt-17-16-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-16-1.ddc"; sourceTree = "<group>"; };
-		F80443F3239562E900A2C882 /* ibt-17-0-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-0-1.ddc"; sourceTree = "<group>"; };
-		F80443F4239562E900A2C882 /* ibt-20-1-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-4.sfi"; sourceTree = "<group>"; };
-		F80443F5239562E900A2C882 /* ibt-hw-37.8.10-fw-1.10.2.27.d.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.8.10-fw-1.10.2.27.d.bseq"; sourceTree = "<group>"; };
-		F80443F6239562E900A2C882 /* ibt-hw-37.8.10-fw-1.10.3.11.e.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.8.10-fw-1.10.3.11.e.bseq"; sourceTree = "<group>"; };
-		F80443F7239562E900A2C882 /* ibt-19-0-0.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-0.ddc"; sourceTree = "<group>"; };
-		F80443F8239562E900A2C882 /* ibt-12-16.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-12-16.sfi"; sourceTree = "<group>"; };
-		F80443F9239562E900A2C882 /* ibt-17-2.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-2.sfi"; sourceTree = "<group>"; };
-		F80443FA239562E900A2C882 /* ibt-hw-37.8.10-fw-22.50.19.14.f.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.8.10-fw-22.50.19.14.f.bseq"; sourceTree = "<group>"; };
-		F80443FB239562E900A2C882 /* ibt-12-16.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-12-16.ddc"; sourceTree = "<group>"; };
-		F80443FC239562E900A2C882 /* ibt-17-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-1.ddc"; sourceTree = "<group>"; };
-		F80443FD239562EA00A2C882 /* ibt-hw-37.7.10-fw-1.80.2.3.d.bseq */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-hw-37.7.10-fw-1.80.2.3.d.bseq"; sourceTree = "<group>"; };
-		F80443FE239562EA00A2C882 /* ibt-18-16-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-16-1.ddc"; sourceTree = "<group>"; };
-		F80443FF239562EA00A2C882 /* ibt-19-32-0.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-0.ddc"; sourceTree = "<group>"; };
-		F8044400239562EA00A2C882 /* ibt-19-0-4.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-4.ddc"; sourceTree = "<group>"; };
-		F8044401239562EA00A2C882 /* ibt-19-32-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-4.sfi"; sourceTree = "<group>"; };
-		F8044402239562EA00A2C882 /* ibt-17-2.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-2.ddc"; sourceTree = "<group>"; };
-		F8044403239562EA00A2C882 /* ibt-19-0-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-1.ddc"; sourceTree = "<group>"; };
-		F8044404239562EA00A2C882 /* ibt-17-16-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-16-1.sfi"; sourceTree = "<group>"; };
-		F8044405239562EA00A2C882 /* ibt-18-16-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-18-16-1.sfi"; sourceTree = "<group>"; };
-		F8044406239562EB00A2C882 /* ibt-20-0-3.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-0-3.sfi"; sourceTree = "<group>"; };
-		F8044407239562EB00A2C882 /* ibt-19-0-0.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-0.sfi"; sourceTree = "<group>"; };
-		F8044408239562EB00A2C882 /* ibt-19-32-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-32-1.sfi"; sourceTree = "<group>"; };
-		F8044409239562EB00A2C882 /* ibt-17-1.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-1.sfi"; sourceTree = "<group>"; };
+		F83490DB23AF988A00551995 /* ibt-18-2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-18-2.h"; sourceTree = "<group>"; };
+		F83490DC23AF988A00551995 /* ibt-hw-37.8.10-fw-1.10.2.27.d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.8.10-fw-1.10.2.27.d.h"; sourceTree = "<group>"; };
+		F83490DD23AF988B00551995 /* ibt-20-1-3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-20-1-3.h"; sourceTree = "<group>"; };
+		F83490DE23AF988B00551995 /* ibt-19-0-0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-0-0.h"; sourceTree = "<group>"; };
+		F83490DF23AF988B00551995 /* ibt-11-5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-11-5.h"; sourceTree = "<group>"; };
+		F83490E023AF988B00551995 /* ibt-hw-37.8.10-fw-22.50.19.14.f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.8.10-fw-22.50.19.14.f.h"; sourceTree = "<group>"; };
+		F83490E123AF988B00551995 /* ibt-19-32-4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-32-4.h"; sourceTree = "<group>"; };
+		F83490E223AF988B00551995 /* ibt-19-32-0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-32-0.h"; sourceTree = "<group>"; };
+		F83490E323AF988C00551995 /* ibt-17-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-17-1.h"; sourceTree = "<group>"; };
+		F83490E423AF988C00551995 /* ibt-18-16-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-18-16-1.h"; sourceTree = "<group>"; };
+		F83490E523AF988C00551995 /* ibt-17-0-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-17-0-1.h"; sourceTree = "<group>"; };
+		F83490E623AF988C00551995 /* ibt-12-16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-12-16.h"; sourceTree = "<group>"; };
+		F83490E723AF988C00551995 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.7.10-fw-1.0.1.2d.d.h"; sourceTree = "<group>"; };
+		F83490E923AF988C00551995 /* ibt-hw-37.7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.7.h"; sourceTree = "<group>"; };
+		F83490EA23AF988C00551995 /* ibt-19-32-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-32-1.h"; sourceTree = "<group>"; };
+		F83490EB23AF988D00551995 /* ibt-18-0-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-18-0-1.h"; sourceTree = "<group>"; };
+		F83490EC23AF988D00551995 /* ibt-19-0-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-0-1.h"; sourceTree = "<group>"; };
+		F83490ED23AF988D00551995 /* ibt-19-0-4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-0-4.h"; sourceTree = "<group>"; };
+		F83490EF23AF988D00551995 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.7.10-fw-1.80.1.2d.d.h"; sourceTree = "<group>"; };
+		F83490F023AF988D00551995 /* ibt-hw-37.8.10-fw-1.10.3.11.e.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.8.10-fw-1.10.3.11.e.h"; sourceTree = "<group>"; };
+		F83490F123AF988D00551995 /* ibt-17-2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-17-2.h"; sourceTree = "<group>"; };
+		F83490F223AF988E00551995 /* ibt-18-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-18-1.h"; sourceTree = "<group>"; };
+		F83490F323AF988E00551995 /* ibt-19-16-4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-19-16-4.h"; sourceTree = "<group>"; };
+		F83490F423AF988E00551995 /* ibt-20-0-3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-20-0-3.h"; sourceTree = "<group>"; };
+		F83490F523AF988E00551995 /* ibt-hw-37.7.10-fw-1.80.2.3.d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.7.10-fw-1.80.2.3.d.h"; sourceTree = "<group>"; };
+		F83490F623AF988E00551995 /* ibt-20-1-4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-20-1-4.h"; sourceTree = "<group>"; };
+		F83490F723AF988E00551995 /* ibt-hw-37.8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.8.h"; sourceTree = "<group>"; };
+		F83490F823AF988F00551995 /* ibt-17-16-1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-17-16-1.h"; sourceTree = "<group>"; };
+		F83490F923AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.2.3.d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ibt-hw-37.7.10-fw-1.0.2.3.d.h"; sourceTree = "<group>"; };
+		F834911923AF9B3C00551995 /* FWData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWData.h; sourceTree = "<group>"; };
 		F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelBluetoothFirmware.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntelBluetoothFirmware.hpp; sourceTree = "<group>"; };
 		F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntelBluetoothFirmware.cpp; sourceTree = "<group>"; };
@@ -153,6 +114,7 @@
 		F834E417237C20FF000CB269 /* IntelBluetoothFirmware */ = {
 			isa = PBXGroup;
 			children = (
+				F834911923AF9B3C00551995 /* FWData.h */,
 				F8BD1B3C2396ACAB0088EBE4 /* Log.h */,
 				F834E422237C2FF1000CB269 /* fw */,
 				F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */,
@@ -170,55 +132,35 @@
 		F834E422237C2FF1000CB269 /* fw */ = {
 			isa = PBXGroup;
 			children = (
-				F80443E6239562E700A2C882 /* ibt-11-5.ddc */,
-				F80443DD239562E600A2C882 /* ibt-11-5.sfi */,
-				F80443FB239562E900A2C882 /* ibt-12-16.ddc */,
-				F80443F8239562E900A2C882 /* ibt-12-16.sfi */,
-				F80443F3239562E900A2C882 /* ibt-17-0-1.ddc */,
-				F80443E1239562E700A2C882 /* ibt-17-0-1.sfi */,
-				F80443FC239562E900A2C882 /* ibt-17-1.ddc */,
-				F8044409239562EB00A2C882 /* ibt-17-1.sfi */,
-				F8044402239562EA00A2C882 /* ibt-17-2.ddc */,
-				F80443F9239562E900A2C882 /* ibt-17-2.sfi */,
-				F80443F2239562E900A2C882 /* ibt-17-16-1.ddc */,
-				F8044404239562EA00A2C882 /* ibt-17-16-1.sfi */,
-				F80443DF239562E700A2C882 /* ibt-18-0-1.ddc */,
-				F80443EF239562E800A2C882 /* ibt-18-0-1.sfi */,
-				F80443DA239562E600A2C882 /* ibt-18-1.ddc */,
-				F80443EE239562E800A2C882 /* ibt-18-1.sfi */,
-				F80443F1239562E900A2C882 /* ibt-18-2.ddc */,
-				F80443F0239562E800A2C882 /* ibt-18-2.sfi */,
-				F80443FE239562EA00A2C882 /* ibt-18-16-1.ddc */,
-				F8044405239562EA00A2C882 /* ibt-18-16-1.sfi */,
-				F80443F7239562E900A2C882 /* ibt-19-0-0.ddc */,
-				F8044407239562EB00A2C882 /* ibt-19-0-0.sfi */,
-				F8044403239562EA00A2C882 /* ibt-19-0-1.ddc */,
-				F80443EB239562E800A2C882 /* ibt-19-0-1.sfi */,
-				F8044400239562EA00A2C882 /* ibt-19-0-4.ddc */,
-				F80443E0239562E700A2C882 /* ibt-19-0-4.sfi */,
-				F80443E9239562E800A2C882 /* ibt-19-16-4.ddc */,
-				F80443DB239562E600A2C882 /* ibt-19-16-4.sfi */,
-				F80443FF239562EA00A2C882 /* ibt-19-32-0.ddc */,
-				F80443EA239562E800A2C882 /* ibt-19-32-0.sfi */,
-				F80443DE239562E700A2C882 /* ibt-19-32-1.ddc */,
-				F8044408239562EB00A2C882 /* ibt-19-32-1.sfi */,
-				F80443DC239562E600A2C882 /* ibt-19-32-4.ddc */,
-				F8044401239562EA00A2C882 /* ibt-19-32-4.sfi */,
-				F80443E2239562E700A2C882 /* ibt-20-0-3.ddc */,
-				F8044406239562EB00A2C882 /* ibt-20-0-3.sfi */,
-				F80443D9239562E600A2C882 /* ibt-20-1-3.ddc */,
-				F80443E8239562E800A2C882 /* ibt-20-1-3.sfi */,
-				F80443E4239562E700A2C882 /* ibt-20-1-4.ddc */,
-				F80443F4239562E900A2C882 /* ibt-20-1-4.sfi */,
-				F80443ED239562E800A2C882 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.bseq */,
-				F80443E7239562E700A2C882 /* ibt-hw-37.7.10-fw-1.0.2.3.d.bseq */,
-				F80443E5239562E700A2C882 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.bseq */,
-				F80443FD239562EA00A2C882 /* ibt-hw-37.7.10-fw-1.80.2.3.d.bseq */,
-				F80443EC239562E800A2C882 /* ibt-hw-37.7.bseq */,
-				F80443F5239562E900A2C882 /* ibt-hw-37.8.10-fw-1.10.2.27.d.bseq */,
-				F80443F6239562E900A2C882 /* ibt-hw-37.8.10-fw-1.10.3.11.e.bseq */,
-				F80443FA239562E900A2C882 /* ibt-hw-37.8.10-fw-22.50.19.14.f.bseq */,
-				F80443E3239562E700A2C882 /* ibt-hw-37.8.bseq */,
+				F83490DF23AF988B00551995 /* ibt-11-5.h */,
+				F83490E623AF988C00551995 /* ibt-12-16.h */,
+				F83490E523AF988C00551995 /* ibt-17-0-1.h */,
+				F83490E323AF988C00551995 /* ibt-17-1.h */,
+				F83490F123AF988D00551995 /* ibt-17-2.h */,
+				F83490F823AF988F00551995 /* ibt-17-16-1.h */,
+				F83490EB23AF988D00551995 /* ibt-18-0-1.h */,
+				F83490F223AF988E00551995 /* ibt-18-1.h */,
+				F83490DB23AF988A00551995 /* ibt-18-2.h */,
+				F83490E423AF988C00551995 /* ibt-18-16-1.h */,
+				F83490DE23AF988B00551995 /* ibt-19-0-0.h */,
+				F83490EC23AF988D00551995 /* ibt-19-0-1.h */,
+				F83490ED23AF988D00551995 /* ibt-19-0-4.h */,
+				F83490F323AF988E00551995 /* ibt-19-16-4.h */,
+				F83490E223AF988B00551995 /* ibt-19-32-0.h */,
+				F83490EA23AF988C00551995 /* ibt-19-32-1.h */,
+				F83490E123AF988B00551995 /* ibt-19-32-4.h */,
+				F83490F423AF988E00551995 /* ibt-20-0-3.h */,
+				F83490DD23AF988B00551995 /* ibt-20-1-3.h */,
+				F83490F623AF988E00551995 /* ibt-20-1-4.h */,
+				F83490E723AF988C00551995 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.h */,
+				F83490F923AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.2.3.d.h */,
+				F83490EF23AF988D00551995 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.h */,
+				F83490F523AF988E00551995 /* ibt-hw-37.7.10-fw-1.80.2.3.d.h */,
+				F83490E923AF988C00551995 /* ibt-hw-37.7.h */,
+				F83490DC23AF988A00551995 /* ibt-hw-37.8.10-fw-1.10.2.27.d.h */,
+				F83490F023AF988D00551995 /* ibt-hw-37.8.10-fw-1.10.3.11.e.h */,
+				F83490E023AF988B00551995 /* ibt-hw-37.8.10-fw-22.50.19.14.f.h */,
+				F83490F723AF988E00551995 /* ibt-hw-37.8.h */,
 			);
 			path = fw;
 			sourceTree = "<group>";
@@ -230,7 +172,36 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F834910A23AF988F00551995 /* ibt-18-0-1.h in Headers */,
+				F834910523AF988F00551995 /* ibt-12-16.h in Headers */,
+				F834910C23AF988F00551995 /* ibt-19-0-4.h in Headers */,
+				F834911523AF988F00551995 /* ibt-20-1-4.h in Headers */,
+				F834911123AF988F00551995 /* ibt-18-1.h in Headers */,
+				F834910F23AF988F00551995 /* ibt-hw-37.8.10-fw-1.10.3.11.e.h in Headers */,
+				F834910223AF988F00551995 /* ibt-17-1.h in Headers */,
+				F83490FB23AF988F00551995 /* ibt-hw-37.8.10-fw-1.10.2.27.d.h in Headers */,
+				F834911423AF988F00551995 /* ibt-hw-37.7.10-fw-1.80.2.3.d.h in Headers */,
+				F834910E23AF988F00551995 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.h in Headers */,
+				F83490FF23AF988F00551995 /* ibt-hw-37.8.10-fw-22.50.19.14.f.h in Headers */,
+				F834910B23AF988F00551995 /* ibt-19-0-1.h in Headers */,
+				F834910623AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.h in Headers */,
 				F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */,
+				F834910123AF988F00551995 /* ibt-19-32-0.h in Headers */,
+				F834910323AF988F00551995 /* ibt-18-16-1.h in Headers */,
+				F83490FA23AF988F00551995 /* ibt-18-2.h in Headers */,
+				F834911823AF988F00551995 /* ibt-hw-37.7.10-fw-1.0.2.3.d.h in Headers */,
+				F834910823AF988F00551995 /* ibt-hw-37.7.h in Headers */,
+				F834911723AF988F00551995 /* ibt-17-16-1.h in Headers */,
+				F834910423AF988F00551995 /* ibt-17-0-1.h in Headers */,
+				F834911623AF988F00551995 /* ibt-hw-37.8.h in Headers */,
+				F83490FD23AF988F00551995 /* ibt-19-0-0.h in Headers */,
+				F834911323AF988F00551995 /* ibt-20-0-3.h in Headers */,
+				F834910023AF988F00551995 /* ibt-19-32-4.h in Headers */,
+				F834911023AF988F00551995 /* ibt-17-2.h in Headers */,
+				F834910923AF988F00551995 /* ibt-19-32-1.h in Headers */,
+				F83490FC23AF988F00551995 /* ibt-20-1-3.h in Headers */,
+				F83490FE23AF988F00551995 /* ibt-11-5.h in Headers */,
+				F834911223AF988F00551995 /* ibt-19-16-4.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,55 +263,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8044429239562EB00A2C882 /* ibt-12-16.sfi in Resources */,
-				F804442B239562EB00A2C882 /* ibt-hw-37.8.10-fw-22.50.19.14.f.bseq in Resources */,
-				F8044414239562EB00A2C882 /* ibt-hw-37.8.bseq in Resources */,
-				F8044416239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.80.1.2d.d.bseq in Resources */,
-				F804441C239562EB00A2C882 /* ibt-19-0-1.sfi in Resources */,
-				F8044439239562EB00A2C882 /* ibt-19-32-1.sfi in Resources */,
-				F8044438239562EB00A2C882 /* ibt-19-0-0.sfi in Resources */,
-				F8044430239562EB00A2C882 /* ibt-19-32-0.ddc in Resources */,
-				F804440B239562EB00A2C882 /* ibt-18-1.ddc in Resources */,
-				F804442A239562EB00A2C882 /* ibt-17-2.sfi in Resources */,
-				F804440D239562EB00A2C882 /* ibt-19-32-4.ddc in Resources */,
-				F8044411239562EB00A2C882 /* ibt-19-0-4.sfi in Resources */,
-				F8044424239562EB00A2C882 /* ibt-17-0-1.ddc in Resources */,
-				F804440F239562EB00A2C882 /* ibt-19-32-1.ddc in Resources */,
-				F8044436239562EB00A2C882 /* ibt-18-16-1.sfi in Resources */,
-				F804441F239562EB00A2C882 /* ibt-18-1.sfi in Resources */,
-				F8044435239562EB00A2C882 /* ibt-17-16-1.sfi in Resources */,
-				F8044421239562EB00A2C882 /* ibt-18-2.sfi in Resources */,
-				F8044434239562EB00A2C882 /* ibt-19-0-1.ddc in Resources */,
-				F804440C239562EB00A2C882 /* ibt-19-16-4.sfi in Resources */,
-				F8044425239562EB00A2C882 /* ibt-20-1-4.sfi in Resources */,
-				F8044437239562EB00A2C882 /* ibt-20-0-3.sfi in Resources */,
-				F8044432239562EB00A2C882 /* ibt-19-32-4.sfi in Resources */,
-				F804440E239562EB00A2C882 /* ibt-11-5.sfi in Resources */,
-				F8044433239562EB00A2C882 /* ibt-17-2.ddc in Resources */,
-				F8044410239562EB00A2C882 /* ibt-18-0-1.ddc in Resources */,
-				F8044428239562EB00A2C882 /* ibt-19-0-0.ddc in Resources */,
-				F804443A239562EB00A2C882 /* ibt-17-1.sfi in Resources */,
-				F804441A239562EB00A2C882 /* ibt-19-16-4.ddc in Resources */,
-				F8044422239562EB00A2C882 /* ibt-18-2.ddc in Resources */,
-				F8044415239562EB00A2C882 /* ibt-20-1-4.ddc in Resources */,
-				F804441D239562EB00A2C882 /* ibt-hw-37.7.bseq in Resources */,
-				F8044419239562EB00A2C882 /* ibt-20-1-3.sfi in Resources */,
-				F8044427239562EB00A2C882 /* ibt-hw-37.8.10-fw-1.10.3.11.e.bseq in Resources */,
-				F8044420239562EB00A2C882 /* ibt-18-0-1.sfi in Resources */,
-				F804440A239562EB00A2C882 /* ibt-20-1-3.ddc in Resources */,
-				F8044431239562EB00A2C882 /* ibt-19-0-4.ddc in Resources */,
-				F8044417239562EB00A2C882 /* ibt-11-5.ddc in Resources */,
-				F804442F239562EB00A2C882 /* ibt-18-16-1.ddc in Resources */,
-				F804442D239562EB00A2C882 /* ibt-17-1.ddc in Resources */,
-				F804442E239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.80.2.3.d.bseq in Resources */,
-				F8044423239562EB00A2C882 /* ibt-17-16-1.ddc in Resources */,
-				F8044426239562EB00A2C882 /* ibt-hw-37.8.10-fw-1.10.2.27.d.bseq in Resources */,
-				F804441B239562EB00A2C882 /* ibt-19-32-0.sfi in Resources */,
-				F8044413239562EB00A2C882 /* ibt-20-0-3.ddc in Resources */,
-				F804441E239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.0.1.2d.d.bseq in Resources */,
-				F804442C239562EB00A2C882 /* ibt-12-16.ddc in Resources */,
-				F8044418239562EB00A2C882 /* ibt-hw-37.7.10-fw-1.0.2.3.d.bseq in Resources */,
-				F8044412239562EB00A2C882 /* ibt-17-0-1.sfi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +398,7 @@
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				DEVELOPMENT_TEAM = YXX7XALBVX;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
@@ -495,7 +417,7 @@
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				DEVELOPMENT_TEAM = YXX7XALBVX;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;

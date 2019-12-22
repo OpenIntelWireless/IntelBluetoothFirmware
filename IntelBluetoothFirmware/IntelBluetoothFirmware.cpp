@@ -28,6 +28,14 @@ enum {
     kUpdateDone
 };
 
+enum {
+    kNewGetVersion,
+    kNewLoadFW,
+    kNewSetEventMask,
+    kNewUpdateAbort,
+    kNewUpdateDone
+};
+
 static IOPMPowerState myTwoStates[2] =
 {
     { kIOPMPowerStateVersion1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -50,6 +58,14 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     XYLog("Driver Start()\n");
     super::start(provider);
     m_pDevice = (IOUSBHostDevice *)provider;
+    if (m_pDevice == NULL) {
+        m_pInterface = OSDynamicCast(IOUSBHostInterface, provider);
+        if (m_pInterface == NULL) {
+            super::stop(this);
+            return false;
+        }
+        m_pDevice = m_pInterface->getDevice();
+    }
     
     PMinit();
     registerPowerDriver(this, myTwoStates, 2);
@@ -101,7 +117,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     }
 
     if (!initUSBConfiguration()) {
-        XYLog("init usb configuration failed\"n");
+        XYLog("init usb configuration failed\n");
         cleanUp();
         return false;
     }
@@ -113,15 +129,15 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     XYLog("usb init succeed\n");
     beginDownload();
     cleanUp();
-    super::stop(this);
-    return true;
+//    stop(this);
+    return false;
 }
 
 bool IntelBluetoothFirmware::initUSBConfiguration()
 {
     uint8_t configIndex = 0;
     uint8_t configNum = m_pDevice->getDeviceDescriptor()->bNumConfigurations;
-    if (configNum < configIndex+configNum) {
+    if (configNum < configIndex + configNum) {
         XYLog("config num error\n");
         return false;
     }
@@ -136,10 +152,11 @@ bool IntelBluetoothFirmware::initUSBConfiguration()
         XYLog("get device configuration failed\n");
         return false;
     }
-    if (currentConfig != 0) {
-        XYLog("device configuration has been set to %d\n", currentConfig);
-        return true;
-    }
+//    if (currentConfig != 0) {
+//        XYLog("device configuration has been set to %d\n", currentConfig);
+//        return true;
+//    }
+    XYLog("set configuration to %d\n", configDescriptor->bConfigurationValue);
     IOReturn ret = m_pDevice->setConfiguration(configDescriptor->bConfigurationValue);
     if (ret != kIOReturnSuccess) {
         XYLog("set device configuration to %d failed\n", configDescriptor->bConfigurationValue);
@@ -152,8 +169,13 @@ bool IntelBluetoothFirmware::initInterface()
 {
     OSIterator* iterator = m_pDevice->getChildIterator(gIOServicePlane);
     OSObject* candidate = NULL;
-    while(iterator != NULL && (candidate = iterator->getNextObject()) != NULL)
+    if (iterator == NULL) {
+        XYLog("can not create child iterator\n");
+        return false;
+    }
+    while((candidate = iterator->getNextObject()) != NULL)
     {
+        XYLog("忙碌中，别急\n");
         IOUSBHostInterface* interfaceCandidate = OSDynamicCast(IOUSBHostInterface, candidate);
         if(   interfaceCandidate != NULL
            )
@@ -209,7 +231,7 @@ bool IntelBluetoothFirmware::initInterface()
 void IntelBluetoothFirmware::cleanUp()
 {
     XYLog("Clean up...\n");
-    PMstop();
+//    PMstop();
     if (fwData) {
         fwData->release();
         fwData = NULL;
@@ -629,18 +651,20 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
             }
             char fwname[64];
             snprintf(fwname, sizeof(fwname),
-            "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x.bseq",
+            "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x",
             ver->hw_platform, ver->hw_variant, ver->hw_revision,
             ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
             ver->fw_build_ww, ver->fw_build_yy);
             XYLog("request firmware %s \n", fwname);
             if (!fwData) {
-                fwData = requestFirmware(fwname);
-                if (!fwData) {
-                    XYLog("no firmware, stop\n");
-                    mDeviceState = kUpdateAbort;
-                    break;
-                }
+                FwDesc desc = getFWDescByName(fwname);
+                fwData = OSData::withBytes(desc.var, desc.size);
+//                fwData = requestFirmware(fwname);
+//                if (!fwData) {
+//                    XYLog("no firmware, stop\n");
+//                    mDeviceState = kUpdateAbort;
+//                    break;
+//                }
             }
             XYLog("request firmware success");
             mDeviceState = kEnterMfg;
@@ -672,8 +696,8 @@ OSData* IntelBluetoothFirmware::requestFirmware(const char* resourceName)
         .context = this,
         .resource = NULL
     };
-    OSKextRequestResource(OSKextGetCurrentIdentifier(), resourceName, onLoadFW, &context, NULL);
-    XYLog("request start.\n");
+    IOReturn ret = OSKextRequestResource(OSKextGetCurrentIdentifier(), resourceName, onLoadFW, &context, NULL);
+    XYLog("request start ret=0x%08x, %s.\n", ret, stringFromReturn(ret));
     IOLockSleep(resourceCompletion, this, 0);
     XYLog("是谁叫醒了我.\n");
     IOLockUnlock(resourceCompletion);
@@ -687,10 +711,10 @@ OSData* IntelBluetoothFirmware::requestFirmware(const char* resourceName)
 
 void IntelBluetoothFirmware::onLoadFW(OSKextRequestTag requestTag, OSReturn result, const void *resourceData, uint32_t resourceDataLength, void *context)
 {
-    XYLog("onLoadFW callback ret=0x%08x\n length=%d", result, resourceDataLength);
+    XYLog("onLoadFW callback ret=0x%08x length=%d", result, resourceDataLength);
     ResourceCallbackContext *resourceContxt = (ResourceCallbackContext*)context;
     IOLockLock(resourceContxt->context->resourceCallbackCompletion);
-    if (result == kOSReturnSuccess) {
+    if (resourceDataLength > 0) {
         XYLog("onLoadFW return success");
         resourceContxt->resource = OSData::withBytes(resourceData, resourceDataLength);
     }
@@ -754,11 +778,17 @@ IOService * IntelBluetoothFirmware::probe(IOService *provider, SInt32 *score)
         XYLog("super probe failed\n");
         return NULL;
     }
-    *score = 3000;
+//    *score = 3500;
     m_pDevice = OSDynamicCast(IOUSBHostDevice, provider);
     if (!m_pDevice) {
         XYLog("%s -- %s is not usb device, class=%s\n", provider->getLocation(), provider->getName(), provider->metaClass->getClassName());
-        return NULL;
+        m_pInterface = OSDynamicCast(IOUSBHostInterface, provider);
+        if (m_pInterface == NULL) {
+            XYLog("is not a usb interface\n");
+            return NULL;
+        }
+        XYLog("is a interface\n");
+        m_pDevice = m_pInterface->getDevice();
     }
     UInt16 vendorID = USBToHost16(m_pDevice->getDeviceDescriptor()->idVendor);
     UInt16 productID = USBToHost16(m_pDevice->getDeviceDescriptor()->idProduct);
