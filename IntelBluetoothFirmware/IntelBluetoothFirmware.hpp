@@ -12,6 +12,11 @@
 #include "IOBluetoothHostControllerUSBTransport.h"
 #include "FWData.h"
 
+enum BTType {
+    kTypeOld,
+    kTypeNew,
+} ;
+
 class IntelBluetoothFirmware : public IOService
 {
     OSDeclareDefaultStructors (IntelBluetoothFirmware)
@@ -36,17 +41,17 @@ public:
     
     void beginDownload();
     
+    void beginDownloadNew();
+    
     static void onRead(void* owner, void* parameter, IOReturn status, uint32_t bytesTransferred);
     
     IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param);
-    
-    IOReturn bulkWrite(const void* data, uint16_t length);
     
     void parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength);
     
     void onHCICommandSucceed(HciResponse *command, int length);
     
-    IOReturn getConfiguration(UInt8 *configNumber);
+    void onHCICommandSucceedNew(HciResponse *command, int length);
     
     bool initUSBConfiguration();
     
@@ -62,10 +67,11 @@ public:
                          void                          * context);
     
 public:
+    
+    
     IOUSBHostDevice* m_pDevice;
     IOUSBHostInterface* m_pInterface;
     IOUSBHostPipe* m_pInterruptReadPipe;
-    IOUSBHostPipe* m_pBulkWritePipe;
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
@@ -87,6 +93,7 @@ private:
         IntelBluetoothFirmware* context;
         OSData* resource;
     };
+    BTType currentType;
 };
 
 #endif
