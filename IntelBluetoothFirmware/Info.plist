@@ -20,7 +20,7 @@
 	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>IOKitPersonalities</key>
 	<dict>
-		<key>IntelBluetoothFirmware_common</key>
+		<key>IntelBluetoothFirmware_3165</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
 			<string>com.zxystd.IntelBluetoothFirmware</string>
@@ -32,6 +32,21 @@
 			<string>IOUSBHostDevice</string>
 			<key>idProduct</key>
 			<integer>2602</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_ax200</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>41</integer>
 			<key>idVendor</key>
 			<integer>32903</integer>
 		</dict>

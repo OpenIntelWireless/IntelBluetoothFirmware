@@ -47,6 +47,8 @@ public:
     
     IOReturn sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param);
     
+    int securedSend(uint8_t fragmentType, uint32_t plen, const uint8_t *p);
+    
     void parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength);
     
     void onHCICommandSucceed(HciResponse *command, int length);
@@ -94,6 +96,7 @@ private:
         OSData* resource;
     };
     BTType currentType;
+    uint32_t boot_param;
 };
 
 #endif
