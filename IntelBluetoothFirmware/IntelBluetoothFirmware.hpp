@@ -4,6 +4,7 @@
 
 #include <IOKit/IOLib.h>
 #include <IOKit/IOService.h>
+#include <IOKit/IOLocks.h>
 #include <IOKit/usb/USB.h>
 #include <libkern/OSKextLib.h>
 #include <IOKit/usb/IOUSBHostDevice.h>
@@ -39,9 +40,13 @@ public:
     
     bool interruptPipeRead();
     
+    bool bulkPipeRead();
+    
     void beginDownload();
     
     void beginDownloadNew();
+    
+    IOReturn bulkWrite(const void *data, uint16_t length);
     
     static void onRead(void* owner, void* parameter, IOReturn status, uint32_t bytesTransferred);
     
@@ -61,6 +66,12 @@ public:
     
     OSData *requestFirmware(const char* resourceName);
     
+    bool beginContinueRead();
+    
+    void continueRead();
+
+    void stopContinueRead();
+    
     static void onLoadFW(
     OSKextRequestTag                requestTag,
     OSReturn                        result,
@@ -74,11 +85,16 @@ public:
     IOUSBHostDevice* m_pDevice;
     IOUSBHostInterface* m_pInterface;
     IOUSBHostPipe* m_pInterruptReadPipe;
+    IOUSBHostPipe* m_pBulkWritePipe;
+    IOUSBHostPipe* m_pBulkReadPipe;
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
     IOLock* resourceCompletion;
     IOLock* resourceCallbackCompletion;
+    
+    IOLock* bootupLock;
+    IOLock* downloadLock;
     
     int mDeviceState;
     IntelVersion *ver;
@@ -97,6 +113,8 @@ private:
     };
     BTType currentType;
     uint32_t boot_param;
+    thread_t continueReadThread;
+    bool continueReadFlag;
 };
 
 #endif
