@@ -38,10 +38,12 @@ enum {
     kNewUpdateDone
 };
 
+#define kIOPMPowerOff 0
+
 static IOPMPowerState myTwoStates[2] =
 {
-    { kIOPMPowerStateVersion1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    { kIOPMPowerStateVersion1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0 }
+    {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
+    {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 bool IntelBluetoothFirmware::init(OSDictionary *dictionary)
@@ -107,6 +109,8 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     if (!mReadBuffer) {
         XYLog("%s::fail to alloc read buffer\n", getName());
         cleanUp();
+        PMstop();
+        super::stop(this);
         return false;
     }
 
@@ -123,19 +127,24 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     
     if (!m_pDevice->open(this)) {
         XYLog("start fail, can not open device\n");
-        super::stop(this);
         cleanUp();
+        PMstop();
+        super::stop(this);
         return false;
     }
 
     if (!initUSBConfiguration()) {
         XYLog("init usb configuration failed\n");
         cleanUp();
+        PMstop();
+        super::stop(this);
         return false;
     }
     if (!initInterface()) {
         XYLog("init usb interface failed\n");
         cleanUp();
+        PMstop();
+        super::stop(this);
         return false;
     }
     XYLog("usb init succeed\n");
@@ -145,8 +154,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         beginDownloadNew();
     }
     cleanUp();
-    stop(this);
-    return true;
+    return false;
 }
 
 bool IntelBluetoothFirmware::initUSBConfiguration()
@@ -248,7 +256,6 @@ bool IntelBluetoothFirmware::initInterface()
 void IntelBluetoothFirmware::cleanUp()
 {
     XYLog("Clean up...\n");
-    PMstop();
     if (fwData) {
         fwData->release();
         fwData = NULL;
@@ -294,7 +301,6 @@ void IntelBluetoothFirmware::cleanUp()
         usbCompletion.owner = NULL;
         usbCompletion.action = NULL;
         OSSafeReleaseNULL(mReadBuffer);
-        mReadBuffer = NULL;
     }
     if (m_pInterface) {
         m_pInterface->close(this);
@@ -628,13 +634,14 @@ void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, voi
     if (currentType == kTypeNew) {
         if (header->evt == 0xff && header->plen > 0) {
             BtIntel::printAllByte(response, length + HCI_COMMAND_HDR_SIZE);
-            const void *ptr = (uint8_t* )response + HCI_EVENT_HDR_SIZE + 1;
-            unsigned int len = length - HCI_EVENT_HDR_SIZE - 1;
             switch (((uint8_t*)response)[2]) {
+                
                 case 0x02:
+                    XYLog("设备重启完成\n");
                     IOLockWakeup(bootupLock, this, false);
                     break;
                 case 0x06:
+                    XYLog("设备固件上传完成\n");
                     IOLockWakeup(downloadLock, this, false);
                     break;
                     
@@ -871,9 +878,11 @@ void IntelBluetoothFirmware::beginDownloadNew()
                         }
                     }
                     XYLog("send firmware done\n");
-//                    IOSleep(1000);
+                    isRequest = false;
+//                    IOSleep(5000);
 //                    IOLockLock(downloadLock);
-//                    bulkPipeRead();
+//                    sendHCIRequest(HCI_OP_RESET, 0, NULL);
+//                    interruptPipeRead();
 //                    IOLockSleep(downloadLock, this, 0);
                     mDeviceState = kNewIntelReset;
 //                    mDeviceState = kNewUpdateDone;
@@ -892,12 +901,13 @@ void IntelBluetoothFirmware::beginDownloadNew()
                         break;
                     }
                     XYLog("Intel reset succeed\n");
-                    isRequest = false;
-//                    IOLockLock(bootupLock);
-//                    interruptPipeRead();
-//                    IOLockSleep(bootupLock, this, 0);
+//                    isRequest = false;
                     IOSleep(1000);
+//                    IOLockLock(bootupLock);
+//                    beginContinueRead();
+//                    IOLockSleep(bootupLock, this, 0);
                     mDeviceState = kNewSetEventMask;
+//                    stopContinueRead();
 //                    IOLockUnlock(bootupLock);
                     break;
                 }
@@ -909,6 +919,9 @@ void IntelBluetoothFirmware::beginDownloadNew()
                         goto done;
                         break;
                     }
+                    interruptPipeRead();
+                    sendHCIRequest(HCI_OP_RESET, 0, NULL);
+                    mDeviceState = kNewUpdateDone;
                     break;
                 }
                 default:
@@ -976,7 +989,7 @@ int IntelBluetoothFirmware::securedSend(uint8_t fragmentType, uint32_t plen, con
 void IntelBluetoothFirmware::continueRead()
 {
     while (continueReadFlag) {
-        bulkPipeRead();
+        interruptPipeRead();
         IOSleep(300);
     }
 }
@@ -1241,6 +1254,5 @@ IOService * IntelBluetoothFirmware::probe(IOService *provider, SInt32 *score)
     } else {
         currentType = kTypeNew;
     }
-    m_pDevice = NULL;
     return this;
 }
