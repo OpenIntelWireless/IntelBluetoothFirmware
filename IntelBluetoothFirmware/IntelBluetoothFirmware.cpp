@@ -72,10 +72,10 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         return false;
     }
 
-//    PMinit();
-//    registerPowerDriver(this, myTwoStates, 2);
-//    provider->joinPMtree(this);
-//    makeUsable();
+    PMinit();
+    registerPowerDriver(this, myTwoStates, 2);
+    provider->joinPMtree(this);
+    makeUsable();
 
     hciCommand = (HciCommandHdr *)IOMalloc(sizeof(HciCommandHdr));
 
@@ -158,6 +158,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         beginDownloadNew();
     }
 //    m_pDevice->close(this);
+    
     super::stop(provider);
 //    cleanUp();
     return false;
@@ -808,10 +809,6 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     /* Start the firmware download transaction with the Init fragment
                      * represented by the 128 bytes of CSS header.
                      */
-//                    if (!beginContinueRead()) {
-//                        XYLog("read thread start fail.\n");
-//                        goto done;
-//                    }
                     int err = 0;
                     XYLog("send firmware header\n");
                     uint8_t* fw_ptr = fw;
