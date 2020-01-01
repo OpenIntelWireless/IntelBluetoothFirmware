@@ -20,6 +20,96 @@
 	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>IOKitPersonalities</key>
 	<dict>
+		<key>IntelBluetoothFirmware_ 0026</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>38</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_ 3168</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>2727</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_ 726x</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>2012</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_ 8265</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>2603</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_ 926x</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>37</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
+		<key>IntelBluetoothFirmware_ 9560</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>70000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>2730</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
 		<key>IntelBluetoothFirmware_3165</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
@@ -49,38 +139,6 @@
 			<integer>41</integer>
 			<key>idVendor</key>
 			<integer>32903</integer>
-		</dict>
-		<key>IntelBluetoothFirmware_interface</key>
-		<dict>
-			<key>CFBundleIdentifier</key>
-			<string>com.zxystd.IntelBluetoothFirmware</string>
-			<key>IOClass</key>
-			<string>IntelBluetoothFirmware</string>
-			<key>IOProviderClass</key>
-			<string>IOUSBHostInterface</string>
-			<key>bInterfaceClass</key>
-			<integer>224</integer>
-			<key>bInterfaceProtocol</key>
-			<integer>1</integer>
-			<key>bInterfaceSubClass</key>
-			<integer>1</integer>
-			<key>idProduct</key>
-			<integer>2602</integer>
-			<key>idVendor</key>
-			<integer>32903</integer>
-		</dict>
-		<key>rtltest</key>
-		<dict>
-			<key>CFBundleIdentifier</key>
-			<string>com.zxystd.IntelBluetoothFirmware</string>
-			<key>IOClass</key>
-			<string>IntelBluetoothFirmware</string>
-			<key>IOProviderClass</key>
-			<string>IOUSBHostDevice</string>
-			<key>idProduct</key>
-			<integer>30209</integer>
-			<key>idVendor</key>
-			<integer>5263</integer>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>

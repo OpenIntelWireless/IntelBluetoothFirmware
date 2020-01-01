@@ -66,12 +66,6 @@ public:
     
     OSData *requestFirmware(const char* resourceName);
     
-    bool beginContinueRead();
-    
-    void continueRead();
-
-    void stopContinueRead();
-    
     static void onLoadFW(
     OSKextRequestTag                requestTag,
     OSReturn                        result,
@@ -113,8 +107,6 @@ private:
     };
     BTType currentType;
     uint32_t boot_param;
-    thread_t continueReadThread;
-    bool continueReadFlag;
 };
 
 #endif

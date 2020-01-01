@@ -74,9 +74,9 @@ void BtIntel::printAllByte(void *addr, int size)
         return;
     }
     
-    while(print_bytes < size) {
-        XYLog("%02x", *ptr);
-        ptr++;
-        print_bytes++;
-    }
+//    while(print_bytes < size) {
+//        XYLog("%02x", *ptr);
+//        ptr++;
+//        print_bytes++;
+//    }
 }
