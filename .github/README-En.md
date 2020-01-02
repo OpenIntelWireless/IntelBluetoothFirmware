@@ -1,13 +1,13 @@
 # IntelBluetoothFirmware
 
-Intel Bluetooth Firmware Uploader Kernel Extension, allows proper functionality via Cold Boot
+Intel Bluetooth Firmware Uploader Kernel Extension
 
 **Languages:**
 
 - [简体中文 (Chinese)](/README.md)
 - **English**
 
-## Supportd Devices
+## Supported Devices
 
 |        Model        | Product ID |
 | :----------------: | :--------: |
