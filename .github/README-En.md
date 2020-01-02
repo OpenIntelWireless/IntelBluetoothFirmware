@@ -5,7 +5,7 @@ Intel Bluetooth Firmware Uploader Kernel Extension, allows proper functionality 
 **Languages:**
 
 - [简体中文 (Chinese)](/README.md)
-- [English](/.github/README-En.md)
+- **English**
 
 ## Supportd Devices
 
