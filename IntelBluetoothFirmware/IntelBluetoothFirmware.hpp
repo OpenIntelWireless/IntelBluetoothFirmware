@@ -10,7 +10,6 @@
 #include <IOKit/usb/IOUSBHostDevice.h>
 #include <IOKit/usb/IOUSBHostInterface.h>
 #include "Log.h"
-#include "IOBluetoothHostControllerUSBTransport.h"
 #include "FWData.h"
 
 enum BTType {

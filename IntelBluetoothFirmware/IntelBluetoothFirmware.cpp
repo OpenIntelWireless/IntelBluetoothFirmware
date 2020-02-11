@@ -42,7 +42,7 @@ enum {
 
 static IOPMPowerState myTwoStates[2] =
 {
-    {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
+    {1, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
@@ -54,7 +54,7 @@ bool IntelBluetoothFirmware::init(OSDictionary *dictionary)
 
 void IntelBluetoothFirmware::free() {
     XYLog("Driver free()\n");
-//    cleanUp();
+    //    cleanUp();
     if (hciCommand) {
         IOFree(hciCommand, sizeof(HciCommandHdr));
         hciCommand = NULL;
@@ -71,40 +71,40 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         XYLog("Driver Start fail, not usb device\n");
         return false;
     }
-
+    
     PMinit();
     registerPowerDriver(this, myTwoStates, 2);
     provider->joinPMtree(this);
     makeUsable();
-
+    
     hciCommand = (HciCommandHdr *)IOMalloc(sizeof(HciCommandHdr));
-
+    
     completion = IOLockAlloc();
-
+    
     if (!completion) {
         return false;
     }
-
+    
     resourceCompletion = IOLockAlloc();
     if (!resourceCompletion) {
         return false;
     }
-
+    
     resourceCallbackCompletion = IOLockAlloc();
     if (!resourceCallbackCompletion) {
         return false;
     }
-
+    
     bootupLock = IOLockAlloc();
     if (!bootupLock) {
         return false;
     }
-
+    
     downloadLock = IOLockAlloc();
     if (!downloadLock) {
         return false;
     }
-
+    
     mReadBuffer = IOBufferMemoryDescriptor::inTaskWithOptions(kernel_task
                                                               , kIODirectionIn, kReadBufferSize);
     if (!mReadBuffer) {
@@ -112,22 +112,22 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         cleanUp();
         return false;
     }
-
+    
     mReadBuffer->prepare(kIODirectionIn);
     
     super::start(provider);
     
     m_pDevice->retain();
-
-//    return true;
+    
+    //    return true;
     m_pDevice->setConfiguration(0);
-
+    
     IOSleep(1500);
-
+    
     usbCompletion.owner = this;
     usbCompletion.action = onRead;
     usbCompletion.parameter = NULL;
-
+    
     if (!m_pDevice->open(this)) {
         XYLog("start fail, can not open device\n");
         cleanUp();
@@ -135,7 +135,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         super::stop(provider);
         return false;
     }
-
+    
     if (!initUSBConfiguration()) {
         XYLog("init usb configuration failed\n");
         cleanUp();
@@ -157,10 +157,10 @@ bool IntelBluetoothFirmware::start(IOService *provider)
     } else {
         beginDownloadNew();
     }
-//    m_pDevice->close(this);
+    //    m_pDevice->close(this);
     
     super::stop(provider);
-//    cleanUp();
+    //    cleanUp();
     return false;
 }
 
@@ -262,60 +262,60 @@ bool IntelBluetoothFirmware::initInterface()
 
 void IntelBluetoothFirmware::cleanUp()
 {
-//    XYLog("Clean up...\n");
-//    PMstop();
-//    if (fwData) {
-//        fwData->release();
-//        fwData = NULL;
-//    }
-//    if (completion) {
-//        IOLockFree(completion);
-//        completion = NULL;
-//    }
-//    if (resourceCompletion) {
-//        IOLockFree(resourceCompletion);
-//        resourceCompletion = NULL;
-//    }
-//    if (bootupLock) {
-//        IOLockFree(bootupLock);
-//        bootupLock = NULL;
-//    }
-//    if (downloadLock) {
-//        IOLockFree(downloadLock);
-//        downloadLock = NULL;
-//    }
-//    if (m_pBulkWritePipe) {
-//        m_pBulkWritePipe->abort();
-//        m_pBulkWritePipe->release();
-//        m_pBulkWritePipe = NULL;
-//    }
-//    if (m_pBulkReadPipe) {
-//        m_pBulkReadPipe->abort();
-//        m_pBulkReadPipe->release();
-//        m_pBulkReadPipe = NULL;
-//    }
-//    if (m_pInterruptReadPipe) {
-//        m_pInterruptReadPipe->abort();
-//        m_pInterruptReadPipe->release();
-//        m_pInterruptReadPipe = NULL;
-//    }
-//    if (mReadBuffer) {
-//        mReadBuffer->complete(kIODirectionIn);
-//        usbCompletion.owner = NULL;
-//        usbCompletion.action = NULL;
-//        OSSafeReleaseNULL(mReadBuffer);
-//    }
-//    if (m_pInterface) {
-//        m_pInterface->close(this);
-//        m_pInterface->release();
-//        m_pInterface = NULL;
-//    }
-//    if (m_pDevice) {
-//        m_pDevice->close(this);
-//        m_pDevice->release();
-//        m_pDevice->reset();
-//        m_pDevice = NULL;
-//    }
+    //    XYLog("Clean up...\n");
+    //    PMstop();
+    //    if (fwData) {
+    //        fwData->release();
+    //        fwData = NULL;
+    //    }
+    //    if (completion) {
+    //        IOLockFree(completion);
+    //        completion = NULL;
+    //    }
+    //    if (resourceCompletion) {
+    //        IOLockFree(resourceCompletion);
+    //        resourceCompletion = NULL;
+    //    }
+    //    if (bootupLock) {
+    //        IOLockFree(bootupLock);
+    //        bootupLock = NULL;
+    //    }
+    //    if (downloadLock) {
+    //        IOLockFree(downloadLock);
+    //        downloadLock = NULL;
+    //    }
+    //    if (m_pBulkWritePipe) {
+    //        m_pBulkWritePipe->abort();
+    //        m_pBulkWritePipe->release();
+    //        m_pBulkWritePipe = NULL;
+    //    }
+    //    if (m_pBulkReadPipe) {
+    //        m_pBulkReadPipe->abort();
+    //        m_pBulkReadPipe->release();
+    //        m_pBulkReadPipe = NULL;
+    //    }
+    //    if (m_pInterruptReadPipe) {
+    //        m_pInterruptReadPipe->abort();
+    //        m_pInterruptReadPipe->release();
+    //        m_pInterruptReadPipe = NULL;
+    //    }
+    //    if (mReadBuffer) {
+    //        mReadBuffer->complete(kIODirectionIn);
+    //        usbCompletion.owner = NULL;
+    //        usbCompletion.action = NULL;
+    //        OSSafeReleaseNULL(mReadBuffer);
+    //    }
+    //    if (m_pInterface) {
+    //        m_pInterface->close(this);
+    //        m_pInterface->release();
+    //        m_pInterface = NULL;
+    //    }
+    //    if (m_pDevice) {
+    //        m_pDevice->close(this);
+    //        m_pDevice->release();
+    //        m_pDevice->reset();
+    //        m_pDevice = NULL;
+    //    }
 }
 
 bool IntelBluetoothFirmware::interruptPipeRead()
@@ -398,13 +398,13 @@ void IntelBluetoothFirmware::beginDownload()
                     HciEventHdr *evt = NULL;
                     const uint8_t *evt_param = NULL;
                     int remain = fwData->getLength() - (fw_ptr - fw);
-                   /* The first byte indicates the types of the patch command or event.
-                    * 0x01 means HCI command and 0x02 is HCI event. If the first bytes
-                    * in the current firmware buffer doesn't start with 0x01 or
-                    * the size of remain buffer is smaller than HCI command header,
-                    * the firmware file is corrupted and it should stop the patching
-                    * process.
-                    */
+                    /* The first byte indicates the types of the patch command or event.
+                     * 0x01 means HCI command and 0x02 is HCI event. If the first bytes
+                     * in the current firmware buffer doesn't start with 0x01 or
+                     * the size of remain buffer is smaller than HCI command header,
+                     * the firmware file is corrupted and it should stop the patching
+                     * process.
+                     */
                     if (remain > HCI_COMMAND_HDR_SIZE && fw_ptr[0] != 0x01) {
                         XYLog("Intel fw corrupted: invalid cmd read");
                         mDeviceState = kUpdateAbort;
@@ -416,56 +416,56 @@ void IntelBluetoothFirmware::beginDownload()
                     cmd = (FWCommandHdr*)(fw_ptr);
                     fw_ptr += sizeof(*cmd);
                     remain -= sizeof(*cmd);
-                   /* Ensure that the remain firmware data is long enough than the length
-                    * of command parameter. If not, the firmware file is corrupted.
-                    */
+                    /* Ensure that the remain firmware data is long enough than the length
+                     * of command parameter. If not, the firmware file is corrupted.
+                     */
                     if (remain < cmd->plen) {
                         XYLog("Intel fw corrupted: invalid cmd len");
                         goto done;
                         break;
                     }
-                   /* If there is a command that loads a patch in the firmware
-                    * file, then enable the patch upon success, otherwise just
-                    * disable the manufacturer mode, for example patch activation
-                    * is not required when the default firmware patch file is used
-                    * because there are no patch data to load.
-                    */
+                    /* If there is a command that loads a patch in the firmware
+                     * file, then enable the patch upon success, otherwise just
+                     * disable the manufacturer mode, for example patch activation
+                     * is not required when the default firmware patch file is used
+                     * because there are no patch data to load.
+                     */
                     
                     cmd_param = fw_ptr;
                     fw_ptr += cmd->plen;
                     remain -= cmd->plen;
-                   /* This reads the expected events when the above command is sent to the
-                    * device. Some vendor commands expects more than one events, for
-                    * example command status event followed by vendor specific event.
-                    * For this case, it only keeps the last expected event. so the command
-                    * can be sent with __hci_cmd_sync_ev() which returns the sk_buff of
-                    * last expected event.
-                    */
+                    /* This reads the expected events when the above command is sent to the
+                     * device. Some vendor commands expects more than one events, for
+                     * example command status event followed by vendor specific event.
+                     * For this case, it only keeps the last expected event. so the command
+                     * can be sent with __hci_cmd_sync_ev() which returns the sk_buff of
+                     * last expected event.
+                     */
                     int evt_times = 0;
                     while (remain > HCI_EVENT_HDR_SIZE && fw_ptr[0] == 0x02) {
                         fw_ptr++;
                         remain--;
                         
                         evt_times++;
-
+                        
                         evt = (HciEventHdr*)(fw_ptr);
                         fw_ptr += sizeof(*evt);
                         remain -= sizeof(*evt);
-
+                        
                         if (remain < evt->plen) {
                             XYLog("Intel fw corrupted: invalid evt len");
                             goto done;
                             break;
                         }
-
+                        
                         evt_param = fw_ptr;
                         fw_ptr += evt->plen;
                         remain -= evt->plen;
                     }
-                   /* Every HCI commands in the firmware file has its correspond event.
-                    * If event is not found or remain is smaller than zero, the firmware
-                    * file is corrupted.
-                    */
+                    /* Every HCI commands in the firmware file has its correspond event.
+                     * If event is not found or remain is smaller than zero, the firmware
+                     * file is corrupted.
+                     */
                     if (!evt || !evt_param || remain < 0) {
                         XYLog("Intel fw corrupted: invalid evt read");
                         goto done;
@@ -475,7 +475,7 @@ void IntelBluetoothFirmware::beginDownload()
                     XYLog("evt=%02X\n", evt->evt);
                     if ((ret = sendHCIRequest(USBToHost16(cmd->opcode), cmd->plen, (void *)cmd_param)) != kIOReturnSuccess) {
                         XYLog("sending Intel patch command (0x%4.4x) failed (%d) %s",
-                        cmd->opcode, ret, stringFromReturn(ret));
+                              cmd->opcode, ret, stringFromReturn(ret));
                         goto done;
                         break;
                     }
@@ -490,16 +490,16 @@ void IntelBluetoothFirmware::beginDownload()
             }
             case kExitMfg:
             {
-//                bool reset = true;
-//                bool patched = true;
-//                uint8_t param[] = { 0x00, 0x00 };
-               /* The 2nd command parameter specifies the manufacturing exit method:
-                * 0x00: Just disable the manufacturing mode (0x00).
-                * 0x01: Disable manufacturing mode and reset with patches deactivated.
-                * 0x02: Disable manufacturing mode and reset with patches activated.
-                */
-//                if (reset)
-//                    param[1] |= patched ? 0x02 : 0x01;
+                //                bool reset = true;
+                //                bool patched = true;
+                //                uint8_t param[] = { 0x00, 0x00 };
+                /* The 2nd command parameter specifies the manufacturing exit method:
+                 * 0x00: Just disable the manufacturing mode (0x00).
+                 * 0x01: Disable manufacturing mode and reset with patches deactivated.
+                 * 0x02: Disable manufacturing mode and reset with patches activated.
+                 */
+                //                if (reset)
+                //                    param[1] |= patched ? 0x02 : 0x01;
                 XYLog("HCI_OP_INTEL_EXIT_MFG\n");
                 if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)EXIT_MFG_PARAM)) != kIOReturnSuccess) {
                     XYLog("Exiting manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
@@ -522,7 +522,7 @@ void IntelBluetoothFirmware::beginDownload()
             default:
                 break;
         }
-
+        
         if (isRequest) {
             if (!interruptPipeRead())
             {
@@ -557,16 +557,14 @@ done:
     m_pDevice->close(this);
     m_pDevice->release();
     m_pDevice = NULL;
-//    cleanUp();
+    stop(this);
+    //    cleanUp();
 }
 
 IOReturn IntelBluetoothFirmware::sendHCIRequest(uint16_t opCode, uint8_t paramLen, const void * param)
 {
     isRequest = true;
-    XYLog("opCode=0x%02x, paramLen=%d\n", opCode, paramLen);
-    if (paramLen > 0) {
-        XYLog("check=%02X\n", (uint8_t)*(uint8_t*)param);
-    }
+    //    XYLog("opCode=0x%02x, paramLen=%d\n", opCode, paramLen);
     StandardUSB::DeviceRequest request =
     {
         .bmRequestType = makeDeviceRequestbmRequestType(kRequestDirectionOut, kRequestTypeClass, kRequestRecipientDevice),
@@ -636,12 +634,12 @@ void IntelBluetoothFirmware::onRead(void *owner, void *parameter, IOReturn statu
 void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength)
 {
     HciEventHdr* header = (HciEventHdr*)response;
-    XYLog("recv event=0x%04x, length=%d\n", header->evt, header->plen);
+    //    XYLog("recv event=0x%04x, length=%d\n", header->evt, header->plen);
     if (currentType == kTypeNew) {
         if (header->evt == 0xff && header->plen > 0) {
             BtIntel::printAllByte(response, length + HCI_COMMAND_HDR_SIZE);
             switch (((uint8_t*)response)[2]) {
-                
+                    
                 case 0x02:
                     XYLog("设备重启完成\n");
                     IOLockWakeup(bootupLock, this, false);
@@ -673,7 +671,7 @@ void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, voi
 
 void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int length)
 {
-    XYLog("recv command opcode=0x%04x\n", command->opcode);
+    //    XYLog("recv command opcode=0x%04x\n", command->opcode);
     BtIntel::printAllByte(command, length + HCI_COMMAND_HDR_SIZE);
     switch (command->opcode) {
         case HCI_OP_RESET:
@@ -682,32 +680,32 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
         case HCI_OP_INTEL_VERSION:
         {
             ver = (IntelVersion*)((uint8_t*)command + 5);
-           /* fw_patch_num indicates the version of patch the device currently
-            * have. If there is no patch data in the device, it is always 0x00.
-            * So, if it is other than 0x00, no need to patch the device again.
-            */
+            /* fw_patch_num indicates the version of patch the device currently
+             * have. If there is no patch data in the device, it is always 0x00.
+             * So, if it is other than 0x00, no need to patch the device again.
+             */
             if (ver->fw_patch_num) {
                 XYLog("Intel device is already patched. "
-                        "patch num: %02x", ver->fw_patch_num);
+                      "patch num: %02x", ver->fw_patch_num);
                 mDeviceState = kSetEventMask;
                 break;
             }
             char fwname[64];
             snprintf(fwname, sizeof(fwname),
-            "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x",
-            ver->hw_platform, ver->hw_variant, ver->hw_revision,
-            ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
-            ver->fw_build_ww, ver->fw_build_yy);
+                     "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x",
+                     ver->hw_platform, ver->hw_variant, ver->hw_revision,
+                     ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
+                     ver->fw_build_ww, ver->fw_build_yy);
             XYLog("request firmware %s \n", fwname);
             if (!fwData) {
                 FwDesc desc = getFWDescByName(fwname);
                 fwData = OSData::withBytes(desc.var, desc.size);
-//                fwData = requestFirmware(fwname);
-//                if (!fwData) {
-//                    XYLog("no firmware, stop\n");
-//                    mDeviceState = kUpdateAbort;
-//                    break;
-//                }
+                //                fwData = requestFirmware(fwname);
+                //                if (!fwData) {
+                //                    XYLog("no firmware, stop\n");
+                //                    mDeviceState = kUpdateAbort;
+                //                    break;
+                //                }
             }
             XYLog("request firmware success");
             mDeviceState = kEnterMfg;
@@ -773,194 +771,195 @@ static inline u32 get_unaligned_le32(const void *p)
 
 void IntelBluetoothFirmware::beginDownloadNew()
 {
-        IOLockLock(completion);
-        mDeviceState = kNewGetVersion;
-        boot_param = 0x00000000;
-        while (true) {
-            if (mDeviceState == kNewUpdateDone || mDeviceState == kNewUpdateAbort) {
-                break;
-            }
-            
-            IOReturn ret;
-            switch (mDeviceState) {
-                case kNewGetVersion:
-                {
-                    XYLog("HCI_OP_INTEL_VERSION\n");
-                    if ((ret = sendHCIRequest(HCI_OP_INTEL_VERSION, 0, NULL)) != kIOReturnSuccess) {
-                        XYLog("Reading Intel version information failed, ret=%d\n %s", ret, stringFromReturn(ret));
-                        goto done;
-                        break;
-                    }
-                    break;
-                }
-                case kNewGetBootParams:
-                {
-                    XYLog("HCI_OP_BOOT_PARAMS\n");
-                    if ((ret = sendHCIRequest(HCI_OP_READ_INTEL_BOOT_PARAMS, 0, NULL)) != kIOReturnSuccess) {
-                        XYLog("Reading Intel version boot params failed, ret=%d\n %s", ret, stringFromReturn(ret));
-                        goto done;
-                        break;
-                    }
-                    break;
-                }
-                case kNewLoadFW:
-                {
-                    uint8_t* fw = (uint8_t*)fwData->getBytesNoCopy();
-                    /* Start the firmware download transaction with the Init fragment
-                     * represented by the 128 bytes of CSS header.
-                     */
-                    int err = 0;
-                    XYLog("send firmware header\n");
-                    uint8_t* fw_ptr = fw;
-                    err = securedSend(0x00, 128, fw_ptr);
-                    if (err < 0) {
-                        XYLog("Failed to send firmware header (%d)\n", err);
-                        goto done;
-                    }
-                    /* Send the 256 bytes of public key information from the firmware
-                     * as the PKey fragment.
-                     */
-                    XYLog("send firmware pkey\n");
-                    fw_ptr = fw + 128;
-                    err = securedSend(0x03, 256, fw_ptr);
-                    if (err < 0) {
-                        XYLog("Failed to send firmware pkey (%d)\n", err);
-                        goto done;
-                    }
-                    /* Send the 256 bytes of signature information from the firmware
-                     * as the Sign fragment.
-                     */
-                    XYLog("send firmware signature\n");
-                    fw_ptr = fw + 388;
-                    err = securedSend(0x02, 256, fw_ptr);
-                    if (err < 0) {
-                        XYLog("Failed to send firmware signature (%d)\n", err);
-                        goto done;
-                    }
-                    fw_ptr = fw + 644;
-                    uint32_t frag_len = 0;
-                    XYLog("send firmware data\n");
-                    while (fw_ptr - fw < fwData->getLength()) {
-                         FWCommandHdr *cmd = (FWCommandHdr *)(fw_ptr + frag_len);
-
-                        /* Each SKU has a different reset parameter to use in the
-                         * HCI_Intel_Reset command and it is embedded in the firmware
-                         * data. So, instead of using static value per SKU, check
-                         * the firmware data and save it for later use.
-                         */
-                        if (cmd->opcode == 0xfc0e) {
-                            /* The boot parameter is the first 32-bit value
-                             * and rest of 3 octets are reserved.
-                             */
-                            boot_param = get_unaligned_le32(fw_ptr + sizeof(*cmd));
-
-                            XYLog("boot_param=0x%x\n", boot_param);
-                        }
-
-                        frag_len += sizeof(*cmd) + cmd->plen;
-
-                        /* The parameter length of the secure send command requires
-                         * a 4 byte alignment. It happens so that the firmware file
-                         * contains proper Intel_NOP commands to align the fragments
-                         * as needed.
-                         *
-                         * Send set of commands with 4 byte alignment from the
-                         * firmware data buffer as a single Data fragement.
-                         */
-                        if (!(frag_len % 4)) {
-                            err = securedSend(0x01, frag_len, fw_ptr);
-                            if (err < 0) {
-                                XYLog("Failed to send firmware data (%d)\n",
-                                       err);
-                                goto done;
-                            }
-
-                            fw_ptr += frag_len;
-                            frag_len = 0;
-                        }
-                    }
-                    XYLog("send firmware done\n");
-                    isRequest = false;
-                    mDeviceState = kNewIntelReset;
-                    break;
-                }
-                case kNewIntelReset:
-                {
-                    XYLog("HCI_OP_INTEL_RESET\n");
-                    IntelReset *params = (IntelReset *)INTEL_RESET_PARAM;
-                    params->boot_param = USBToHost16(boot_param);
-                    if ((ret = sendHCIRequest(HCI_OP_INTEL_RESET_BOOT, sizeof(IntelReset), (void *)INTEL_RESET_PARAM)) != kIOReturnSuccess) {
-                        XYLog("Intel reset failed (%d) boot_param=%08x, %s\n", ret, boot_param, stringFromReturn(ret));
-                        goto done;
-                        break;
-                    }
-                    XYLog("Intel reset succeed\n");
-                    IOSleep(1000);
-                    mDeviceState = kNewSetEventMask;
-                    break;
-                }
-                case kNewSetEventMask:
-                {
-                    XYLog("HCI_OP_INTEL_EVENT_MASK\n");
-                    if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)EVENT_MASK)) != kIOReturnSuccess) {
-                        XYLog("Setting Intel event mask failed (%d) %s\n", ret, stringFromReturn(ret));
-                        goto done;
-                        break;
-                    }
-                    interruptPipeRead();
-                    sendHCIRequest(HCI_OP_RESET, 0, NULL);
-                    mDeviceState = kNewUpdateDone;
-                    break;
-                }
-                default:
-                    break;
-            }
-
-            if (isRequest) {
-                if (!interruptPipeRead())
-                {
-                    XYLog("hci read pipe fail. stop\n");
-                    break;
-                }
-                XYLog("interrupt wait\n");
-                IOLockSleep(completion, this, 0);
-            }
-            isRequest = false;
-            XYLog("interrupt continue\n");
+    IOLockLock(completion);
+    mDeviceState = kNewGetVersion;
+    boot_param = 0x00000000;
+    while (true) {
+        if (mDeviceState == kNewUpdateDone || mDeviceState == kNewUpdateAbort) {
+            break;
         }
         
-    done:
+        IOReturn ret;
+        switch (mDeviceState) {
+            case kNewGetVersion:
+            {
+                XYLog("HCI_OP_INTEL_VERSION\n");
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_VERSION, 0, NULL)) != kIOReturnSuccess) {
+                    XYLog("Reading Intel version information failed, ret=%d\n %s", ret, stringFromReturn(ret));
+                    goto done;
+                    break;
+                }
+                break;
+            }
+            case kNewGetBootParams:
+            {
+                XYLog("HCI_OP_BOOT_PARAMS\n");
+                if ((ret = sendHCIRequest(HCI_OP_READ_INTEL_BOOT_PARAMS, 0, NULL)) != kIOReturnSuccess) {
+                    XYLog("Reading Intel version boot params failed, ret=%d\n %s", ret, stringFromReturn(ret));
+                    goto done;
+                    break;
+                }
+                break;
+            }
+            case kNewLoadFW:
+            {
+                uint8_t* fw = (uint8_t*)fwData->getBytesNoCopy();
+                /* Start the firmware download transaction with the Init fragment
+                 * represented by the 128 bytes of CSS header.
+                 */
+                int err = 0;
+                XYLog("send firmware header\n");
+                uint8_t* fw_ptr = fw;
+                err = securedSend(0x00, 128, fw_ptr);
+                if (err < 0) {
+                    XYLog("Failed to send firmware header (%d)\n", err);
+                    goto done;
+                }
+                /* Send the 256 bytes of public key information from the firmware
+                 * as the PKey fragment.
+                 */
+                XYLog("send firmware pkey\n");
+                fw_ptr = fw + 128;
+                err = securedSend(0x03, 256, fw_ptr);
+                if (err < 0) {
+                    XYLog("Failed to send firmware pkey (%d)\n", err);
+                    goto done;
+                }
+                /* Send the 256 bytes of signature information from the firmware
+                 * as the Sign fragment.
+                 */
+                XYLog("send firmware signature\n");
+                fw_ptr = fw + 388;
+                err = securedSend(0x02, 256, fw_ptr);
+                if (err < 0) {
+                    XYLog("Failed to send firmware signature (%d)\n", err);
+                    goto done;
+                }
+                fw_ptr = fw + 644;
+                uint32_t frag_len = 0;
+                XYLog("send firmware data\n");
+                while (fw_ptr - fw < fwData->getLength()) {
+                    FWCommandHdr *cmd = (FWCommandHdr *)(fw_ptr + frag_len);
+                    
+                    /* Each SKU has a different reset parameter to use in the
+                     * HCI_Intel_Reset command and it is embedded in the firmware
+                     * data. So, instead of using static value per SKU, check
+                     * the firmware data and save it for later use.
+                     */
+                    if (cmd->opcode == 0xfc0e) {
+                        /* The boot parameter is the first 32-bit value
+                         * and rest of 3 octets are reserved.
+                         */
+                        boot_param = get_unaligned_le32(fw_ptr + sizeof(*cmd));
+                        
+                        XYLog("boot_param=0x%x\n", boot_param);
+                    }
+                    
+                    frag_len += sizeof(*cmd) + cmd->plen;
+                    
+                    /* The parameter length of the secure send command requires
+                     * a 4 byte alignment. It happens so that the firmware file
+                     * contains proper Intel_NOP commands to align the fragments
+                     * as needed.
+                     *
+                     * Send set of commands with 4 byte alignment from the
+                     * firmware data buffer as a single Data fragement.
+                     */
+                    if (!(frag_len % 4)) {
+                        err = securedSend(0x01, frag_len, fw_ptr);
+                        if (err < 0) {
+                            XYLog("Failed to send firmware data (%d)\n",
+                                  err);
+                            goto done;
+                        }
+                        
+                        fw_ptr += frag_len;
+                        frag_len = 0;
+                    }
+                }
+                XYLog("send firmware done\n");
+                isRequest = false;
+                mDeviceState = kNewIntelReset;
+                break;
+            }
+            case kNewIntelReset:
+            {
+                XYLog("HCI_OP_INTEL_RESET\n");
+                IntelReset *params = (IntelReset *)INTEL_RESET_PARAM;
+                params->boot_param = USBToHost16(boot_param);
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_RESET_BOOT, sizeof(IntelReset), (void *)INTEL_RESET_PARAM)) != kIOReturnSuccess) {
+                    XYLog("Intel reset failed (%d) boot_param=%08x, %s\n", ret, boot_param, stringFromReturn(ret));
+                    goto done;
+                    break;
+                }
+                XYLog("Intel reset succeed\n");
+                IOSleep(1000);
+                mDeviceState = kNewSetEventMask;
+                break;
+            }
+            case kNewSetEventMask:
+            {
+                XYLog("HCI_OP_INTEL_EVENT_MASK\n");
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)EVENT_MASK)) != kIOReturnSuccess) {
+                    XYLog("Setting Intel event mask failed (%d) %s\n", ret, stringFromReturn(ret));
+                    goto done;
+                    break;
+                }
+                interruptPipeRead();
+                sendHCIRequest(HCI_OP_RESET, 0, NULL);
+                mDeviceState = kNewUpdateDone;
+                break;
+            }
+            default:
+                break;
+        }
         
-        
-        IOLockUnlock(completion);
-        
-        
-        XYLog("End download\n");
-        m_pInterruptReadPipe->abort();
-        m_pInterruptReadPipe->release();
-        m_pInterruptReadPipe = NULL;
-        m_pBulkWritePipe->abort();
-        m_pBulkWritePipe->release();
-        m_pBulkWritePipe = NULL;
-        m_pBulkReadPipe->abort();
-        m_pBulkReadPipe->release();
-        m_pBulkReadPipe = NULL;
-        m_pInterface->close(this);
-        m_pInterface->release();
-        m_pInterface = NULL;
-        m_pDevice->close(this);
-        m_pDevice->release();
-        m_pDevice = NULL;
+        if (isRequest) {
+            if (!interruptPipeRead())
+            {
+                XYLog("hci read pipe fail. stop\n");
+                break;
+            }
+            XYLog("interrupt wait\n");
+            IOLockSleep(completion, this, 0);
+        }
+        isRequest = false;
+        XYLog("interrupt continue\n");
+    }
+    
+done:
+    
+    
+    IOLockUnlock(completion);
+    
+    
+    XYLog("End download\n");
+    m_pInterruptReadPipe->abort();
+    m_pInterruptReadPipe->release();
+    m_pInterruptReadPipe = NULL;
+    m_pBulkWritePipe->abort();
+    m_pBulkWritePipe->release();
+    m_pBulkWritePipe = NULL;
+    m_pBulkReadPipe->abort();
+    m_pBulkReadPipe->release();
+    m_pBulkReadPipe = NULL;
+    m_pInterface->close(this);
+    m_pInterface->release();
+    m_pInterface = NULL;
+    m_pDevice->close(this);
+    m_pDevice->release();
+    m_pDevice = NULL;
+    stop(this);
 }
 
 int IntelBluetoothFirmware::securedSend(uint8_t fragmentType, uint32_t plen, const uint8_t *p)
 {
     while (plen > 0) {
         uint8_t cmd_param[253], fragment_len = (plen > 252) ? 252 : plen;
-
+        
         cmd_param[0] = fragmentType;
         memcpy(cmd_param + 1, p, fragment_len);
-
+        
         uint8_t len = fragment_len + 1;
         bzero(hciCommand, sizeof(HciCommandHdr));
         hciCommand->opcode = 0xfc09;
@@ -972,158 +971,158 @@ int IntelBluetoothFirmware::securedSend(uint8_t fragmentType, uint32_t plen, con
         
         bulkPipeRead();
         IOLockSleep(completion, this, 0);
-
+        
         plen -= fragment_len;
         p += fragment_len;
     }
-
+    
     return 1;
 }
 
 void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int length)
 {
     BtIntel::printAllByte(command, length + HCI_COMMAND_HDR_SIZE);
-        switch (command->opcode) {
-                case HCI_OP_INTEL_VERSION:
-                {
-                    ver = (IntelVersion *)IOMalloc(sizeof(IntelVersion));
-                    memcpy(ver, (uint8_t*)command + 5, sizeof(IntelVersion));
-                    if (ver->hw_platform != 0x37) {
-                        XYLog("Unsupported Intel hardware platform (%u)",
-                               ver->hw_platform);
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    switch (ver->hw_variant) {
-                    case 0x0b:    /* SfP */
-                    case 0x0c:    /* WsP */
-                    case 0x11:    /* JfP */
-                    case 0x12:    /* ThP */
-                    case 0x13:    /* HrP */
-                    case 0x14:    /* CcP */
-                        break;
-                    default:
-                        XYLog("Unsupported Intel hardware variant (%u)",
-                               ver->hw_variant);
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    BtIntel::printIntelVersion(ver);
-                    /* The firmware variant determines if the device is in bootloader
-                     * mode or is running operational firmware. The value 0x06 identifies
-                     * the bootloader and the value 0x23 identifies the operational
-                     * firmware.
-                     *
-                     * When the operational firmware is already present, then only
-                     * the check for valid Bluetooth device address is needed. This
-                     * determines if the device will be added as configured or
-                     * unconfigured controller.
-                     *
-                     * It is not possible to use the Secure Boot Parameters in this
-                     * case since that command is only available in bootloader mode.
-                     */
-                    if (ver->fw_variant == 0x23) {
-                        mDeviceState = kNewUpdateDone;
-                        XYLog("firmware had been download.\n");
-                        break;
-                    }
-                    /* If the device is not in bootloader mode, then the only possible
-                     * choice is to return an error and abort the device initialization.
-                     */
-                    if (ver->fw_variant != 0x06) {
-                        XYLog("Unsupported Intel firmware variant (%u)",
-                               ver->fw_variant);
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    char fw_name[64];
-                    snprintf(fw_name, 64, "ibt-%u-%u-%u",
-                    ver->hw_variant,
-                    ver->hw_revision,
-                    ver->fw_revision);
-                    XYLog("supect device firmware: %s", fw_name);
-                    mDeviceState = kNewGetBootParams;
-                    break;
-                }
-                case HCI_OP_READ_INTEL_BOOT_PARAMS:
-                {
-                    params = (IntelBootParams*)((uint8_t*)command + 5);
-                    if (params->status) {
-                        XYLog("Intel boot parameters command failed (%02x)",
-                               params->status);
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    XYLog("Device revision is %u",
-                            USBToHost16(params->dev_revid));
-                    XYLog("Secure boot is %s",
-                            params->secure_boot ? "enabled" : "disabled");
-                    XYLog("OTP lock is %s",
-                            params->otp_lock ? "enabled" : "disabled");
-                    XYLog("API lock is %s",
-                            params->api_lock ? "enabled" : "disabled");
-                    XYLog("Debug lock is %s",
-                            params->debug_lock ? "enabled" : "disabled");
-                    XYLog("Minimum firmware build %u week %u %u",
-                            params->min_fw_build_nn, params->min_fw_build_cw,
-                            2000 + params->min_fw_build_yy);
-                    /* It is required that every single firmware fragment is acknowledged
-                     * with a command complete event. If the boot parameters indicate
-                     * that this bootloader does not send them, then abort the setup.
-                     */
-                    if (params->limited_cce != 0x00) {
-                        XYLog("Unsupported Intel firmware loading method (%u)",
-                               params->limited_cce);
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    char fw_name[64];
-                    int len = sizeof(fw_name);
-                    switch (ver->hw_variant) {
-                    case 0x0b:    /* SfP */
-                    case 0x0c:    /* WsP */
-                        snprintf(fw_name, len, "ibt-%u-%u",
-                            ver->hw_variant,
-                            params->dev_revid);
-                        break;
-                    case 0x11:    /* JfP */
-                    case 0x12:    /* ThP */
-                    case 0x13:    /* HrP */
-                    case 0x14:    /* CcP */
-                        snprintf(fw_name, len, "ibt-%u-%u-%u",
-                            ver->hw_variant,
-                            ver->hw_revision,
-                            ver->fw_revision);
-                        break;
-                    default:
-                        XYLog("Unsupported Intel firmware naming");
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    if (!fwData) {
-                        FwDesc desc = getFWDescByName(fw_name);
-                        fwData = OSData::withBytes(desc.var, desc.size);
-                    }
-                    XYLog("Found device firmware: %s", fw_name);
-                    if (fwData->getLength() < 644) {
-                        XYLog("Invalid size of firmware file (%zu)",
-                               fwData->getLength());
-                        mDeviceState = kNewUpdateAbort;
-                        break;
-                    }
-                    if (ver) {
-                        IOFree(ver, sizeof(IntelVersion));
-                        ver = NULL;
-                    }
-                    mDeviceState = kNewLoadFW;
-                    break;
-                }
-            case HCI_OP_INTEL_EVENT_MASK:
-                mDeviceState = kNewUpdateDone;
+    switch (command->opcode) {
+        case HCI_OP_INTEL_VERSION:
+        {
+            ver = (IntelVersion *)IOMalloc(sizeof(IntelVersion));
+            memcpy(ver, (uint8_t*)command + 5, sizeof(IntelVersion));
+            if (ver->hw_platform != 0x37) {
+                XYLog("Unsupported Intel hardware platform (%u)",
+                      ver->hw_platform);
+                mDeviceState = kNewUpdateAbort;
                 break;
-                    
-                default:
+            }
+            switch (ver->hw_variant) {
+                case 0x0b:    /* SfP */
+                case 0x0c:    /* WsP */
+                case 0x11:    /* JfP */
+                case 0x12:    /* ThP */
+                case 0x13:    /* HrP */
+                case 0x14:    /* CcP */
                     break;
+                default:
+                    XYLog("Unsupported Intel hardware variant (%u)",
+                          ver->hw_variant);
+                    mDeviceState = kNewUpdateAbort;
+                    break;
+            }
+            BtIntel::printIntelVersion(ver);
+            /* The firmware variant determines if the device is in bootloader
+             * mode or is running operational firmware. The value 0x06 identifies
+             * the bootloader and the value 0x23 identifies the operational
+             * firmware.
+             *
+             * When the operational firmware is already present, then only
+             * the check for valid Bluetooth device address is needed. This
+             * determines if the device will be added as configured or
+             * unconfigured controller.
+             *
+             * It is not possible to use the Secure Boot Parameters in this
+             * case since that command is only available in bootloader mode.
+             */
+            if (ver->fw_variant == 0x23) {
+                mDeviceState = kNewUpdateDone;
+                XYLog("firmware had been download.\n");
+                break;
+            }
+            /* If the device is not in bootloader mode, then the only possible
+             * choice is to return an error and abort the device initialization.
+             */
+            if (ver->fw_variant != 0x06) {
+                XYLog("Unsupported Intel firmware variant (%u)",
+                      ver->fw_variant);
+                mDeviceState = kNewUpdateAbort;
+                break;
+            }
+            char fw_name[64];
+            snprintf(fw_name, 64, "ibt-%u-%u-%u",
+                     ver->hw_variant,
+                     ver->hw_revision,
+                     ver->fw_revision);
+            XYLog("supect device firmware: %s", fw_name);
+            mDeviceState = kNewGetBootParams;
+            break;
+        }
+        case HCI_OP_READ_INTEL_BOOT_PARAMS:
+        {
+            params = (IntelBootParams*)((uint8_t*)command + 5);
+            if (params->status) {
+                XYLog("Intel boot parameters command failed (%02x)",
+                      params->status);
+                mDeviceState = kNewUpdateAbort;
+                break;
+            }
+            XYLog("Device revision is %u",
+                  USBToHost16(params->dev_revid));
+            XYLog("Secure boot is %s",
+                  params->secure_boot ? "enabled" : "disabled");
+            XYLog("OTP lock is %s",
+                  params->otp_lock ? "enabled" : "disabled");
+            XYLog("API lock is %s",
+                  params->api_lock ? "enabled" : "disabled");
+            XYLog("Debug lock is %s",
+                  params->debug_lock ? "enabled" : "disabled");
+            XYLog("Minimum firmware build %u week %u %u",
+                  params->min_fw_build_nn, params->min_fw_build_cw,
+                  2000 + params->min_fw_build_yy);
+            /* It is required that every single firmware fragment is acknowledged
+             * with a command complete event. If the boot parameters indicate
+             * that this bootloader does not send them, then abort the setup.
+             */
+            if (params->limited_cce != 0x00) {
+                XYLog("Unsupported Intel firmware loading method (%u)",
+                      params->limited_cce);
+                mDeviceState = kNewUpdateAbort;
+                break;
+            }
+            char fw_name[64];
+            int len = sizeof(fw_name);
+            switch (ver->hw_variant) {
+                case 0x0b:    /* SfP */
+                case 0x0c:    /* WsP */
+                    snprintf(fw_name, len, "ibt-%u-%u",
+                             ver->hw_variant,
+                             params->dev_revid);
+                    break;
+                case 0x11:    /* JfP */
+                case 0x12:    /* ThP */
+                case 0x13:    /* HrP */
+                case 0x14:    /* CcP */
+                    snprintf(fw_name, len, "ibt-%u-%u-%u",
+                             ver->hw_variant,
+                             ver->hw_revision,
+                             ver->fw_revision);
+                    break;
+                default:
+                    XYLog("Unsupported Intel firmware naming");
+                    mDeviceState = kNewUpdateAbort;
+                    break;
+            }
+            if (!fwData) {
+                FwDesc desc = getFWDescByName(fw_name);
+                fwData = OSData::withBytes(desc.var, desc.size);
+            }
+            XYLog("Found device firmware: %s", fw_name);
+            if (fwData->getLength() < 644) {
+                XYLog("Invalid size of firmware file (%zu)",
+                      fwData->getLength());
+                mDeviceState = kNewUpdateAbort;
+                break;
+            }
+            if (ver) {
+                IOFree(ver, sizeof(IntelVersion));
+                ver = NULL;
+            }
+            mDeviceState = kNewLoadFW;
+            break;
+        }
+        case HCI_OP_INTEL_EVENT_MASK:
+            mDeviceState = kNewUpdateDone;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -1171,27 +1170,27 @@ IOReturn IntelBluetoothFirmware::setPowerState(unsigned long powerStateOrdinal, 
 void IntelBluetoothFirmware::stop(IOService *provider)
 {
     XYLog("Driver Stop()\n");
-//    PMstop();
-//    if (fwData) {
-//        fwData->release();
-//        fwData = NULL;
-//    }
-//    if (mReadBuffer) {
-//        mReadBuffer->complete(kIODirectionIn);
-//        usbCompletion.owner = NULL;
-//        usbCompletion.action = NULL;
-//        OSSafeReleaseNULL(mReadBuffer);
-//        mReadBuffer = NULL;
-//    }
-//    if (completion) {
-//        IOLockFree(completion);
-//        completion = NULL;
-//    }
-//    if (resourceCompletion) {
-//        IOLockFree(resourceCompletion);
-//        resourceCompletion = NULL;
-//    }
-//    cleanUp();
+    //    PMstop();
+    //    if (fwData) {
+    //        fwData->release();
+    //        fwData = NULL;
+    //    }
+    //    if (mReadBuffer) {
+    //        mReadBuffer->complete(kIODirectionIn);
+    //        usbCompletion.owner = NULL;
+    //        usbCompletion.action = NULL;
+    //        OSSafeReleaseNULL(mReadBuffer);
+    //        mReadBuffer = NULL;
+    //    }
+    //    if (completion) {
+    //        IOLockFree(completion);
+    //        completion = NULL;
+    //    }
+    //    if (resourceCompletion) {
+    //        IOLockFree(resourceCompletion);
+    //        resourceCompletion = NULL;
+    //    }
+    //    cleanUp();
     super::stop(provider);
 }
 
@@ -1202,7 +1201,7 @@ IOService * IntelBluetoothFirmware::probe(IOService *provider, SInt32 *score)
         XYLog("super probe failed\n");
         return NULL;
     }
-//    *score = 3500;
+    //    *score = 3500;
     m_pDevice = OSDynamicCast(IOUSBHostDevice, provider);
     if (!m_pDevice) {
         XYLog("is not usb device\n");
