@@ -13,13 +13,15 @@ After a few months public test, it seems like it is work well and stable. Curren
 - 0x8087, 0x0029
 - 0x8087, 0x0a2b
 
-###Installation
-Download two files from the latest release, and put then in to the kext directory and then restart.
+Installation
+-------
+Download the two files from the latest release, and put then in to the kext directory and then restart.
 **Do not** put the kext files to L/E or S/L/E, may be it will cause system freeze.
 - **IntelBluetoothFirmware.kext**  driver to upload firmware.
 - **IntelBluetoothInjector.kext** it is just only provide and display open/close switch on the bluetooth panel, it is not nesseary to install.
 
-###Troublesshooting
+Troublesshooting
+-------
 In case there is something wrong cause the drivers not work, please use terminal and run command
 log show --last boot | grep IntelFirmware
 to take the driver logs, send it to me or raise issue. If there is no log, maybe you should check USB、DSDT、bios etc.
