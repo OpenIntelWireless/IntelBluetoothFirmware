@@ -1,8 +1,13 @@
-IntelBluetoothFirmware
-=========
-IntelBluetoothFirmware is a driver that can upload intel wireless bluetooth firmware to support native bluetooth. The firmware binary files are com from linux open source project.
+# IntelBluetoothFirmware
 
-After a few months public test, it seems like it is work well and stable. Currently it is only support 10.12 or greater version system, support device ids as below:
+- **English**
+- [简体中文](/.github/README-zh_Hans.md)
+
+IntelBluetoothFirmware is a Kernel Extension that uploads Intel Wireless Bluetooth Firmware to provide native Bluetooth in macOS.
+The firmware binary files are com from the Linux Open Source Project.
+
+After a few months of public testing, it seems like this Kext works well and stable.
+Currently it supports macOS 10.13 or higher, supported device ids are:
 
 - 0x8087, 0x0a2a
 - 0x8087, 0x07dc
@@ -13,15 +18,23 @@ After a few months public test, it seems like it is work well and stable. Curren
 - 0x8087, 0x0029
 - 0x8087, 0x0a2b
 
-Installation
--------
-Download the two files from the latest release, and put then in to the kext directory and then restart.
-**Do not** put the kext files to L/E or S/L/E, may be it will cause system freeze.
-- **IntelBluetoothFirmware.kext**  driver to upload firmware.
-- **IntelBluetoothInjector.kext** it is just only provide and display open/close switch on the bluetooth panel, it is not nesseary to install.
+## Installation
 
-Troublesshooting
--------
-In case there is something wrong cause the drivers not work, please use terminal and run command
+Download the [latest release](https://github.com/zxystd/IntelBluetoothFirmware/releases/latest), inject the Kext files into the Bootloader and then restart.
+
+***Do not*** inject the Kext files to `/Library/Extensions` or `/System/Library/Extensions` as it may likely **freeze the system**.
+
+- **IntelBluetoothFirmware.kext**
+  > Driver to upload the firmware.
+- **IntelBluetoothInjector.kext**
+  > Dummy Kext to enable open/close switch on the Bluetooth settings panel, not necessary to install.
+
+## Troubleshooting
+
+In case there is something wrong with the driver, please run the following command in Terminal:
+
+```sh
 log show --last boot | grep IntelFirmware
-to take the driver logs, send it to me or raise issue. If there is no log, maybe you should check USB、DSDT、bios etc.
+```
+
+Save the driver logs, send it to me by opening an issue. **If there are no logs, you should probably check your Bootloader, USB, BIOS, etc.**
