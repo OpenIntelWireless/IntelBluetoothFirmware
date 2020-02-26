@@ -471,8 +471,6 @@ void IntelBluetoothFirmware::beginDownload()
                         goto done;
                         break;
                     }
-                    XYLog("ori=%02X\n", (uint8_t)*(uint8_t*)cmd_param);
-                    XYLog("evt=%02X\n", evt->evt);
                     if ((ret = sendHCIRequest(USBToHost16(cmd->opcode), cmd->plen, (void *)cmd_param)) != kIOReturnSuccess) {
                         XYLog("sending Intel patch command (0x%4.4x) failed (%d) %s",
                               cmd->opcode, ret, stringFromReturn(ret));
@@ -540,7 +538,9 @@ done:
     
     
     IOLockUnlock(completion);
-    
+    if (mDeviceState == kUpdateDone) {
+        publishReg();
+    }
     XYLog("End download\n");
     m_pInterruptReadPipe->abort();
     m_pInterruptReadPipe->release();
@@ -690,15 +690,14 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
                 mDeviceState = kSetEventMask;
                 break;
             }
-            char fwname[64];
-            snprintf(fwname, sizeof(fwname),
-                     "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x",
+            snprintf(firmwareName, sizeof(firmwareName),
+                     "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x.bseq",
                      ver->hw_platform, ver->hw_variant, ver->hw_revision,
                      ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
                      ver->fw_build_ww, ver->fw_build_yy);
-            XYLog("request firmware %s \n", fwname);
+            XYLog("request firmware %s \n", firmwareName);
             if (!fwData) {
-                FwDesc desc = getFWDescByName(fwname);
+                FwDesc desc = getFWDescByName(firmwareName);
                 fwData = OSData::withBytes(desc.var, desc.size);
                 //                fwData = requestFirmware(fwname);
                 //                if (!fwData) {
@@ -727,6 +726,11 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
         default:
             break;
     }
+}
+
+void IntelBluetoothFirmware::publishReg()
+{
+    setProperty("fw_name", OSString::withCString(firmwareName));
 }
 
 #include <IOKit/IOTypes.h>
@@ -932,6 +936,9 @@ done:
     
     IOLockUnlock(completion);
     
+    if (mDeviceState == kNewUpdateDone) {
+        publishReg();
+    }
     
     XYLog("End download\n");
     m_pInterruptReadPipe->abort();
@@ -1035,12 +1042,11 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                 mDeviceState = kNewUpdateAbort;
                 break;
             }
-            char fw_name[64];
-            snprintf(fw_name, 64, "ibt-%u-%u-%u",
+            snprintf(firmwareName, 64, "ibt-%u-%u-%u.sfi",
                      ver->hw_variant,
                      ver->hw_revision,
                      ver->fw_revision);
-            XYLog("supect device firmware: %s", fw_name);
+            XYLog("supect device firmware: %s", firmwareName);
             mDeviceState = kNewGetBootParams;
             break;
         }
@@ -1081,7 +1087,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
             switch (ver->hw_variant) {
                 case 0x0b:    /* SfP */
                 case 0x0c:    /* WsP */
-                    snprintf(fw_name, len, "ibt-%u-%u",
+                    snprintf(fw_name, len, "ibt-%u-%u.sfi",
                              ver->hw_variant,
                              params->dev_revid);
                     break;
@@ -1089,7 +1095,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                 case 0x12:    /* ThP */
                 case 0x13:    /* HrP */
                 case 0x14:    /* CcP */
-                    snprintf(fw_name, len, "ibt-%u-%u-%u",
+                    snprintf(fw_name, len, "ibt-%u-%u-%u.sfi",
                              ver->hw_variant,
                              ver->hw_revision,
                              ver->fw_revision);
@@ -1163,7 +1169,7 @@ void IntelBluetoothFirmware::onLoadFW(OSKextRequestTag requestTag, OSReturn resu
 
 IOReturn IntelBluetoothFirmware::setPowerState(unsigned long powerStateOrdinal, IOService *whatDevice)
 {
-    XYLog("setPowerState powerStateOrdinal=%lu\n", powerStateOrdinal);
+//    XYLog("setPowerState powerStateOrdinal=%lu\n", powerStateOrdinal);
     return IOPMAckImplied;
 }
 
