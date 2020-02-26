@@ -20,6 +20,10 @@ IntelBluetoothFirmware 是一个用于在 macOS 中启用原生蓝牙的固件�
 
 下载[最新 release](https://github.com/zxystd/IntelBluetoothFirmware/releases/latest)，注入到引导工具后重启即可。
 
+或者解压后,置于`/EFI/EFI/CLOVER/kexts/Other`,跟其他`*.kext`文件放在一起.然后重建缓存`sudo kextcache -i /`,重启.
+
+亲测小米pro gtx 双系统无需再热启动,并且可以关闭蓝牙.
+
 **不要** 把驱动安装到 `/Library/Extensions` 或 `/System/Library/Extensions`，系统很有可能因此冻结。
 
 - **IntelBluetoothFirmware.kext**
