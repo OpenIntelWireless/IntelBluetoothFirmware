@@ -63,6 +63,8 @@ public:
     
     bool initInterface();
     
+    void publishReg();
+    
     OSData *requestFirmware(const char* resourceName);
     
     static void onLoadFW(
@@ -98,6 +100,7 @@ public:
 private:
     bool isRequest;
     OSData *fwData;
+    char firmwareName[64];
     HciCommandHdr *hciCommand;
     struct ResourceCallbackContext
     {
