@@ -1,14 +1,12 @@
 ---
 name: Bug report
 about: Issue with the Kext
-title: "[BUG]"
 labels: bug
 assignees: ''
 
 ---
 
 **Description**
-
 > A clear and concise description of what the bug is
 
 **Environment**
