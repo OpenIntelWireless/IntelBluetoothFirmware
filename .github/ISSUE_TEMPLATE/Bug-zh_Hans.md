@@ -1,14 +1,12 @@
 ---
 name: Bug 报告
 about: Kext 存在问题
-title: "[BUG]"
 labels: bug
 assignees: ''
 
 ---
 
 **描述**
-
 > 简要描述 Kext 存在的问题
 
 **环境**
