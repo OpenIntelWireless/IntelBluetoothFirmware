@@ -7,7 +7,6 @@
 //
 
 #include "BtIntel.h"
-#include <IOKit/IOLib.h>
 #include <string.h>
 #include "Log.h"
 
