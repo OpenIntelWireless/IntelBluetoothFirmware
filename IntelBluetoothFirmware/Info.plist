@@ -145,22 +145,14 @@
 	<string>Copyright © 2019 钟先耀. All rights reserved.</string>
 	<key>OSBundleLibraries</key>
 	<dict>
-		<key>com.apple.iokit.IOACPIFamily</key>
-		<string>1.0</string>
-		<key>com.apple.iokit.IOBluetoothFamily</key>
-		<string>1.0</string>
 		<key>com.apple.iokit.IOUSBHostFamily</key>
-		<string>1.0</string>
-		<key>com.apple.kpi.bsd</key>
-		<string>8.0</string>
+		<string>1.2</string>
 		<key>com.apple.kpi.iokit</key>
-		<string>8.0</string>
+		<string>16.7</string>
 		<key>com.apple.kpi.libkern</key>
-		<string>8.0</string>
+		<string>16.7</string>
 		<key>com.apple.kpi.mach</key>
-		<string>8.0</string>
-		<key>com.apple.kpi.unsupported</key>
-		<string>8.0</string>
+		<string>16.7</string>
 	</dict>
 </dict>
 </plist>

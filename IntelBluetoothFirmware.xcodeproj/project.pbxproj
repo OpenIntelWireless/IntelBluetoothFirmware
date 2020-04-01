@@ -21,13 +21,6 @@
 			remoteGlobalIDString = F831F1932406B3DF00DD1390;
 			remoteInfo = FB;
 		};
-		F8F6361B2406C57A00497626 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F834E40C237C20FF000CB269 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8F636102406C4AA00497626;
-			remoteInfo = IntelBluetoothInjector;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -226,7 +219,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F8F6361C2406C57A00497626 /* PBXTargetDependency */,
 				F831F1982406B3E500DD1390 /* PBXTargetDependency */,
 			);
 			name = IntelBluetoothFirmware;
@@ -334,11 +326,6 @@
 			isa = PBXTargetDependency;
 			target = F831F1932406B3DF00DD1390 /* FB */;
 			targetProxy = F831F1972406B3E500DD1390 /* PBXContainerItemProxy */;
-		};
-		F8F6361C2406C57A00497626 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8F636102406C4AA00497626 /* IntelBluetoothInjector */;
-			targetProxy = F8F6361B2406C57A00497626 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -489,7 +476,7 @@
 				CURRENT_PROJECT_VERSION = 1.0.3;
 				DEVELOPMENT_TEAM = YXX7XALBVX;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0.3;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.0.1;
@@ -509,7 +496,7 @@
 				CURRENT_PROJECT_VERSION = 1.0.3;
 				DEVELOPMENT_TEAM = YXX7XALBVX;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0.3;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.0.1;
