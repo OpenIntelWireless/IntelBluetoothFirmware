@@ -695,7 +695,7 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
                      ver->hw_platform, ver->hw_variant, ver->hw_revision,
                      ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
                      ver->fw_build_ww, ver->fw_build_yy);
-            XYLog("request firmware %s \n", firmwareName);
+            XYLog("Found device firmware %s \n", firmwareName);
             if (!fwData) {
                 FwDesc desc = getFWDescByName(firmwareName);
                 fwData = OSData::withBytes(desc.var, desc.size);

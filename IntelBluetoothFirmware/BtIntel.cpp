@@ -7,7 +7,6 @@
 //
 
 #include "BtIntel.h"
-#include <string.h>
 #include "Log.h"
 
 uint8_t BtIntel::intelConvertSpeed(unsigned int speed)
