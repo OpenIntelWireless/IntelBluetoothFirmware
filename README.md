@@ -31,6 +31,8 @@ Download the [latest release](https://github.com/zxystd/IntelBluetoothFirmware/r
 
 ## Troubleshooting
 
+The Bluetooth controllers supported by this kext are in fact connected internally over USB. Therefore you need to make sure your (internal) USB ports are properly configured before attempting to use this Kext. Checking your USB device is very easy: just open `System Information`, and go in the `USB` tab. If you see an `Bluetooth HCI` entry, you're good to go. Otherwise you need to check your USB configuration.
+
 In case there is something wrong with the driver, please run the following command in Terminal:
 
 ```sh
