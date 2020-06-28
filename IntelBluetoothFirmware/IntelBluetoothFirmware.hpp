@@ -20,6 +20,8 @@ enum BTType {
 class IntelBluetoothFirmware : public IOService
 {
     OSDeclareDefaultStructors (IntelBluetoothFirmware)
+protected:
+    virtual void powerChangeDone(unsigned long stateNumber) override;
     
 public:
     
@@ -109,6 +111,10 @@ private:
     };
     BTType currentType;
     uint32_t boot_param;
+    
+    IOLock *mLock;
+    unsigned long mDevicePowerState;
+    SInt32 mOutstandIO;
 };
 
 #endif

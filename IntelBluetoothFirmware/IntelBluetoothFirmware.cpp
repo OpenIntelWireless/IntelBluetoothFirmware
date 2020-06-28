@@ -15,7 +15,12 @@ OSDefineMetaClassAndStructors(IntelBluetoothFirmware, IOService)
 #define kReadBufferSize 4096
 //com.apple.iokit.IOBluetoothHostControllerUSBTransport
 
-enum { kMyOffPowerState = 0, kMyOnPowerState = 1 };
+enum {
+    kMyOffPowerState,
+    kMyOnPowerState,
+    //
+    kMyNumPowerStates
+};
 
 enum {
     kReset,
@@ -42,8 +47,10 @@ enum {
 
 static IOPMPowerState myTwoStates[2] =
 {
-    {1, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
+    //kMyOffPowerState
+    {kIOPMPowerStateVersion1, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    //kMyOnPowerState
+    {kIOPMPowerStateVersion1, (kIOPMPowerOn | kIOPMDeviceUsable), kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 bool IntelBluetoothFirmware::init(OSDictionary *dictionary)
@@ -55,6 +62,11 @@ bool IntelBluetoothFirmware::init(OSDictionary *dictionary)
 void IntelBluetoothFirmware::free() {
     XYLog("Driver free()\n");
     //    cleanUp();
+    
+    if (mLock) {
+        IOLockFree(mLock);
+    }
+    
     if (hciCommand) {
         IOFree(hciCommand, sizeof(HciCommandHdr));
         hciCommand = NULL;
@@ -72,10 +84,18 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         return false;
     }
     
+    // Create a lock for driver/power management synchronization
+    mLock = IOLockAlloc();
+    if (!mLock) {
+        return false;
+    }
+    
     PMinit();
-    registerPowerDriver(this, myTwoStates, 2);
     provider->joinPMtree(this);
     makeUsable();
+    registerPowerDriver(this, myTwoStates, kMyNumPowerStates);
+    setIdleTimerPeriod(60);
+    registerService();
     
     hciCommand = (HciCommandHdr *)IOMalloc(sizeof(HciCommandHdr));
     
@@ -1169,14 +1189,41 @@ void IntelBluetoothFirmware::onLoadFW(OSKextRequestTag requestTag, OSReturn resu
 
 IOReturn IntelBluetoothFirmware::setPowerState(unsigned long powerStateOrdinal, IOService *whatDevice)
 {
-//    XYLog("setPowerState powerStateOrdinal=%lu\n", powerStateOrdinal);
+    XYLog("setPowerState(0x%lx)\n", powerStateOrdinal);
+
+    if (powerStateOrdinal < mDevicePowerState) {
+        mDevicePowerState = powerStateOrdinal;
+    }
+
+    switch (powerStateOrdinal) {
+        case kMyOffPowerState:
+            // Wait for outstanding IO to complete before putting device into a
+            // lowe power state
+            IOLockLock(mLock);
+            while (mOutstandIO != 0) {
+                IOLockSleep(mLock, &mOutstandIO, THREAD_UNINT);
+            }
+            IOLockUnlock(mLock);
+            break;
+    }
+
+    if (powerStateOrdinal > mDevicePowerState) {
+        mDevicePowerState = powerStateOrdinal;
+    }
     return IOPMAckImplied;
+}
+
+void IntelBluetoothFirmware::powerChangeDone(unsigned long stateNumber)
+{
+    // Wake up threads waiting on power state change
+    XYLog("powerChangeDone(0x%lx)\n", stateNumber);
+    IOLockWakeup(mLock, &mDevicePowerState, false);
 }
 
 void IntelBluetoothFirmware::stop(IOService *provider)
 {
     XYLog("Driver Stop()\n");
-    //    PMstop();
+    PMstop();
     //    if (fwData) {
     //        fwData->release();
     //        fwData = NULL;
