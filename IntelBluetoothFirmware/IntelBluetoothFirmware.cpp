@@ -1066,7 +1066,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                      ver->hw_variant,
                      ver->hw_revision,
                      ver->fw_revision);
-            XYLog("supect device firmware: %s", firmwareName);
+            XYLog("suspect device firmware: %s", firmwareName);
             mDeviceState = kNewGetBootParams;
             break;
         }
