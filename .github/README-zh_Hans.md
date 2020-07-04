@@ -15,6 +15,7 @@ IntelBluetoothFirmware 是一个用于在 macOS 中启用原生蓝牙的固件�
 - 0x8087, 0x0026
 - 0x8087, 0x0029
 - 0x8087, 0x0a2b
+- 0x8087, 0x0032
 
 ## 安装
 
@@ -36,3 +37,7 @@ log show --last boot | grep IntelFirmware
 ```
 
 保存驱动程序日志，并在 issue 中附上。 **如果没有日志生成，你需要先检查引导工具，USB，BIOS 等等。**
+
+## 参考资料
+- [torvalds/linux](https://github.com/torvalds/linux)
+- [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM)
