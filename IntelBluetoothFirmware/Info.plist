@@ -26,6 +26,8 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
 			<key>IOProviderClass</key>
@@ -40,6 +42,8 @@
 			<key>CFBundleIdentifier</key>
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
 			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
@@ -56,6 +60,8 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
 			<key>IOProviderClass</key>
@@ -70,6 +76,8 @@
 			<key>CFBundleIdentifier</key>
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
 			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
@@ -86,6 +94,8 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
 			<key>IOProviderClass</key>
@@ -100,6 +110,8 @@
 			<key>CFBundleIdentifier</key>
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
 			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
@@ -116,6 +128,8 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
 			<key>IOProviderClass</key>
@@ -131,6 +145,8 @@
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
 			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>
 			<key>IOProviderClass</key>
@@ -145,6 +161,8 @@
 			<key>CFBundleIdentifier</key>
 			<string>com.zxystd.IntelBluetoothFirmware</string>
 			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
 			<string>IntelBluetoothFirmware</string>
 			<key>IOProbeScore</key>
 			<integer>4000</integer>

@@ -65,15 +65,6 @@ public:
     
     void publishReg();
     
-    OSData *requestFirmware(const char* resourceName);
-    
-    static void onLoadFW(
-    OSKextRequestTag                requestTag,
-    OSReturn                        result,
-    const void                    * resourceData,
-    uint32_t                        resourceDataLength,
-                         void                          * context);
-    
 public:
     
     
@@ -85,13 +76,6 @@ public:
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
-    IOLock* resourceCompletion;
-    IOLock* resourceCallbackCompletion;
-    
-    IOLock* bootupLock;
-    IOLock* downloadLock;
-    
-    bool isBootUp;
     
     int mDeviceState;
     IntelVersion *ver;
