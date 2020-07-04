@@ -91,6 +91,8 @@ public:
     IOLock* bootupLock;
     IOLock* downloadLock;
     
+    bool isBootUp;
+    
     int mDeviceState;
     IntelVersion *ver;
     IntelBootParams *params;

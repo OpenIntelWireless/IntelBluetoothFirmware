@@ -17,6 +17,7 @@ Currently it supports macOS 10.13 or higher, supported device ids are:
 - 0x8087, 0x0026
 - 0x8087, 0x0029
 - 0x8087, 0x0a2b
+- 0x8087, 0x0032
 
 ## Installation
 
@@ -38,3 +39,7 @@ log show --last boot | grep IntelFirmware
 ```
 
 Save the driver logs, send it to me by opening an issue. **If there are no logs, you should probably check your Bootloader, USB, BIOS, etc.**
+
+## Credits
+- [torvalds/linux](https://github.com/torvalds/linux)
+- [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM)
