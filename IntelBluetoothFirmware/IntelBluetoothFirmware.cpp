@@ -34,6 +34,7 @@ enum {
     kNewLoadFW,
     kNewIntelReset,
     kNewSetEventMask,
+    kNewResetToBL,
     kNewUpdateAbort,
     kNewUpdateDone
 };
@@ -571,7 +572,7 @@ void IntelBluetoothFirmware::onRead(void *owner, void *parameter, IOReturn statu
             break;
     }
     
-    IOLockWakeup(that->completion, that, true);
+    IOLockWakeup(that->completion, that, false);
 }
 
 void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, void* output, UInt8* outputLength)
@@ -861,19 +862,32 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     goto done;
                     break;
                 }
-                if (!isBootup) {
-                    AbsoluteTime deadline;
-                    interruptPipeRead();
-                    IOLockLock(completion);
-                    clock_interval_to_deadline(1000, kMillisecondScale, reinterpret_cast<uint64_t*> (&deadline));
-                    int ret = IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
-                    IOLockUnlock(completion);
-                    if (ret != THREAD_AWAKENED) {
-                        XYLog("%s wait for bootup timeout\n", __FUNCTION__);
-                    }
-                    isRequest = true;
-                }
+//                if (!isBootup) {
+//                    AbsoluteTime deadline;
+//                    interruptPipeRead();
+//                    IOLockLock(completion);
+//                    clock_interval_to_deadline(1000, kMillisecondScale, reinterpret_cast<uint64_t*> (&deadline));
+//                    int ret = IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
+//                    IOLockUnlock(completion);
+//                    if (ret != THREAD_AWAKENED) {
+//                        XYLog("%s wait for bootup timeout\n", __FUNCTION__);
+//                    }
+//                    isRequest = true;
+//                }
                 mDeviceState = kNewUpdateDone;
+                break;
+            }
+            case kNewResetToBL:
+            {
+                XYLog("HCI_OP_INTEL_RESET_BL\n");
+                if ((ret = sendHCIRequest(HCI_OP_INTEL_RESET_BOOT, sizeof(IntelReset), (void *)INTEL_RESET_BL_PARAM)) != kIOReturnSuccess) {
+                    XYLog("FW download error recovery failed (%ld), %s\n", ret, stringFromReturn(ret));
+                    m_pDevice->reset();
+                    goto done;
+                    break;
+                }
+                IOSleep(150);
+                goto done;
                 break;
             }
             default:
@@ -890,8 +904,12 @@ void IntelBluetoothFirmware::beginDownloadNew()
             IOLockLock(completion);
             AbsoluteTime deadline;
             clock_interval_to_deadline(HCI_INIT_TIMEOUT, kMillisecondScale, reinterpret_cast<uint64_t*> (&deadline));
-            IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
+            int ret = IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
             IOLockUnlock(completion);
+            if (ret != THREAD_AWAKENED) {
+                XYLog("HCI Timeout, retry\n");
+                mDeviceState = kNewResetToBL;
+            }
         }
         isRequest = false;
         XYLog("interrupt continue\n");
