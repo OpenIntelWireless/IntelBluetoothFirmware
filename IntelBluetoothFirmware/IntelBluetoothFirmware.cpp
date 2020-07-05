@@ -585,6 +585,7 @@ void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, voi
                     
                 case 0x02:
                     XYLog("Notify: Device reboot done\n");
+                    isBootup = true;
                     break;
                 case 0x06:
                     XYLog("Notify: Firmware download done\n");
@@ -845,9 +846,10 @@ void IntelBluetoothFirmware::beginDownloadNew()
                 int ret = IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
                 IOLockUnlock(completion);
                 if (ret != THREAD_AWAKENED) {
-                    XYLog("%s wait for bootup timeout\n", __FUNCTION__);
+                    XYLog("%s wait for firmware download done timeout\n", __FUNCTION__);
                 }
                 isRequest = true;
+                isBootup = false;
                 mDeviceState = kNewSetEventMask;
                 break;
             }
@@ -858,6 +860,18 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     XYLog("Setting Intel event mask failed (%d) %s\n", ret, stringFromReturn(ret));
                     goto done;
                     break;
+                }
+                if (!isBootup) {
+                    AbsoluteTime deadline;
+                    interruptPipeRead();
+                    IOLockLock(completion);
+                    clock_interval_to_deadline(1000, kMillisecondScale, reinterpret_cast<uint64_t*> (&deadline));
+                    int ret = IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
+                    IOLockUnlock(completion);
+                    if (ret != THREAD_AWAKENED) {
+                        XYLog("%s wait for bootup timeout\n", __FUNCTION__);
+                    }
+                    isRequest = true;
                 }
                 mDeviceState = kNewUpdateDone;
                 break;
