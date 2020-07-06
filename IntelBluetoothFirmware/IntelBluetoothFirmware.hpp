@@ -76,7 +76,6 @@ public:
     
     IOLock* completion;
     IOUSBHostCompletion usbCompletion;
-    bool isBootup;
     
     int mDeviceState;
     IntelVersion *ver;
