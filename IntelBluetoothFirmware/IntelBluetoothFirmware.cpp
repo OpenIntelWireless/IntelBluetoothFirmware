@@ -198,7 +198,7 @@ bool IntelBluetoothFirmware::initInterface()
         uint8_t epDirection = StandardUSB::getEndpointDirection(endpointDescriptor);
         uint8_t epType = StandardUSB::getEndpointType(endpointDescriptor);
         if (epDirection == kUSBIn && epType == kUSBInterrupt) {
-            XYLog("Found Interrupt endpoint！！！\n");
+            XYLog("Found Interrupt endpoint!\n");
             m_pInterruptReadPipe = m_pInterface->copyPipe(StandardUSB::getEndpointAddress(endpointDescriptor));
             if (m_pInterruptReadPipe == NULL) {
                 XYLog("copy InterruptReadPipe pipe fail\n");
@@ -208,7 +208,7 @@ bool IntelBluetoothFirmware::initInterface()
             m_pInterruptReadPipe->release();
         } else {
             if (epDirection == kUSBOut && epType == kUSBBulk) {
-                XYLog("Found Bulk out endpoint！！！\n");
+                XYLog("Found Bulk out endpoint!\n");
                 m_pBulkWritePipe = m_pInterface->copyPipe(StandardUSB::getEndpointAddress(endpointDescriptor));
                 if (m_pBulkWritePipe == NULL) {
                     XYLog("copy Bulk pipe fail\n");
@@ -218,7 +218,7 @@ bool IntelBluetoothFirmware::initInterface()
                 m_pBulkWritePipe->release();
             } else {
                 if (epDirection == kUSBIn && epType == kUSBBulk) {
-                    XYLog("Found Bulk in endpoint！！！\n");
+                    XYLog("Found Bulk in endpoint!\n");
                     m_pBulkReadPipe = m_pInterface->copyPipe(StandardUSB::getEndpointAddress(endpointDescriptor));
                     if (m_pBulkReadPipe == NULL) {
                         XYLog("copy Bulk pipe fail\n");
@@ -586,7 +586,6 @@ void IntelBluetoothFirmware::parseHCIResponse(void* response, UInt16 length, voi
                     
                 case 0x02:
                     XYLog("Notify: Device reboot done\n");
-                    isBootup = true;
                     break;
                 case 0x06:
                     XYLog("Notify: Firmware download done\n");
@@ -850,7 +849,6 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     XYLog("%s wait for firmware download done timeout\n", __FUNCTION__);
                 }
                 isRequest = true;
-                isBootup = false;
                 mDeviceState = kNewSetEventMask;
                 break;
             }
@@ -862,18 +860,6 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     goto done;
                     break;
                 }
-//                if (!isBootup) {
-//                    AbsoluteTime deadline;
-//                    interruptPipeRead();
-//                    IOLockLock(completion);
-//                    clock_interval_to_deadline(1000, kMillisecondScale, reinterpret_cast<uint64_t*> (&deadline));
-//                    int ret = IOLockSleepDeadline(completion, this, deadline, THREAD_INTERRUPTIBLE);
-//                    IOLockUnlock(completion);
-//                    if (ret != THREAD_AWAKENED) {
-//                        XYLog("%s wait for bootup timeout\n", __FUNCTION__);
-//                    }
-//                    isRequest = true;
-//                }
                 mDeviceState = kNewUpdateDone;
                 break;
             }
@@ -887,6 +873,8 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     break;
                 }
                 IOSleep(150);
+                //some devices will not re enum controllers after sending RESET_BL command, so reset it again.
+                m_pDevice->reset();
                 goto done;
                 break;
             }
