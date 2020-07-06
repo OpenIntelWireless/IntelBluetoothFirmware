@@ -483,7 +483,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.12;
 				SUPPORTED_PLATFORMS = macosx;
 				WRAPPER_EXTENSION = kext;
 			};
@@ -504,7 +504,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.12;
 				SUPPORTED_PLATFORMS = macosx;
 				WRAPPER_EXTENSION = kext;
 			};

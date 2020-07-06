@@ -279,7 +279,18 @@ bool IntelBluetoothFirmware::interruptPipeRead()
     if ((result = m_pInterruptReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), &usbCompletion, 0)) != kIOReturnSuccess) {
         if (result == kIOUSBPipeStalled)
         {
-            m_pInterruptReadPipe->clearStall(false);
+            XYLog("%s pipe stall, try clear\n", __FUNCTION__);
+            bool clearSucceed = false;
+            for (int i = 0; i < 1000; i++) {
+                if (m_pInterruptReadPipe->clearStall(true) != kIOUSBPipeStalled) {
+                    XYLog("%s %d clear stall succeed.\n", __FUNCTION__, i);
+                    clearSucceed = true;
+                    break;
+                }
+            }
+            if (clearSucceed) {
+                return (result = m_pInterruptReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), &usbCompletion, 0)) != kIOReturnSuccess;
+            }
         }
         return false;
     }
@@ -293,7 +304,18 @@ bool IntelBluetoothFirmware::bulkPipeRead()
     if ((result = m_pBulkReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), &usbCompletion, 0)) != kIOReturnSuccess) {
         if (result == kIOUSBPipeStalled)
         {
-            m_pBulkReadPipe->clearStall(false);
+            XYLog("%s pipe stall, try clear\n", __FUNCTION__);
+            bool clearSucceed = false;
+            for (int i = 0; i < 1000; i++) {
+                if (m_pBulkReadPipe->clearStall(true) != kIOUSBPipeStalled) {
+                    XYLog("%s %d clear stall succeed.\n", __FUNCTION__, i);
+                    clearSucceed = true;
+                    break;
+                }
+            }
+            if (clearSucceed) {
+                return (result = m_pBulkReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), &usbCompletion, 0)) != kIOReturnSuccess;
+            }
         }
         return false;
     }
@@ -325,7 +347,7 @@ void IntelBluetoothFirmware::beginDownload()
             {
                 XYLog("HCI_OP_INTEL_VERSION\n");
                 if ((ret = sendHCIRequest(HCI_OP_INTEL_VERSION, 0, NULL)) != kIOReturnSuccess) {
-                    XYLog("Reading Intel version information failed, ret=%d\n %s", ret, stringFromReturn(ret));
+                    XYLog("Reading Intel version information failed, ret=%d %s\n", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
@@ -335,7 +357,7 @@ void IntelBluetoothFirmware::beginDownload()
             {
                 XYLog("HCI_OP_INTEL_ENTER_MFG\n");
                 if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)ENTER_MFG_PARAM)) != kIOReturnSuccess) {
-                    XYLog("Entering manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
+                    XYLog("Entering manufacturer mode failed (%d) %s\n", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
@@ -359,7 +381,7 @@ void IntelBluetoothFirmware::beginDownload()
                      * process.
                      */
                     if (remain > HCI_COMMAND_HDR_SIZE && fw_ptr[0] != 0x01) {
-                        XYLog("Intel fw corrupted: invalid cmd read");
+                        XYLog("Intel fw corrupted: invalid cmd read\n");
                         mDeviceState = kUpdateAbort;
                         goto done;
                         break;
@@ -373,7 +395,7 @@ void IntelBluetoothFirmware::beginDownload()
                      * of command parameter. If not, the firmware file is corrupted.
                      */
                     if (remain < cmd->plen) {
-                        XYLog("Intel fw corrupted: invalid cmd len");
+                        XYLog("Intel fw corrupted: invalid cmd len\n");
                         goto done;
                         break;
                     }
@@ -406,7 +428,7 @@ void IntelBluetoothFirmware::beginDownload()
                         remain -= sizeof(*evt);
                         
                         if (remain < evt->plen) {
-                            XYLog("Intel fw corrupted: invalid evt len");
+                            XYLog("Intel fw corrupted: invalid evt len\n");
                             goto done;
                             break;
                         }
@@ -420,12 +442,12 @@ void IntelBluetoothFirmware::beginDownload()
                      * file is corrupted.
                      */
                     if (!evt || !evt_param || remain < 0) {
-                        XYLog("Intel fw corrupted: invalid evt read");
+                        XYLog("Intel fw corrupted: invalid evt read\n");
                         goto done;
                         break;
                     }
                     if ((ret = sendHCIRequest(USBToHost16(cmd->opcode), cmd->plen, (void *)cmd_param)) != kIOReturnSuccess) {
-                        XYLog("sending Intel patch command (0x%4.4x) failed (%d) %s",
+                        XYLog("sending Intel patch command (0x%4.4x) failed (%d) %s\n",
                               cmd->opcode, ret, stringFromReturn(ret));
                         goto done;
                         break;
@@ -461,7 +483,7 @@ void IntelBluetoothFirmware::beginDownload()
                 //                    param[1] |= patched ? 0x02 : 0x01;
                 XYLog("HCI_OP_INTEL_EXIT_MFG\n");
                 if ((ret = sendHCIRequest(HCI_OP_INTEL_ENTER_MFG, 2, (void *)EXIT_MFG_PARAM)) != kIOReturnSuccess) {
-                    XYLog("Exiting manufacturer mode failed (%d)\n %s", ret, stringFromReturn(ret));
+                    XYLog("Exiting manufacturer mode failed (%d) %s\n", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
@@ -471,7 +493,7 @@ void IntelBluetoothFirmware::beginDownload()
             {
                 XYLog("HCI_OP_INTEL_EVENT_MASK\n");
                 if ((ret = sendHCIRequest(HCI_OP_INTEL_EVENT_MASK, 8, (void *)EVENT_MASK)) != kIOReturnSuccess) {
-                    XYLog("Setting Intel event mask failed (%d)\n %s", ret, stringFromReturn(ret));
+                    XYLog("Setting Intel event mask failed (%d) %s\n", ret, stringFromReturn(ret));
                     goto done;
                     break;
                 }
@@ -488,7 +510,7 @@ void IntelBluetoothFirmware::beginDownload()
                 XYLog("hci read pipe fail. stop\n");
                 break;
             }
-            XYLog("interrupt wait");
+            XYLog("interrupt wait\n");
             IOLockLock(completion);
             AbsoluteTime deadline;
             clock_interval_to_deadline(HCI_INIT_TIMEOUT, kMillisecondScale, reinterpret_cast<uint64_t*> (&deadline));
@@ -496,7 +518,7 @@ void IntelBluetoothFirmware::beginDownload()
             IOLockUnlock(completion);
         }
         isRequest = false;
-        XYLog("interrupt continue");
+        XYLog("interrupt continue\n");
     }
     
 done:
@@ -990,7 +1012,8 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
              * case since that command is only available in bootloader mode.
              */
             if (ver->fw_variant == 0x23) {
-                mDeviceState = kNewUpdateDone;
+                //should also set event mask
+                mDeviceState = kNewSetEventMask;
                 XYLog("firmware had been download.\n");
                 break;
             }
@@ -998,7 +1021,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
              * choice is to return an error and abort the device initialization.
              */
             if (ver->fw_variant != 0x06) {
-                XYLog("Unsupported Intel firmware variant (%u)",
+                XYLog("Unsupported Intel firmware variant (%u)\n",
                       ver->fw_variant);
                 mDeviceState = kNewUpdateAbort;
                 break;
@@ -1007,7 +1030,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                      ver->hw_variant,
                      ver->hw_revision,
                      ver->fw_revision);
-            XYLog("suspect device firmware: %s", firmwareName);
+            XYLog("suspect device firmware: %s\n", firmwareName);
             mDeviceState = kNewGetBootParams;
             break;
         }
@@ -1015,22 +1038,22 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
         {
             params = (IntelBootParams*)((uint8_t*)command + 5);
             if (params->status) {
-                XYLog("Intel boot parameters command failed (%02x)",
+                XYLog("Intel boot parameters command failed (%02x)\n",
                       params->status);
                 mDeviceState = kNewUpdateAbort;
                 break;
             }
-            XYLog("Device revision is %u",
+            XYLog("Device revision is %u\n",
                   USBToHost16(params->dev_revid));
-            XYLog("Secure boot is %s",
+            XYLog("Secure boot is %s\n",
                   params->secure_boot ? "enabled" : "disabled");
-            XYLog("OTP lock is %s",
+            XYLog("OTP lock is %s\n",
                   params->otp_lock ? "enabled" : "disabled");
-            XYLog("API lock is %s",
+            XYLog("API lock is %s\n",
                   params->api_lock ? "enabled" : "disabled");
-            XYLog("Debug lock is %s",
+            XYLog("Debug lock is %s\n",
                   params->debug_lock ? "enabled" : "disabled");
-            XYLog("Minimum firmware build %u week %u %u",
+            XYLog("Minimum firmware build %u week %u %u\n",
                   params->min_fw_build_nn, params->min_fw_build_cw,
                   2000 + params->min_fw_build_yy);
             /* It is required that every single firmware fragment is acknowledged
@@ -1038,7 +1061,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
              * that this bootloader does not send them, then abort the setup.
              */
             if (params->limited_cce != 0x00) {
-                XYLog("Unsupported Intel firmware loading method (%u)",
+                XYLog("Unsupported Intel firmware loading method (%u)\n",
                       params->limited_cce);
                 mDeviceState = kNewUpdateAbort;
                 break;
@@ -1070,9 +1093,9 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                 FwDesc desc = getFWDescByName(fw_name);
                 fwData = OSData::withBytes(desc.var, desc.size);
             }
-            XYLog("Found device firmware: %s", fw_name);
+            XYLog("Found device firmware: %s\n", fw_name);
             if (fwData->getLength() < 644) {
-                XYLog("Invalid size of firmware file (%zu)",
+                XYLog("Invalid size of firmware file (%zu)\n",
                       fwData->getLength());
                 mDeviceState = kNewUpdateAbort;
                 break;
