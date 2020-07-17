@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Issue with the Kext
-labels: bug
+labels: ''
 assignees: ''
 
 ---
