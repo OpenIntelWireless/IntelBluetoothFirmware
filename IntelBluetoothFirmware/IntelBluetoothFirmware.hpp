@@ -63,7 +63,7 @@ public:
     
     bool initInterface();
     
-    void publishReg();
+    void publishReg(bool isSucceed);
     
 public:
     
