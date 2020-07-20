@@ -325,6 +325,7 @@ bool IntelBluetoothFirmware::bulkPipeRead()
 void IntelBluetoothFirmware::beginDownload()
 {
     mDeviceState = kReset;
+    bool isSucceed = false;
     while (true) {
         
         if (mDeviceState == kUpdateDone || mDeviceState == kUpdateAbort) {
@@ -497,6 +498,7 @@ void IntelBluetoothFirmware::beginDownload()
                     goto done;
                     break;
                 }
+                isSucceed = true;
                 mDeviceState = kUpdateDone;
                 break;
             }
@@ -523,9 +525,7 @@ void IntelBluetoothFirmware::beginDownload()
     
 done:
     
-    if (mDeviceState == kUpdateDone) {
-        publishReg();
-    }
+    publishReg(isSucceed);
     XYLog("End download\n");
 }
 
@@ -644,6 +644,11 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
         case HCI_OP_INTEL_VERSION:
         {
             ver = (IntelVersion*)((uint8_t*)command + 5);
+            snprintf(firmwareName, sizeof(firmwareName),
+                     "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x.bseq",
+                     ver->hw_platform, ver->hw_variant, ver->hw_revision,
+                     ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
+                     ver->fw_build_ww, ver->fw_build_yy);
             /* fw_patch_num indicates the version of patch the device currently
              * have. If there is no patch data in the device, it is always 0x00.
              * So, if it is other than 0x00, no need to patch the device again.
@@ -654,21 +659,10 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
                 mDeviceState = kSetEventMask;
                 break;
             }
-            snprintf(firmwareName, sizeof(firmwareName),
-                     "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x.bseq",
-                     ver->hw_platform, ver->hw_variant, ver->hw_revision,
-                     ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
-                     ver->fw_build_ww, ver->fw_build_yy);
             XYLog("Found device firmware %s \n", firmwareName);
             if (!fwData) {
                 FwDesc desc = getFWDescByName(firmwareName);
                 fwData = OSData::withBytes(desc.var, desc.size);
-                //                fwData = requestFirmware(fwname);
-                //                if (!fwData) {
-                //                    XYLog("no firmware, stop\n");
-                //                    mDeviceState = kUpdateAbort;
-                //                    break;
-                //                }
             }
             XYLog("request firmware success");
             mDeviceState = kEnterMfg;
@@ -692,9 +686,10 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
     }
 }
 
-void IntelBluetoothFirmware::publishReg()
+void IntelBluetoothFirmware::publishReg(bool isSucceed)
 {
     setProperty("fw_name", OSString::withCString(firmwareName));
+    m_pDevice->setProperty("FirmwareLoaded", isSucceed);
 }
 
 #include <IOKit/IOTypes.h>
@@ -741,6 +736,7 @@ void IntelBluetoothFirmware::beginDownloadNew()
 {
     mDeviceState = kNewGetVersion;
     boot_param = 0x00000000;
+    bool isSucceed = false;
     while (true) {
         if (mDeviceState == kNewUpdateDone || mDeviceState == kNewUpdateAbort) {
             break;
@@ -882,6 +878,7 @@ void IntelBluetoothFirmware::beginDownloadNew()
                     goto done;
                     break;
                 }
+                isSucceed = true;
                 mDeviceState = kNewUpdateDone;
                 break;
             }
@@ -918,6 +915,7 @@ void IntelBluetoothFirmware::beginDownloadNew()
             IOLockUnlock(completion);
             if (ret != THREAD_AWAKENED) {
                 XYLog("HCI Timeout, retry\n");
+                isSucceed = false;
                 mDeviceState = kNewResetToBL;
             }
         }
@@ -927,9 +925,7 @@ void IntelBluetoothFirmware::beginDownloadNew()
     
 done:
     
-    if (mDeviceState == kNewUpdateDone) {
-        publishReg();
-    }
+    publishReg(isSucceed);
     
     XYLog("End download\n");
 }
@@ -998,6 +994,11 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                     break;
             }
             BtIntel::printIntelVersion(ver);
+            snprintf(firmwareName, 64, "ibt-%u-%u-%u.sfi",
+                     ver->hw_variant,
+                     ver->hw_revision,
+                     ver->fw_revision);
+            XYLog("suspect device firmware: %s\n", firmwareName);
             /* The firmware variant determines if the device is in bootloader
              * mode or is running operational firmware. The value 0x06 identifies
              * the bootloader and the value 0x23 identifies the operational
@@ -1012,8 +1013,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
              * case since that command is only available in bootloader mode.
              */
             if (ver->fw_variant == 0x23) {
-                //should also set event mask
-                mDeviceState = kNewSetEventMask;
+                mDeviceState = kNewUpdateDone;
                 XYLog("firmware had been download.\n");
                 break;
             }
@@ -1026,11 +1026,6 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                 mDeviceState = kNewUpdateAbort;
                 break;
             }
-            snprintf(firmwareName, 64, "ibt-%u-%u-%u.sfi",
-                     ver->hw_variant,
-                     ver->hw_revision,
-                     ver->fw_revision);
-            XYLog("suspect device firmware: %s\n", firmwareName);
             mDeviceState = kNewGetBootParams;
             break;
         }

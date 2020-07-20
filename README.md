@@ -1,5 +1,7 @@
 # IntelBluetoothFirmware
 
+[![Join the chat at https://gitter.im/OpenIntelWireless/itlwm](https://badges.gitter.im/OpenIntelWireless/IntelBluetoothFirmware.svg)](https://gitter.im/OpenIntelWireless/IntelBluetoothFirmware?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 - **English**
 - [简体中文](/.github/README-zh_Hans.md)
 
