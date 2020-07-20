@@ -15,7 +15,7 @@
 
 /* Begin PBXFileReference section */
 		F831F10D2406AD0300DD1390 /* fw_gen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = fw_gen.sh; sourceTree = "<group>"; };
-		F834911923AF9B3C00551995 /* FWData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWData.h; sourceTree = "<group>"; };
+		F834911923AF9B3C00551995 /* FwData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FwData.h; sourceTree = "<group>"; };
 		F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelBluetoothFirmware.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntelBluetoothFirmware.hpp; sourceTree = "<group>"; };
 		F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntelBluetoothFirmware.cpp; sourceTree = "<group>"; };
@@ -101,15 +101,15 @@
 		F834E417237C20FF000CB269 /* IntelBluetoothFirmware */ = {
 			isa = PBXGroup;
 			children = (
-				F834911923AF9B3C00551995 /* FWData.h */,
-				F8BD1B3C2396ACAB0088EBE4 /* Log.h */,
 				F834E422237C2FF1000CB269 /* fw */,
+				F834911923AF9B3C00551995 /* FwData.h */,
+				F8BD1B3C2396ACAB0088EBE4 /* Log.h */,
 				F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */,
 				F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */,
-				F834E41C237C20FF000CB269 /* Info.plist */,
 				F8C3BFCC2380DA75006000F5 /* BtIntel.h */,
 				F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */,
 				F8C3BFCF2380E5FC006000F5 /* Hci.h */,
+				F834E41C237C20FF000CB269 /* Info.plist */,
 			);
 			path = IntelBluetoothFirmware;
 			sourceTree = "<group>";

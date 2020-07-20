@@ -6,8 +6,8 @@
 //  Copyright © 2019 zxystd. All rights reserved.
 //
 
-#ifndef FWData_h
-#define FWData_h
+#ifndef FwData_h
+#define FwData_h
 #include <string.h>
 
 struct FwDesc {
@@ -32,4 +32,4 @@ static inline struct FwDesc getFWDescByName(const char* name) {
     return fwList[0];
 }
 
-#endif /* FWData_h */
+#endif /* FwData_h */

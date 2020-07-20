@@ -10,7 +10,7 @@
 #include <IOKit/usb/IOUSBHostDevice.h>
 #include <IOKit/usb/IOUSBHostInterface.h>
 #include "Log.h"
-#include "FWData.h"
+#include "FwData.h"
 
 enum BTType {
     kTypeOld,
