@@ -1013,7 +1013,7 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
              * case since that command is only available in bootloader mode.
              */
             if (ver->fw_variant == 0x23) {
-                mDeviceState = kNewUpdateDone;
+                mDeviceState = kNewSetEventMask;
                 XYLog("firmware had been download.\n");
                 break;
             }
