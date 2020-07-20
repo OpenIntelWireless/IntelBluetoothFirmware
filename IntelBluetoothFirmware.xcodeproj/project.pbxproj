@@ -13,16 +13,6 @@
 		F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F831F1972406B3E500DD1390 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F834E40C237C20FF000CB269 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F831F1932406B3DF00DD1390;
-			remoteInfo = FB;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		F831F10D2406AD0300DD1390 /* fw_gen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = fw_gen.sh; sourceTree = "<group>"; };
 		F834911923AF9B3C00551995 /* FWData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWData.h; sourceTree = "<group>"; };
@@ -219,7 +209,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F831F1982406B3E500DD1390 /* PBXTargetDependency */,
 			);
 			name = IntelBluetoothFirmware;
 			productName = IntelBluetoothFirmware;
@@ -320,14 +309,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F831F1982406B3E500DD1390 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F831F1932406B3DF00DD1390 /* FB */;
-			targetProxy = F831F1972406B3E500DD1390 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F831F1952406B3DF00DD1390 /* Debug */ = {
@@ -473,11 +454,11 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = NO;
-				CURRENT_PROJECT_VERSION = 1.1.1;
+				CURRENT_PROJECT_VERSION = 1.1.2;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
@@ -494,11 +475,11 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = NO;
-				CURRENT_PROJECT_VERSION = 1.1.1;
+				CURRENT_PROJECT_VERSION = 1.1.2;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
 				MODULE_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
@@ -515,17 +496,17 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.1.1;
+				CURRENT_PROJECT_VERSION = 1.1.2;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = IntelBluetoothInjector/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothInjector;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.12;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -535,17 +516,17 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.1.1;
+				CURRENT_PROJECT_VERSION = 1.1.2;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = IntelBluetoothInjector/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothInjector;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.12;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
