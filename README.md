@@ -5,11 +5,16 @@
 - **English**
 - [简体中文](/.github/README-zh_Hans.md)
 
+## Intro
+
 IntelBluetoothFirmware is a Kernel Extension that uploads Intel Wireless Bluetooth Firmware to provide native Bluetooth in macOS.
 The firmware binary files are coming from the Linux Open Source Project.
 
 After a few months of public testing, it seems like this Kext works well and stable.
-Currently it supports macOS 10.13 or higher, supported device ids are:
+
+## Supported Devices
+
+Supports macOS 10.12 or higher, supported Device *USB* IDs are:
 
 - 0x8087, 0x0a2a
 - 0x8087, 0x07dc
@@ -25,12 +30,12 @@ Currently it supports macOS 10.13 or higher, supported device ids are:
 
 Download the [latest release](https://github.com/zxystd/IntelBluetoothFirmware/releases/latest), inject the Kext files into the Bootloader and then restart.
 
-***Do not*** inject the Kext files to `/Library/Extensions` or `/System/Library/Extensions` as it may likely **freeze the system**.
+***Do not*** inject the Kext files to `/Library/Extensions` or `/System/Library/Extensions` as it may likely **break your system**.
 
 - **IntelBluetoothFirmware.kext**
   > Driver to upload the firmware.
 - **IntelBluetoothInjector.kext**
-  > Dummy Kext to enable open/close switch on the Bluetooth settings panel, not necessary to install.
+  > Codeless Kext that enables open/close switch on the Bluetooth settings panel, not necessary to install.
 
 ## Troubleshooting
 
@@ -43,5 +48,6 @@ log show --last boot | grep IntelFirmware
 Save the driver logs, send it to me by opening an issue. **If there are no logs, you should probably check your Bootloader, USB, BIOS, etc.**
 
 ## Credits
+
 - [torvalds/linux](https://github.com/torvalds/linux)
 - [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM)

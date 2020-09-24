@@ -5,9 +5,15 @@
 - [English](/README.md)
 - **简体中文**
 
+## 简介
+
 IntelBluetoothFirmware 是一个用于在 macOS 中启用原生蓝牙的固件上传驱动，固件的二进制文件来自 Linux。
 
-经过数月的测试后，这个驱动已经被证实可以正常稳定工作。目前支持 macOS 10.13 及以上，支持的设备 ID 如下：
+经过数月的测试后，这个驱动已经被证实可以正常稳定工作。
+
+## 支持
+
+目前支持 macOS 10.12 及以上，支持的设备 USB ID 如下：
 
 - 0x8087, 0x0a2a
 - 0x8087, 0x07dc
@@ -23,7 +29,7 @@ IntelBluetoothFirmware 是一个用于在 macOS 中启用原生蓝牙的固件�
 
 下载[最新 release](https://github.com/zxystd/IntelBluetoothFirmware/releases/latest)，注入到引导工具后重启即可。
 
-**不要** 把驱动安装到 `/Library/Extensions` 或 `/System/Library/Extensions`，系统很有可能因此冻结。
+**不要** 把驱动安装到 `/Library/Extensions` 或 `/System/Library/Extensions`，系统很有可能因此损坏。
 
 - **IntelBluetoothFirmware.kext**
   > 用于上传固件
@@ -41,5 +47,6 @@ log show --last boot | grep IntelFirmware
 保存驱动程序日志，并在 issue 中附上。 **如果没有日志生成，你需要先检查引导工具，USB，BIOS 等等。**
 
 ## 参考资料
+
 - [torvalds/linux](https://github.com/torvalds/linux)
 - [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM)

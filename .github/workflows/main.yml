@@ -20,7 +20,7 @@ jobs:
 
     - name: Generate Firmware
       run: |
-        xcodebuild -scheme FB CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+        xcodebuild -scheme fw_gen CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
     - name: Debug Build
       run: |
