@@ -68,13 +68,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8F6360E2406C4AA00497626 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -171,28 +164,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8F6360C2406C4AA00497626 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXLegacyTarget section */
-		F831F1932406B3DF00DD1390 /* FB */ = {
+		50827919251C3F0300F45B08 /* fw_gen */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = F831F1942406B3DF00DD1390 /* Build configuration list for PBXLegacyTarget "FB" */;
+			buildArgumentsString = "";
+			buildConfigurationList = 5082791A251C3F0300F45B08 /* Build configuration list for PBXLegacyTarget "fw_gen" */;
 			buildPhases = (
 			);
 			buildToolPath = "$(PROJECT_DIR)/fw_gen.sh";
+			buildWorkingDirectory = "";
 			dependencies = (
 			);
-			name = FB;
+			name = fw_gen;
 			passBuildSettingsInEnvironment = 1;
-			productName = FB;
+			productName = fw_gen;
 		};
 /* End PBXLegacyTarget section */
 
@@ -219,10 +206,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8F636182406C4AA00497626 /* Build configuration list for PBXNativeTarget "IntelBluetoothInjector" */;
 			buildPhases = (
-				F8F6360C2406C4AA00497626 /* Headers */,
-				F8F6360D2406C4AA00497626 /* Sources */,
-				F8F6360E2406C4AA00497626 /* Frameworks */,
-				F8F6360F2406C4AA00497626 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -242,8 +225,8 @@
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = zxystd;
 				TargetAttributes = {
-					F831F1932406B3DF00DD1390 = {
-						CreatedOnToolsVersion = 11.1;
+					50827919251C3F0300F45B08 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 					F834E414237C20FF000CB269 = {
 						CreatedOnToolsVersion = 11.1;
@@ -266,22 +249,15 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F831F1932406B3DF00DD1390 /* FB */,
 				F834E414237C20FF000CB269 /* IntelBluetoothFirmware */,
 				F8F636102406C4AA00497626 /* IntelBluetoothInjector */,
+				50827919251C3F0300F45B08 /* fw_gen */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F834E413237C20FF000CB269 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8F6360F2406C4AA00497626 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -301,42 +277,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8F6360D2406C4AA00497626 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		F831F1952406B3DF00DD1390 /* Debug */ = {
+		5082791B251C3F0300F45B08 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = YXX7XALBVX;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macos;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		F831F1962406B3DF00DD1390 /* Release */ = {
+		5082791C251C3F0300F45B08 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = YXX7XALBVX;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macos;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -538,11 +507,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F831F1942406B3DF00DD1390 /* Build configuration list for PBXLegacyTarget "FB" */ = {
+		5082791A251C3F0300F45B08 /* Build configuration list for PBXLegacyTarget "fw_gen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F831F1952406B3DF00DD1390 /* Debug */,
-				F831F1962406B3DF00DD1390 /* Release */,
+				5082791B251C3F0300F45B08 /* Debug */,
+				5082791C251C3F0300F45B08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
