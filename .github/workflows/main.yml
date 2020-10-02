@@ -1,8 +1,6 @@
 name: CI
 
-on:
-  push:
-    branches: master
+on: [push, pull_request]
 
 jobs:
 
@@ -14,18 +12,14 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: "Install macOS 10.12 SDK"
+    - name: Install MacKernelSDK
       run: |
-        curl -L https://github.com/alexey-lysiuk/macos-sdk/releases/download/10.12/MacOSX10.12.tar.bz2 -o /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.tar.bz2 && tar -xjf /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.tar.bz2 -C /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
-
-    - name: Generate Firmware
-      run: |
-        xcodebuild -scheme fw_gen CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+        git clone --depth=1 https://github.com/acidanthera/MacKernelSDK.git
 
     - name: Debug Build
       run: |
-        xcodebuild -scheme IntelBluetoothFirmware -sdk macosx10.12 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+        xcodebuild -alltargets -configuration Debug | xcpretty && exit ${PIPESTATUS[0]}
 
     - name: Release Build
       run: |
-        xcodebuild -scheme IntelBluetoothFirmware -sdk macosx10.12 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+        xcodebuild -alltargets -configuration Release | xcpretty && exit ${PIPESTATUS[0]}

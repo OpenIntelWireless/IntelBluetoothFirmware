@@ -1,6 +1,6 @@
 # IntelBluetoothFirmware
 
-[![Join the chat at https://gitter.im/OpenIntelWireless/itlwm](https://badges.gitter.im/OpenIntelWireless/IntelBluetoothFirmware.svg)](https://gitter.im/OpenIntelWireless/IntelBluetoothFirmware?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![CI](https://github.com/OpenIntelWireless/IntelBluetoothFirmware/workflows/CI/badge.svg)
 
 - **English**
 - [简体中文](/.github/README-zh_Hans.md)
@@ -8,9 +8,11 @@
 ## Intro
 
 IntelBluetoothFirmware is a Kernel Extension that uploads Intel Wireless Bluetooth Firmware to provide native Bluetooth in macOS.
-The firmware binary files are coming from the Linux Open Source Project.
+The firmware binary files are from the Linux Open Source Project.
 
-After a few months of public testing, it seems like this Kext works well and stable.
+After several months of public testing, it appears that the Kext is working well and stable.
+
+[![Join the chat at https://gitter.im/OpenIntelWireless/itlwm](https://badges.gitter.im/OpenIntelWireless/IntelBluetoothFirmware.svg)](https://gitter.im/OpenIntelWireless/IntelBluetoothFirmware?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Supported Devices
 
@@ -35,7 +37,7 @@ Download the [latest release](https://github.com/zxystd/IntelBluetoothFirmware/r
 - **IntelBluetoothFirmware.kext**
   > Driver to upload the firmware.
 - **IntelBluetoothInjector.kext**
-  > Codeless Kext that enables open/close switch on the Bluetooth settings panel, not necessary to install.
+  > Codeless Kext that enables `On`/`Off` switch on the Bluetooth settings panel, not necessary to install.
 
 ## Troubleshooting
 
