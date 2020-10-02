@@ -79,14 +79,14 @@
 		F834E417237C20FF000CB269 /* IntelBluetoothFirmware */ = {
 			isa = PBXGroup;
 			children = (
-				F834911923AF9B3C00551995 /* FwData.h */,
-				F8BD1B3C2396ACAB0088EBE4 /* Log.h */,
-				F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */,
-				F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */,
-				F834E41C237C20FF000CB269 /* Info.plist */,
-				F8C3BFCC2380DA75006000F5 /* BtIntel.h */,
 				F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */,
+				F8C3BFCC2380DA75006000F5 /* BtIntel.h */,
+				F834911923AF9B3C00551995 /* FwData.h */,
 				F8C3BFCF2380E5FC006000F5 /* Hci.h */,
+				F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */,
+				F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */,
+				F8BD1B3C2396ACAB0088EBE4 /* Log.h */,
+				F834E41C237C20FF000CB269 /* Info.plist */,
 			);
 			path = IntelBluetoothFirmware;
 			sourceTree = "<group>";
@@ -335,7 +335,7 @@
 		F834E420237C20FF000CB269 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1.1.2;
+				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
@@ -343,9 +343,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64",
 				);
-				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
-				MODULE_VERSION = "$(MARKETING_VERSION)";
+				MODULE_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -354,7 +353,7 @@
 		F834E421237C20FF000CB269 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1.1.2;
+				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
@@ -362,9 +361,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64",
 				);
-				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothFirmware;
-				MODULE_VERSION = "$(MARKETING_VERSION)";
+				MODULE_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothFirmware;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -374,11 +372,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGNING_ALLOWED = NO;
-				CURRENT_PROJECT_VERSION = 1.1.2;
+				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				INFOPLIST_FILE = IntelBluetoothInjector/Info.plist;
-				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothInjector;
-				MODULE_VERSION = "$(MARKETING_VERSION)";
+				MODULE_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -388,11 +385,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGNING_ALLOWED = NO;
-				CURRENT_PROJECT_VERSION = 1.1.2;
+				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				INFOPLIST_FILE = IntelBluetoothInjector/Info.plist;
-				MARKETING_VERSION = 1.1.2;
 				MODULE_NAME = com.zxystd.IntelBluetoothInjector;
-				MODULE_VERSION = "$(MARKETING_VERSION)";
+				MODULE_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBluetoothInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
