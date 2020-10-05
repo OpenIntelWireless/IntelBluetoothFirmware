@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
+	<string>$(MODULE_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>$(MODULE_VERSION)</string>
 	<key>IOKitPersonalities</key>
 	<dict>
 		<key>IntelBluetoothFirmware_0026</key>

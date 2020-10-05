@@ -1,8 +1,13 @@
+/** @file
+  Copyright (c) 2020 zxystd. All rights reserved.
+  SPDX-License-Identifier: GPL-3.0-only
+**/
+
 //
 //  Log.h
 //  IntelBluetoothFirmware
 //
-//  Created by qcwap on 2019/12/3.
+//  Created by zxystd on 2019/12/3.
 //  Copyright © 2019 zxystd. All rights reserved.
 //
 

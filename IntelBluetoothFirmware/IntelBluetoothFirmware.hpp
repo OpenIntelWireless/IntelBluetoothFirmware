@@ -1,4 +1,16 @@
-/* add your code here */
+/** @file
+  Copyright (c) 2020 zxystd. All rights reserved.
+  SPDX-License-Identifier: GPL-3.0-only
+**/
+
+//
+//  IntelBluetoothFirmware.hpp
+//  IntelBluetoothFirmware
+//
+//  Created by zxystd on 2019/11/17.
+//  Copyright © 2019 zxystd. All rights reserved.
+//
+
 #ifndef IntelBluetoothFirmware_H
 #define IntelBluetoothFirmware_H
 
