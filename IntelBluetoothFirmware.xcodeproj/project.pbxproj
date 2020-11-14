@@ -10,14 +10,14 @@
 		50E7FCC12525921B009AC958 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E7FCC02525921B009AC958 /* libkmod.a */; };
 		F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */; };
 		F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */; };
-		F8C2411A2406C1160034107D /* FwBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C241192406C1160034107D /* FwBinary.cpp */; };
+		50B2517B255FD4DF005B50EB /* FwBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B2517A255FD4DF005B50EB /* FwBinary.cpp */; };
 		F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		50575CF4252736AD00445985 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		50575CF5252736CB00445985 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = "../../../../../Macintosh HD/Users/ss/Dev/IntelBluetoothFirmware/README.md"; sourceTree = "<group>"; };
-		50575CF6252736DD00445985 /* iwlwifi-firmware-license */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iwlwifi-firmware-license"; path = "../../../../../Macintosh HD/Users/ss/Dev/IntelBluetoothFirmware/iwlwifi-firmware-license"; sourceTree = "<group>"; };
+		50575CF5252736CB00445985 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		50575CF6252736DD00445985 /* iwlwifi-firmware-license */ = {isa = PBXFileReference; lastKnownFileType = text; path = "iwlwifi-firmware-license"; sourceTree = "<group>"; };
 		50E7FCC02525921B009AC958 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
 		F834911923AF9B3C00551995 /* FwData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FwData.h; sourceTree = "<group>"; };
 		F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelBluetoothFirmware.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,7 +25,7 @@
 		F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntelBluetoothFirmware.cpp; sourceTree = "<group>"; };
 		F834E41C237C20FF000CB269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8BD1B3C2396ACAB0088EBE4 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
-		F8C241192406C1160034107D /* FwBinary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FwBinary.cpp; path = IntelBluetoothFirmware/FwBinary.cpp; sourceTree = "<group>"; };
+		50B2517A255FD4DF005B50EB /* FwBinary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FwBinary.cpp; path = IntelBluetoothFirmware/FwBinary.cpp; sourceTree = "<group>"; };
 		F8C3BFCC2380DA75006000F5 /* BtIntel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BtIntel.h; sourceTree = "<group>"; };
 		F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BtIntel.cpp; sourceTree = "<group>"; };
 		F8C3BFCF2380E5FC006000F5 /* Hci.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hci.h; sourceTree = "<group>"; };
@@ -59,7 +59,6 @@
 				50575CF5252736CB00445985 /* README.md */,
 				50575CF4252736AD00445985 /* LICENSE */,
 				50575CF6252736DD00445985 /* iwlwifi-firmware-license */,
-				F8C241192406C1160034107D /* FwBinary.cpp */,
 				F834E417237C20FF000CB269 /* IntelBluetoothFirmware */,
 				F8F636122406C4AA00497626 /* IntelBluetoothInjector */,
 				F834E416237C20FF000CB269 /* Products */,
@@ -208,7 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8C2411A2406C1160034107D /* FwBinary.cpp in Sources */,
+				50B2517B255FD4DF005B50EB /* FwBinary.cpp in Sources */,
 				F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */,
 				F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */,
 			);
