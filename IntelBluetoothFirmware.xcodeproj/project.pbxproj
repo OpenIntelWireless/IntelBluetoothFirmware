@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50B2517B255FD4DF005B50EB /* FwBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B2517A255FD4DF005B50EB /* FwBinary.cpp */; };
 		50E7FCC12525921B009AC958 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E7FCC02525921B009AC958 /* libkmod.a */; };
 		F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */; };
 		F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */; };
-		50B2517B255FD4DF005B50EB /* FwBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B2517A255FD4DF005B50EB /* FwBinary.cpp */; };
+		F854148E261EAA240093D94D /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = F854148C261EAA240093D94D /* zutil.c */; };
+		F854148F261EAA240093D94D /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = F854148D261EAA240093D94D /* zutil.h */; };
 		F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */; };
 /* End PBXBuildFile section */
 
@@ -18,14 +20,16 @@
 		50575CF4252736AD00445985 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		50575CF5252736CB00445985 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		50575CF6252736DD00445985 /* iwlwifi-firmware-license */ = {isa = PBXFileReference; lastKnownFileType = text; path = "iwlwifi-firmware-license"; sourceTree = "<group>"; };
+		50B2517A255FD4DF005B50EB /* FwBinary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FwBinary.cpp; path = IntelBluetoothFirmware/FwBinary.cpp; sourceTree = "<group>"; };
 		50E7FCC02525921B009AC958 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
 		F834911923AF9B3C00551995 /* FwData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FwData.h; sourceTree = "<group>"; };
 		F834E415237C20FF000CB269 /* IntelBluetoothFirmware.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelBluetoothFirmware.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		F834E418237C20FF000CB269 /* IntelBluetoothFirmware.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntelBluetoothFirmware.hpp; sourceTree = "<group>"; };
 		F834E41A237C20FF000CB269 /* IntelBluetoothFirmware.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntelBluetoothFirmware.cpp; sourceTree = "<group>"; };
 		F834E41C237C20FF000CB269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F854148C261EAA240093D94D /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zutil.c; sourceTree = "<group>"; };
+		F854148D261EAA240093D94D /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
 		F8BD1B3C2396ACAB0088EBE4 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
-		50B2517A255FD4DF005B50EB /* FwBinary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FwBinary.cpp; path = IntelBluetoothFirmware/FwBinary.cpp; sourceTree = "<group>"; };
 		F8C3BFCC2380DA75006000F5 /* BtIntel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BtIntel.h; sourceTree = "<group>"; };
 		F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BtIntel.cpp; sourceTree = "<group>"; };
 		F8C3BFCF2380E5FC006000F5 /* Hci.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hci.h; sourceTree = "<group>"; };
@@ -63,6 +67,7 @@
 				F8F636122406C4AA00497626 /* IntelBluetoothInjector */,
 				F834E416237C20FF000CB269 /* Products */,
 				50E7FCBF2525921B009AC958 /* Frameworks */,
+				F854146B261EA4350093D94D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +83,8 @@
 		F834E417237C20FF000CB269 /* IntelBluetoothFirmware */ = {
 			isa = PBXGroup;
 			children = (
+				F854148C261EAA240093D94D /* zutil.c */,
+				F854148D261EAA240093D94D /* zutil.h */,
 				F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */,
 				F8C3BFCC2380DA75006000F5 /* BtIntel.h */,
 				F834911923AF9B3C00551995 /* FwData.h */,
@@ -88,6 +95,14 @@
 				F834E41C237C20FF000CB269 /* Info.plist */,
 			);
 			path = IntelBluetoothFirmware;
+			sourceTree = "<group>";
+		};
+		F854146B261EA4350093D94D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				50B2517A255FD4DF005B50EB /* FwBinary.cpp */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		F8F636122406C4AA00497626 /* IntelBluetoothInjector */ = {
@@ -106,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F834E419237C20FF000CB269 /* IntelBluetoothFirmware.hpp in Headers */,
+				F854148F261EAA240093D94D /* zutil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n#  fw_gen.sh\n#  IntelBluetoothFirmware\n#\n#  Created by qcwap on 2020/2/26.\n#  Copyright © 2020 钟先耀. All rights reserved.\n\ntarget_file=\"${PROJECT_DIR}\"/IntelBluetoothFirmware/FwBinary.cpp\nfw_files=\"${PROJECT_DIR}/IntelBluetoothFirmware/fw/*.*\"\n\nrm -rf \"$target_file\"\n\n{\n    echo \"//  IntelBluetoothFirmware\\n\\n//  Copyright © 2020 钟先耀. All rights reserved.\"\n    echo \"#include \\\"FwData.h\\\"\"\n} >> \"$target_file\"\n\nfind \"${PROJECT_DIR}/IntelBluetoothFirmware/fw\" -iname '*.*' | while read -r fw ; do\n    fw_file_name=\"$(basename \"${fw}\")\"\n    fw_var_name=\"${fw_file_name//./_}\"\n    fw_var_name=\"${fw_var_name//-/_}\"\n    {\n        echo \"\"\n        echo \"const unsigned char ${fw_var_name}[] = {\"\n        xxd -i <\"$fw\"\n        echo \"};\"\n        echo \"\"\n        echo \"const long int ${fw_var_name}_size = sizeof(${fw_var_name});\"\n    } >> \"$target_file\"\ndone\n\n{\n    echo \"\"\n    echo \"const struct FwDesc fwList[] = {\"\n} >> \"$target_file\"\n\ni=0\nwhile read -r fw ; do\n    fw_file_name=\"$(basename \"$fw\")\"\n    fw_var_name=\"${fw_file_name//./_}\"\n    fw_var_name=\"${fw_var_name//-/_}\"\n    echo \"{IBT_FW(\\\"$fw_file_name\\\", $fw_var_name, ${fw_var_name}_size)},\" >> \"$target_file\"\n    ((i++))\ndone < <(find \"${PROJECT_DIR}/IntelBluetoothFirmware/fw\" -iname '*.*')\n\n{\n    echo \"};\"\n    echo \"\"\n    echo \"const int fwNumber = $i;\"\n} >> \"$target_file\"\n";
+			shellScript = "#!/bin/bash\n\n#  fw_gen.sh\n#  IntelBluetoothFirmware\n#\n#  Created by qcwap on 2020/2/26.\n#  Copyright © 2020 钟先耀. All rights reserved.\n\ntarget_file=\"${PROJECT_DIR}\"/IntelBluetoothFirmware/FwBinary.cpp\nfw_files=\"${PROJECT_DIR}/IntelBluetoothFirmware/fw/\"\n\nrm -rf \"$target_file\"\n\nscript_file=\"${PROJECT_DIR}/scripts/\"\npython -c 'import sys;sys.path.append(\"'$script_file'\");import zlib_compress_fw;zlib_compress_fw.process_files(\"'${target_file}'\", \"'$fw_files'\")'\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -207,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F854148E261EAA240093D94D /* zutil.c in Sources */,
 				50B2517B255FD4DF005B50EB /* FwBinary.cpp in Sources */,
 				F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */,
 				F834E41B237C20FF000CB269 /* IntelBluetoothFirmware.cpp in Sources */,
@@ -335,6 +352,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.cpp;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
@@ -353,6 +371,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.cpp;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";

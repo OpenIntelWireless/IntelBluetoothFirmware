@@ -249,23 +249,19 @@ void IntelBluetoothFirmware::cleanUp()
 {
     XYLog("Clean up...\n");
     if (fwData) {
-        fwData->release();
-        fwData = NULL;
+        OSSafeReleaseNULL(fwData);
     }
     if (m_pBulkWritePipe) {
         m_pBulkWritePipe->abort();
-        m_pBulkWritePipe->release();
-        m_pBulkWritePipe = NULL;
+        OSSafeReleaseNULL(m_pBulkWritePipe);
     }
     if (m_pBulkReadPipe) {
         m_pBulkReadPipe->abort();
-        m_pBulkReadPipe->release();
-        m_pBulkReadPipe = NULL;
+        OSSafeReleaseNULL(m_pBulkReadPipe);
     }
     if (m_pInterruptReadPipe) {
         m_pInterruptReadPipe->abort();
-        m_pInterruptReadPipe->release();
-        m_pInterruptReadPipe = NULL;
+        OSSafeReleaseNULL(m_pInterruptReadPipe);
     }
     if (mReadBuffer) {
         mReadBuffer->complete(kIODirectionIn);
@@ -332,6 +328,21 @@ bool IntelBluetoothFirmware::bulkPipeRead()
         return false;
     }
     return true;
+}
+
+static OSData *FirmwareConvertion(OSData *originalFirmware)
+{
+    unsigned int numBytes = originalFirmware->getLength() * 4;
+    unsigned int actualBytes = numBytes;
+    OSData *fwData = NULL;
+    unsigned char* _fwBytes = (unsigned char *)IOMalloc(numBytes);
+    if (!uncompressFirmware(_fwBytes, &actualBytes, (unsigned char *)originalFirmware->getBytesNoCopy(), originalFirmware->getLength())) {
+        IOFree(_fwBytes, numBytes);
+        return NULL;
+    }
+    fwData = OSData::withBytes(_fwBytes, actualBytes);
+    IOFree(_fwBytes, numBytes);
+    return fwData;
 }
 
 void IntelBluetoothFirmware::beginDownload()
@@ -671,10 +682,22 @@ void IntelBluetoothFirmware::onHCICommandSucceed(HciResponse *command, int lengt
                 mDeviceState = kSetEventMask;
                 break;
             }
+            if (fwData) {
+                OSSafeReleaseNULL(fwData);
+            }
+            OSData * _fwData = getFWDescByName(firmwareName);
+            if (!_fwData) {
+                XYLog("Firmware: %s Not found!\n", firmwareName);
+                mDeviceState = kUpdateAbort;
+                break;
+            }
             XYLog("Found device firmware %s \n", firmwareName);
-            if (!fwData) {
-                FwDesc desc = getFWDescByName(firmwareName);
-                fwData = OSData::withBytes(desc.var, desc.size);
+            fwData = FirmwareConvertion(_fwData);
+            OSSafeReleaseNULL(_fwData);
+            if (fwData == NULL) {
+                XYLog("Firmware %s uncompress fail!\n", firmwareName);
+                mDeviceState = kUpdateAbort;
+                break;
             }
             XYLog("request firmware success");
             mDeviceState = kEnterMfg;
@@ -1096,9 +1119,21 @@ void IntelBluetoothFirmware::onHCICommandSucceedNew(HciResponse *command, int le
                     mDeviceState = kNewUpdateAbort;
                     break;
             }
-            if (!fwData) {
-                FwDesc desc = getFWDescByName(fw_name);
-                fwData = OSData::withBytes(desc.var, desc.size);
+            if (fwData) {
+                OSSafeReleaseNULL(fwData);
+            }
+            OSData * _fwData = getFWDescByName(fw_name);
+            if (!_fwData) {
+                XYLog("Firmware: %s Not found!\n", fw_name);
+                mDeviceState = kNewUpdateAbort;
+                break;
+            }
+            fwData = FirmwareConvertion(_fwData);
+            OSSafeReleaseNULL(_fwData);
+            if (fwData == NULL) {
+                XYLog("Firmware %s uncompress fail!\n", firmwareName);
+                mDeviceState = kNewUpdateAbort;
+                break;
             }
             XYLog("Found device firmware: %s\n", fw_name);
             if (fwData->getLength() < 644) {
