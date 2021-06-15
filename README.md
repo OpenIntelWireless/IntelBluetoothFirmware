@@ -14,40 +14,14 @@ After several months of public testing, it appears that the Kext is working well
 
 [![Join the chat at https://gitter.im/OpenIntelWireless/itlwm](https://badges.gitter.im/OpenIntelWireless/IntelBluetoothFirmware.svg)](https://gitter.im/OpenIntelWireless/IntelBluetoothFirmware?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Supported Devices
+## Documentation
 
-Supports macOS 10.12 or higher, supported Device *USB* IDs are:
+**Please read the docs carefully before using the Kernel Extensions or submitting an Issue Report!**
 
-- 0x8087, 0x0a2a
-- 0x8087, 0x07dc
-- 0x8087, 0x0aa7
-- 0x8087, 0x0025
-- 0x8087, 0x0aaa
-- 0x8087, 0x0026
-- 0x8087, 0x0029
-- 0x8087, 0x0a2b
-- 0x8087, 0x0032
-
-## Installation
-
-Download the [latest release](https://github.com/zxystd/IntelBluetoothFirmware/releases/latest), inject the Kext files into the Bootloader and then restart.
-
-***Do not*** inject the Kext files to `/Library/Extensions` or `/System/Library/Extensions` as it may likely **break your system**.
-
-- **IntelBluetoothFirmware.kext**
-  > Driver to upload the firmware.
-- **IntelBluetoothInjector.kext**
-  > Codeless Kext that enables `On`/`Off` switch on the Bluetooth settings panel, not necessary to install.
-
-## Troubleshooting
-
-In case there is something wrong with the driver, please run the following command in Terminal:
-
-```sh
-log show --last boot | grep IntelFirmware
-```
-
-Save the driver logs, send it to me by opening an issue. **If there are no logs, you should probably check your Bootloader, USB, BIOS, etc.**
+- [Supported Devices](https://openintelwireless.github.io/IntelBluetoothFirmware/Compat.html)
+- [Installation](https://openintelwireless.github.io/IntelBluetoothFirmware/Installation.html)
+- [Frequently Asked Questions](https://openintelwireless.github.io/IntelBluetoothFirmware/FAQ.html)
+- [Troubleshooting](https://openintelwireless.github.io/IntelBluetoothFirmware/Compat.html)
 
 ## Credits
 
