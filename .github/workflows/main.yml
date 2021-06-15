@@ -23,3 +23,9 @@ jobs:
     - name: Release Build
       run: |
         xcodebuild -alltargets -configuration Release | xcpretty && exit ${PIPESTATUS[0]}
+
+    - name: Upload to Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ github.event.repository.name }}
+        path: build/*/*.zip

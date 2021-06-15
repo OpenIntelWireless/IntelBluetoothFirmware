@@ -6,6 +6,22 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		17A741EE2677F81B005041A3 /* Package */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 17A741F12677F81B005041A3 /* Build configuration list for PBXAggregateTarget "Package" */;
+			buildPhases = (
+				17A741F62677F829005041A3 /* Archive */,
+			);
+			dependencies = (
+				17A741F32677F823005041A3 /* PBXTargetDependency */,
+				17A741F52677F823005041A3 /* PBXTargetDependency */,
+			);
+			name = Package;
+			productName = Package;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		50B2517B255FD4DF005B50EB /* FwBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B2517A255FD4DF005B50EB /* FwBinary.cpp */; };
 		50E7FCC12525921B009AC958 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E7FCC02525921B009AC958 /* libkmod.a */; };
@@ -15,6 +31,23 @@
 		F854148F261EAA240093D94D /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = F854148D261EAA240093D94D /* zutil.h */; };
 		F8C3BFCE2380DB0D006000F5 /* BtIntel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C3BFCD2380DB0D006000F5 /* BtIntel.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		17A741F22677F823005041A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F834E40C237C20FF000CB269 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F834E414237C20FF000CB269;
+			remoteInfo = IntelBluetoothFirmware;
+		};
+		17A741F42677F823005041A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F834E40C237C20FF000CB269 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8F636102406C4AA00497626;
+			remoteInfo = IntelBluetoothInjector;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		50575CF4252736AD00445985 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -169,6 +202,9 @@
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = zxystd;
 				TargetAttributes = {
+					17A741EE2677F81B005041A3 = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					F834E414237C20FF000CB269 = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -192,11 +228,30 @@
 			targets = (
 				F834E414237C20FF000CB269 /* IntelBluetoothFirmware */,
 				F8F636102406C4AA00497626 /* IntelBluetoothInjector */,
+				17A741EE2677F81B005041A3 /* Package */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		17A741F62677F829005041A3 /* Archive */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Archive;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=()\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\nfor kext in *.kext; do\n  dist+=(\"$kext\")\ndone\n\narchive=\"${PRODUCT_NAME}-${MODULE_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\nrm -rf *.zip\nzip -qry -FS \"${archive}\" \"${dist[@]}\"\n";
+		};
 		50575CF32526E44A00445985 /* Generate Firmware */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,7 +287,36 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		17A741F32677F823005041A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F834E414237C20FF000CB269 /* IntelBluetoothFirmware */;
+			targetProxy = 17A741F22677F823005041A3 /* PBXContainerItemProxy */;
+		};
+		17A741F52677F823005041A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8F636102406C4AA00497626 /* IntelBluetoothInjector */;
+			targetProxy = 17A741F42677F823005041A3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		17A741EF2677F81B005041A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = IntelBluetoothFirmware;
+			};
+			name = Debug;
+		};
+		17A741F02677F81B005041A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = IntelBluetoothFirmware;
+			};
+			name = Release;
+		};
 		F834E41D237C20FF000CB269 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -417,6 +501,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17A741F12677F81B005041A3 /* Build configuration list for PBXAggregateTarget "Package" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17A741EF2677F81B005041A3 /* Debug */,
+				17A741F02677F81B005041A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F834E40F237C20FF000CB269 /* Build configuration list for PBXProject "IntelBluetoothFirmware" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
