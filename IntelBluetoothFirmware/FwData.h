@@ -35,7 +35,7 @@ static inline OSData *getFWDescByName(const char* name) {
     for (int i = 0; i < fwNumber; i++) {
         if (strcmp(fwList[i].name, name) == 0) {
             FwDesc desc = fwList[i];
-            return OSData::withBytes(desc.var, desc.size);
+            return OSData::withBytes(desc.var, (unsigned int)desc.size);
         }
     }
     return NULL;

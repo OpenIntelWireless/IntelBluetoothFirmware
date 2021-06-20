@@ -16,29 +16,31 @@
 
 typedef struct __attribute__((packed))
 {
-    uint16_t opcode;    /* OCF & OGF */
-    uint8_t plen;
-} FWCommandHdr;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t opcode;    /* OCF & OGF */
-    uint8_t plen;
-    uint8_t pData[255];
+    uint16_t    opcode;    /* OCF & OGF */
+    uint8_t     len;
+    uint8_t     data[];
 } HciCommandHdr;
 
 typedef struct __attribute__((packed))
 {
-    uint8_t evt;
-    uint8_t plen;
+    uint8_t     evt;
+    uint8_t     len;
 } HciEventHdr;
 
-struct __attribute__((packed)) HciResponse: HciEventHdr
+typedef struct __attribute__((packed)) 
 {
-    uint8_t numCommands;
-    uint16_t opcode;
-    uint8_t status;
-};
+    HciEventHdr evt;
+    uint8_t     numCommands;
+    uint16_t    opcode;
+    uint8_t     data[];
+} HciResponse;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t     status;
+    uint8_t     numCommands;
+    uint16_t    opcode;
+} HciCmdStatus;
 
 /* ---- HCI Events ---- */
 #define HCI_EV_INQUIRY_COMPLETE                 0x01
@@ -90,23 +92,6 @@ struct __attribute__((packed)) HciResponse: HciEventHdr
 #define HCI_EV_NUM_COMP_BLOCKS                  0x48
 #define HCI_EV_SYNC_TRAIN_COMPLETE              0x4F
 #define HCI_EV_SLAVE_PAGE_RESP_TIMEOUT          0x54
-
-/* HCI device flags */
-enum {
-    HCI_UP,
-    HCI_INIT,
-    HCI_RUNNING,
-
-    HCI_PSCAN,
-    HCI_ISCAN,
-    HCI_AUTH,
-    HCI_ENCRYPT,
-    HCI_INQUIRY,
-
-    HCI_RAW,
-
-    HCI_RESET,
-};
 
 /* HCI timeouts */
 #define HCI_DISCONN_TIMEOUT     2000    /*  2 seconds */
@@ -197,14 +182,6 @@ enum {
 #define HCI_EVENT_HDR_SIZE   2
 #define HCI_ACL_HDR_SIZE     4
 #define HCI_SCO_HDR_SIZE     3
-
-#define HCI_OP_INTEL_VERSION 0xfc05
-#define HCI_OP_INTEL_RESET 0xfc52
-#define HCI_OP_INTEL_RESET_BOOT 0xfc01
-
-#define HCI_OP_INTEL_ENTER_MFG 0xfc11
-#define HCI_OP_READ_INTEL_BOOT_PARAMS 0xfc0d
-#define HCI_OP_INTEL_EVENT_MASK 0xfc52
 
 static uint8_t EXIT_MFG_PARAM[2] = { 0x00, 0x02 };
 static uint8_t ENTER_MFG_PARAM[2] = { 0x01, 0x00 };

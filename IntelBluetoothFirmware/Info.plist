@@ -173,6 +173,23 @@
 			<key>idVendor</key>
 			<integer>32903</integer>
 		</dict>
+		<key>IntelBluetoothFirmware_ax210</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.zxystd.IntelBluetoothFirmware</string>
+			<key>IOClass</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOMatchCategory</key>
+			<string>IntelBluetoothFirmware</string>
+			<key>IOProbeScore</key>
+			<integer>4000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>51</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 钟先耀. All rights reserved.</string>
