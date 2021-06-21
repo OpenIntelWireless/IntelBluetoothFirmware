@@ -183,10 +183,4 @@ typedef struct __attribute__((packed))
 #define HCI_ACL_HDR_SIZE     4
 #define HCI_SCO_HDR_SIZE     3
 
-static uint8_t EXIT_MFG_PARAM[2] = { 0x00, 0x02 };
-static uint8_t ENTER_MFG_PARAM[2] = { 0x01, 0x00 };
-static uint8_t EVENT_MASK[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-static uint8_t INTEL_RESET_PARAM[] = { 0x00, 0x01, 0x00, 0x01, 0x00000000 };
-static uint8_t INTEL_RESET_BL_PARAM[] = { 0x01, 0x01, 0x01, 0x00, 0x00000000 };
-
 #endif /* Hci_h */
