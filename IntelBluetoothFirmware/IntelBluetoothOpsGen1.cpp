@@ -105,10 +105,7 @@ setup()
      * the manufacturer.
      */
     while (fwData->getLength() > fw_ptr - (uint8_t *)fwData->getBytesNoCopy()) {
-        int ret;
-        
-        ret = patching(fwData, &fw_ptr, &disablePatch);
-        if (ret < 0)
+        if (!patching(fwData, &fw_ptr, &disablePatch))
             goto exit_mfg_deactivate;
     }
     
