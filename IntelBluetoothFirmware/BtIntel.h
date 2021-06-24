@@ -184,7 +184,7 @@ public:
     
     OSData *firmwareConvertion(OSData *originalFirmware);
     
-    OSData *requestFirmwareData(const char *fwName);
+    OSData *requestFirmwareData(const char *fwName, bool noWarn = false);
     
     static void printAllByte(void *addr, int size);
     

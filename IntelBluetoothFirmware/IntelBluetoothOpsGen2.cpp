@@ -105,6 +105,7 @@ downloadFirmware(IntelVersion *ver, IntelBootParams *params, uint32_t *bootParam
     uint32_t actSize = 0;
     uint8_t buf[CMD_BUF_MAX_SIZE];
     HciResponse *resp = (HciResponse *)buf;
+    bool firmwareMode = false;
     bool ret = true;
     
     if (!ver || !params) {
@@ -125,6 +126,9 @@ downloadFirmware(IntelVersion *ver, IntelBootParams *params, uint32_t *bootParam
      * case since that command is only available in bootloader mode.
      */
     if (ver->fw_variant == 0x23) {
+        
+        firmwareMode = true;
+        
         /* SfP and WsP don't seem to update the firmware version on file
          * so version checking is currently possible.
          */
@@ -178,13 +182,23 @@ download:
      *
      */
     if (!getFirmware(ver, params, fwname, sizeof(fwname), "sfi")) {
+        if (firmwareMode) {
+            /* Firmware has already been loaded */
+            return true;
+        }
+        XYLog("Unsupported Intel firmware naming\n");
         return false;
     }
     
     strncpy(this->loadedFirmwareName, fwname, strlen(fwname));
     
-    fwData = requestFirmwareData(fwname);
+    fwData = requestFirmwareData(fwname, true);
     if (!fwData) {
+        if (firmwareMode) {
+            /* Firmware has already been loaded */
+            return true;
+        }
+        XYLog("Failed to load Intel firmware file %s\n", fwname);
         return false;
     }
     

@@ -105,16 +105,38 @@ downloadFirmware(IntelVersionTLV *ver, uint32_t *bootParams)
     uint32_t actSize = 0;
     uint8_t buf[CMD_BUF_MAX_SIZE];
     HciResponse *resp = (HciResponse *)buf;
+    bool firmwareMode = false;
     bool ret = true;
     
     if (!ver || !bootParams) {
         return false;
     }
     
+    /* The firmware variant determines if the device is in bootloader
+     * mode or is running operational firmware. The value 0x03 identifies
+     * the bootloader and the value 0x23 identifies the operational
+     * firmware.
+     *
+     * When the operational firmware is already present, then only
+     * the check for valid Bluetooth device address is needed. This
+     * determines if the device will be added as configured or
+     * unconfigured controller.
+     *
+     * It is not possible to use the Secure Boot Parameters in this
+     * case since that command is only available in bootloader mode.
+     */
+    if (ver->img_type == 0x03) {
+        firmwareMode = true;
+    }
+    
     getFirmware(ver, fwname, sizeof(fwname), "sfi");
     
-    fwData = requestFirmwareData(fwname);
+    fwData = requestFirmwareData(fwname, true);
     if (!fwData) {
+        if (firmwareMode) {
+            /* Firmware has already been loaded */
+            return true;
+        }
         XYLog("Failed to load Intel firmware file %s\n", fwname);
         return false;
     }

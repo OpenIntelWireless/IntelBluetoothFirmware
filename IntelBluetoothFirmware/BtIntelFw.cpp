@@ -27,11 +27,12 @@ firmwareConvertion(OSData *originalFirmware)
 }
 
 OSData *BtIntel::
-requestFirmwareData(const char *fwName)
+requestFirmwareData(const char *fwName, bool noWarn)
 {
     OSData * _fwData = getFWDescByName(fwName);
     if (!_fwData) {
-        XYLog("Firmware: %s Not found!\n", fwName);
+        if (!noWarn)
+            XYLog("Firmware: %s Not found!\n", fwName);
         return NULL;
     }
     XYLog("Found device firmware %s \n", fwName);
