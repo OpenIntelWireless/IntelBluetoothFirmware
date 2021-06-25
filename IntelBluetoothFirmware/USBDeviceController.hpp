@@ -29,7 +29,7 @@ class USBDeviceController : public OSObject {
     
 public:
     
-    virtual bool init(IOUSBHostDevice *dev);
+    virtual bool init(IOService *client, IOUSBHostDevice *dev);
     
     virtual void free() override;
     
@@ -53,6 +53,7 @@ public:
     
 private:
     IOUSBHostDevice* m_pDevice;
+    IOService*  m_pClient;
     IOUSBHostInterface* m_pInterface;
     
     IOUSBHostPipe* m_pInterruptReadPipe;

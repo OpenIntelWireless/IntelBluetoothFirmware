@@ -144,7 +144,9 @@ class BtIntel : public OSObject {
     OSDeclareAbstractStructors(BtIntel)
 public:
     
-    virtual bool initWithDevice(IOUSBHostDevice *dev);
+    USBDeviceController *extracted();
+    
+    virtual bool initWithDevice(IOService *client, IOUSBHostDevice *dev);
     
     virtual void free() override;
     

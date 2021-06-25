@@ -16,7 +16,7 @@ OSDefineMetaClassAndStructors(USBDeviceController, OSObject)
 #define kReadBufferSize 4096
 
 bool USBDeviceController::
-init(IOUSBHostDevice *dev)
+init(IOService *client, IOUSBHostDevice *dev)
 {
     XYLog("%s\n", __PRETTY_FUNCTION__);
     if (!super::init()) {
@@ -36,6 +36,8 @@ init(IOUSBHostDevice *dev)
     mReadBuffer->prepare(kIODirectionIn);
     m_pDevice = dev;
     m_pDevice->retain();
+    m_pClient = client;
+    m_pClient->retain();
     return true;
 }
 
@@ -61,11 +63,11 @@ findInterface()
     if (m_pInterface == NULL) {
         return false;
     }
-    if (!m_pInterface->open(m_pDevice)) {
+    m_pInterface->retain();
+    if (!m_pInterface->open(m_pClient)) {
         XYLog("can not open interface\n");
         return false;
     }
-    m_pInterface->retain();
     return true;
 }
 
@@ -94,10 +96,13 @@ free()
         _hciLock = NULL;
     }
     if (m_pInterface) {
-        m_pInterface->close(m_pDevice);
+        if (m_pInterface->isOpen(m_pClient)) {
+            m_pInterface->close(m_pClient);
+        }
         OSSafeReleaseNULL(m_pInterface);
     }
     OSSafeReleaseNULL(m_pDevice);
+    OSSafeReleaseNULL(m_pClient);
     super::free();
 }
 

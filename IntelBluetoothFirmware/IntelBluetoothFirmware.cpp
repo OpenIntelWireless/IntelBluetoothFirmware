@@ -84,7 +84,7 @@ bool IntelBluetoothFirmware::start(IOService *provider)
             m_pBTIntel = new IntelBluetoothOpsGen3();
             break;
     }
-    if (!m_pBTIntel->initWithDevice(m_pDevice)) {
+    if (!m_pBTIntel->initWithDevice(this, m_pDevice)) {
         XYLog("start fail, can not init device\n");
         cleanUp();
         stop(this);
@@ -104,8 +104,10 @@ bool IntelBluetoothFirmware::start(IOService *provider)
 
 void IntelBluetoothFirmware::publishReg(bool isSucceed, const char *fwName)
 {
-    setProperty("fw_name", OSString::withCString(fwName));
     m_pDevice->setProperty("FirmwareLoaded", isSucceed);
+    if (isSucceed) {
+        setProperty("fw_name", OSString::withCString(fwName));
+    }
 }
 
 void IntelBluetoothFirmware::cleanUp()
@@ -113,8 +115,9 @@ void IntelBluetoothFirmware::cleanUp()
     XYLog("Clean up...\n");
     OSSafeReleaseNULL(m_pBTIntel);
     if (m_pDevice) {
-        m_pDevice->setConfiguration(0);
-        m_pDevice->close(this);
+        if (m_pDevice->isOpen(this)) {
+            m_pDevice->close(this);
+        }
         OSSafeReleaseNULL(m_pDevice);
     }
 }

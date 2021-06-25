@@ -18,7 +18,7 @@
 OSDefineMetaClassAndAbstractStructors(BtIntel, OSObject)
 
 bool BtIntel::
-initWithDevice(IOUSBHostDevice *dev)
+initWithDevice(IOService *client, IOUSBHostDevice *dev)
 {
     XYLog("%s\n", __PRETTY_FUNCTION__);
     if (!super::init()) {
@@ -26,7 +26,7 @@ initWithDevice(IOUSBHostDevice *dev)
     }
     
     m_pUSBDeviceController = new USBDeviceController();
-    if (!m_pUSBDeviceController->init(dev)) {
+    if (!m_pUSBDeviceController->init(client, dev)) {
         OSSafeReleaseNULL(m_pUSBDeviceController);
         return false;
     }
