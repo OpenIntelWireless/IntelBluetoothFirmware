@@ -599,7 +599,6 @@
 		F834E420237C20FF000CB269 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.cpp;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
@@ -618,7 +617,6 @@
 		F834E421237C20FF000CB269 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.cpp;
 				INFOPLIST_FILE = IntelBluetoothFirmware/Info.plist;
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
@@ -638,7 +636,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGNING_ALLOWED = NO;
-				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				INFOPLIST_FILE = IntelBluetoothInjector/Info.plist;
 				MODULE_NAME = com.zxystd.IntelBluetoothInjector;
 				MODULE_VERSION = "$(MODULE_VERSION)";
@@ -651,7 +648,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGNING_ALLOWED = NO;
-				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				INFOPLIST_FILE = IntelBluetoothInjector/Info.plist;
 				MODULE_NAME = com.zxystd.IntelBluetoothInjector;
 				MODULE_VERSION = "$(MODULE_VERSION)";
