@@ -27,19 +27,15 @@ initWithDevice(IOService *client, IOUSBHostDevice *dev)
     
     m_pUSBDeviceController = new USBDeviceController();
     if (!m_pUSBDeviceController->init(client, dev)) {
-        OSSafeReleaseNULL(m_pUSBDeviceController);
         return false;
     }
     if (!m_pUSBDeviceController->initConfiguration()) {
-         OSSafeReleaseNULL(m_pUSBDeviceController);
         return false;
     }
     if (!m_pUSBDeviceController->findInterface()) {
-         OSSafeReleaseNULL(m_pUSBDeviceController);
         return false;
     }
     if (!m_pUSBDeviceController->findPipes()) {
-         OSSafeReleaseNULL(m_pUSBDeviceController);
         return false;
     }
     return true;

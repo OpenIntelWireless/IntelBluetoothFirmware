@@ -35,9 +35,7 @@ init(IOService *client, IOUSBHostDevice *dev)
     
     mReadBuffer->prepare(kIODirectionIn);
     m_pDevice = dev;
-    m_pDevice->retain();
     m_pClient = client;
-    m_pClient->retain();
     return true;
 }
 
@@ -63,7 +61,6 @@ findInterface()
     if (m_pInterface == NULL) {
         return false;
     }
-    m_pInterface->retain();
     if (!m_pInterface->open(m_pClient)) {
         XYLog("can not open interface\n");
         return false;
@@ -96,13 +93,13 @@ free()
         _hciLock = NULL;
     }
     if (m_pInterface) {
-        if (m_pInterface->isOpen(m_pClient)) {
+        if (m_pClient && m_pInterface->isOpen(m_pClient)) {
             m_pInterface->close(m_pClient);
+            m_pClient = NULL;
         }
-        OSSafeReleaseNULL(m_pInterface);
+        m_pInterface = NULL;
     }
-    OSSafeReleaseNULL(m_pDevice);
-    OSSafeReleaseNULL(m_pClient);
+    m_pDevice = NULL;
     super::free();
 }
 

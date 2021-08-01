@@ -66,7 +66,6 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         return false;
     }
     
-    m_pDevice->retain();
     if (!m_pDevice->open(this)) {
         XYLog("start fail, can not open device\n");
         cleanUp();
@@ -118,7 +117,7 @@ void IntelBluetoothFirmware::cleanUp()
         if (m_pDevice->isOpen(this)) {
             m_pDevice->close(this);
         }
-        OSSafeReleaseNULL(m_pDevice);
+        m_pDevice = NULL;
     }
 }
 
