@@ -18,7 +18,8 @@ setup()
     const uint8_t *fw_ptr;
     bool disablePatch;
     IntelVersion ver;
-    OSData *fwData;
+    OSData *fwData = NULL;
+    char fwname[64];
     
     /* The controller has a bug with the first HCI command sent to it
      * returning number of completed commands as zero. This would stall the
@@ -49,6 +50,16 @@ setup()
           ver.fw_variant,  ver.fw_revision, ver.fw_build_num,
           ver.fw_build_ww, ver.fw_build_yy, ver.fw_patch_num);
     
+    /* Opens the firmware patch file based on the firmware version read
+     * from the controller. If it fails to open the matching firmware
+     * patch file, it tries to open the default firmware patch file.
+     * If no patch file is found, allow the device to operate without
+     * a patch.
+     */
+    fwData = getFirmware(&ver, fwname, sizeof(fwname));
+    
+    strncpy(this->loadedFirmwareName, fwname, sizeof(this->loadedFirmwareName));
+    
     /* fw_patch_num indicates the version of patch the device currently
      * have. If there is no patch data in the device, it is always 0x00.
      * So, if it is other than 0x00, no need to patch the device again.
@@ -57,14 +68,6 @@ setup()
         XYLog("Intel device is already patched. patch num: %02x\n", ver.fw_patch_num);
         goto complete;
     }
-    
-    /* Opens the firmware patch file based on the firmware version read
-     * from the controller. If it fails to open the matching firmware
-     * patch file, it tries to open the default firmware patch file.
-     * If no patch file is found, allow the device to operate without
-     * a patch.
-     */
-    fwData = getFirmware(&ver);
     
     if (!fwData) {
         goto complete;
@@ -148,7 +151,6 @@ exit_mfg_disable:
     goto complete;
     
 exit_mfg_deactivate:
-    OSSafeReleaseNULL(fwData);
     /* Patching failed. Disable the manufacturer mode with reset and
      * deactivate the downloaded firmware patches.
      */
@@ -159,6 +161,7 @@ exit_mfg_deactivate:
     XYLog("Intel firmware patch completed and deactivated\n");
     
 complete:
+    OSSafeReleaseNULL(fwData);
     /* Set the event mask for Intel specific vendor events. This enables
      * a few extra events that are useful during general operation.
      */
@@ -176,7 +179,8 @@ shutdown()
 bool IntelBluetoothOpsGen1::
 getFirmwareName(char *fwname, size_t len)
 {
-    strncpy(fwname, this->loadedFirmwareName, min(strlen(this->loadedFirmwareName), len));
+    strncpy(fwname, this->loadedFirmwareName, len - 1);
+    fwname[len - 1] = '\0';
     return true;
 }
 
@@ -192,12 +196,11 @@ hciReset()
 }
 
 OSData *IntelBluetoothOpsGen1::
-getFirmware(IntelVersion *ver)
+getFirmware(IntelVersion *ver, char *fwname, size_t len)
 {
-    char fwname[64];
     OSData *fwData;
     
-    snprintf(fwname, sizeof(fwname),
+    snprintf(fwname, len,
              "ibt-hw-%x.%x.%x-fw-%x.%x.%x.%x.%x.bseq",
              ver->hw_platform, ver->hw_variant, ver->hw_revision,
              ver->fw_variant,  ver->fw_revision, ver->fw_build_num,
@@ -208,7 +211,7 @@ getFirmware(IntelVersion *ver)
         /* If the correct firmware patch file is not found, use the
          * default firmware patch file instead
          */
-        snprintf(fwname, sizeof(fwname), "ibt-hw-%x.%x.bseq",
+        snprintf(fwname, len, "ibt-hw-%x.%x.bseq",
                  ver->hw_platform, ver->hw_variant);
         fwData = requestFirmwareData(fwname);
     }

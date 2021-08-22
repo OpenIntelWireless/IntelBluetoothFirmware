@@ -190,7 +190,7 @@ download:
         return false;
     }
     
-    strncpy(this->loadedFirmwareName, fwname, strlen(fwname));
+    strncpy(this->loadedFirmwareName, fwname, sizeof(this->loadedFirmwareName));
     
     fwData = requestFirmwareData(fwname, true);
     if (!fwData) {
@@ -455,6 +455,7 @@ shutdown()
 bool IntelBluetoothOpsGen2::
 getFirmwareName(char *fwname, size_t len)
 {
-    strncpy(fwname, this->loadedFirmwareName, min(strlen(this->loadedFirmwareName), len));
+    strncpy(fwname, this->loadedFirmwareName, len - 1);
+    fwname[len - 1] = '\0';
     return true;
 }

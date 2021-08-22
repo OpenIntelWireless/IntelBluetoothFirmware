@@ -28,7 +28,7 @@ private:
     
     bool hciReset();
     
-    OSData *getFirmware(IntelVersion *ver);
+    OSData *getFirmware(IntelVersion *ver, char *, size_t);
     
 private:
     char loadedFirmwareName[64];

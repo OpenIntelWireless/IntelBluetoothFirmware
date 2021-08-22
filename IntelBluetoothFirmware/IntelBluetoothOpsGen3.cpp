@@ -131,6 +131,8 @@ downloadFirmware(IntelVersionTLV *ver, uint32_t *bootParams)
     
     getFirmware(ver, fwname, sizeof(fwname), "sfi");
     
+    strncpy(this->loadedFirmwareName, fwname, sizeof(this->loadedFirmwareName));
+    
     fwData = requestFirmwareData(fwname, true);
     if (!fwData) {
         if (firmwareMode) {
@@ -560,6 +562,7 @@ shutdown()
 bool IntelBluetoothOpsGen3::
 getFirmwareName(char *fwname, size_t len)
 {
-    strncpy(fwname, this->loadedFirmwareName, min(strlen(this->loadedFirmwareName), len));
+    strncpy(fwname, this->loadedFirmwareName, len - 1);
+    fwname[len - 1] = '\0';
     return true;
 }
