@@ -111,7 +111,7 @@ readVersion(IntelVersion *version)
 bool BtIntel::
 sendIntelReset(uint32_t bootParam)
 {
-    uint8_t buf[11];
+    uint8_t buf[CMD_BUF_MAX_SIZE];
     IntelReset params = {
         0x00, 0x01, 0x00, 0x01, 0x00000000 
     };
@@ -181,7 +181,7 @@ resetToBootloader()
 {
     XYLog("%s\n", __FUNCTION__);
     bool ret;
-    uint8_t buf[11];
+    uint8_t buf[CMD_BUF_MAX_SIZE];
     HciCommandHdr *cmd = (HciCommandHdr *)buf;
     IntelReset params;
     
@@ -225,7 +225,7 @@ resetToBootloader()
 bool BtIntel::
 readDebugFeatures(IntelDebugFeatures *features)
 {
-    uint8_t buf[CMD_BUF_MAX_SIZE], temp[40];
+    uint8_t buf[CMD_BUF_MAX_SIZE], temp[CMD_BUF_MAX_SIZE];
     uint actLen = 0;
     HciCommandHdr *cmd = (HciCommandHdr *)buf;
     HciResponse *resp = (HciResponse *)temp;
