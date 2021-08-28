@@ -180,7 +180,7 @@ downloadFirmware(IntelVersionTLV *ver, uint32_t *bootParams)
      * of this device.
      */
     memset(buf, 0, sizeof(buf));
-    ior = m_pUSBDeviceController->interruptPipeRead(resp, &actSize, 5000);
+    ior = m_pUSBDeviceController->interruptPipeRead(resp, sizeof(buf), &actSize, 5000);
     if (ior != kIOReturnSuccess) {
         XYLog("waiting for firmware download done timeout\n");
         resetToBootloader();
@@ -358,7 +358,7 @@ readVersionTLV(IntelVersionTLV *version)
     cmd->data[0] = 0xFF;
     
     memset(respBuf, 0, sizeof(respBuf));
-    if (!intelSendHCISync(cmd, resp, &actLen, HCI_CMD_TIMEOUT)) {
+    if (!intelSendHCISync(cmd, resp, sizeof(respBuf), &actLen, HCI_CMD_TIMEOUT)) {
         XYLog("Reading Intel version information failed\n");
         return false;
     }

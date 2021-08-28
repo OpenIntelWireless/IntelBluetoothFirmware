@@ -39,9 +39,9 @@ public:
     
     virtual bool findPipes();
     
-    IOReturn bulkPipeRead(void *buf, uint32_t *size, uint32_t timeout);
+    IOReturn bulkPipeRead(void *buf, uint32_t buf_size, uint32_t *size, uint32_t timeout);
     
-    IOReturn interruptPipeRead(void *buf, uint32_t *size, uint32_t timeout);
+    IOReturn interruptPipeRead(void *buf, uint32_t buf_size, uint32_t *size, uint32_t timeout);
     
     IOReturn sendHCIRequest(HciCommandHdr *cmd, uint32_t timeout);
     

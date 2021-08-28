@@ -21,7 +21,7 @@ enterMfg()
     cmd->data[0] = 0x01;
     cmd->data[1] = 0x00;
     
-    return intelSendHCISync(cmd, NULL, NULL, HCI_CMD_TIMEOUT);
+    return intelSendHCISync(cmd, NULL, 0, NULL, HCI_CMD_TIMEOUT);
 }
 
 bool BtIntel::
@@ -44,7 +44,7 @@ exitMfg(bool reset, bool patched)
     if (reset)
         cmd->data[1] |= patched ? 0x02 : 0x01;
     
-    return intelSendHCISync(cmd, NULL, NULL, HCI_CMD_TIMEOUT);
+    return intelSendHCISync(cmd, NULL, 0, NULL, HCI_CMD_TIMEOUT);
 }
 
 bool BtIntel::
@@ -61,7 +61,7 @@ setEventMask(bool debug)
     cmd->len = 8;
     memcpy(cmd->data, mask, 8);
     
-    return intelSendHCISync(cmd, NULL, NULL, HCI_INIT_TIMEOUT);
+    return intelSendHCISync(cmd, NULL, 0, NULL, HCI_INIT_TIMEOUT);
 }
 
 bool BtIntel::
@@ -93,7 +93,7 @@ readVersion(IntelVersion *version)
     HciResponse *resp = (HciResponse *)buf;
     
     memset(buf, 0, sizeof(buf));
-    if (!intelSendHCISync(&cmd, resp, &actLen, HCI_CMD_TIMEOUT)) {
+    if (!intelSendHCISync(&cmd, resp, sizeof(buf), &actLen, HCI_CMD_TIMEOUT)) {
         XYLog("Reading Intel version information failed\n");
         return false;
     }
@@ -137,7 +137,7 @@ readBootParams(IntelBootParams *params)
     HciResponse *resp = (HciResponse *)buf;
     
     memset(buf, 0, sizeof(buf));
-    if (!intelSendHCISync(&cmd, resp, &actLen, HCI_INIT_TIMEOUT)) {
+    if (!intelSendHCISync(&cmd, resp, sizeof(buf), &actLen, HCI_INIT_TIMEOUT)) {
         XYLog("Reading Intel boot parameters failed\n");
         return false;
     }
@@ -236,7 +236,7 @@ readDebugFeatures(IntelDebugFeatures *features)
     cmd->len = sizeof(page_no);
     cmd->data[0] = page_no;
     
-    if (!intelSendHCISync(cmd, resp, &actLen, HCI_INIT_TIMEOUT)) {
+    if (!intelSendHCISync(cmd, resp, sizeof(temp), &actLen, HCI_INIT_TIMEOUT)) {
         XYLog("Reading supported features failed\n");
         return false;
     }
@@ -275,7 +275,7 @@ setDebugFeatures(IntelDebugFeatures *features)
     cmd->len = 11;
     memcpy(cmd->data, mask, 11);
     
-    if (!intelSendHCISync(cmd, NULL, NULL, HCI_INIT_TIMEOUT)) {
+    if (!intelSendHCISync(cmd, NULL, 0, NULL, HCI_INIT_TIMEOUT)) {
         XYLog("Setting Intel telemetry ddc write event mask failed\n");
         return false;
     }

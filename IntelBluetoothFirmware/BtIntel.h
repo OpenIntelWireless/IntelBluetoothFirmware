@@ -190,9 +190,9 @@ public:
     
 protected:
     
-    bool intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout);
+    bool intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, int timeout);
     
-    bool intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout);
+    bool intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, int timeout);
     
 protected:
     USBDeviceController *m_pUSBDeviceController;

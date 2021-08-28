@@ -183,7 +183,7 @@ findPipes()
 }
 
 IOReturn USBDeviceController::
-bulkPipeRead(void *buf, uint32_t *size, uint32_t timeout)
+bulkPipeRead(void *buf, uint32_t buf_size, uint32_t *size, uint32_t timeout)
 {
     uint32_t actualLength = 0;
     IOReturn ret = m_pBulkReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), actualLength, timeout);
@@ -192,11 +192,14 @@ bulkPipeRead(void *buf, uint32_t *size, uint32_t timeout)
         ret = m_pBulkReadPipe->io(mReadBuffer, (uint32_t)mReadBuffer->getLength(), actualLength, timeout);
     }
     if (ret == kIOReturnSuccess) {
+        if (buf && actualLength > buf_size) {
+            XYLog("%s buf size too small. buflen: %d act: %d\n", __FUNCTION__, buf_size, actualLength);
+        }
         if (buf) {
-            memcpy(buf, mReadBuffer->getBytesNoCopy(), actualLength);
+            memcpy(buf, mReadBuffer->getBytesNoCopy(), min(actualLength, buf_size));
         }
         if (size) {
-            *size = actualLength;
+            *size = min(actualLength, buf_size);
         }
     } else {
         XYLog("%s failed: %s %d\n", __FUNCTION__, stringFromReturn(ret), ret);
@@ -228,7 +231,7 @@ interruptHandler(void *owner, void *parameter, IOReturn status, uint32_t bytesTr
 }
 
 IOReturn USBDeviceController::
-interruptPipeRead(void *buf, uint32_t *size, uint32_t timeout)
+interruptPipeRead(void *buf, uint32_t buf_size, uint32_t *size, uint32_t timeout)
 {
     AbsoluteTime deadline;
     IOUSBHostCompletion comple;
@@ -259,11 +262,14 @@ interruptPipeRead(void *buf, uint32_t *size, uint32_t timeout)
             XYLog("%s invalid response size: %d\n", __FUNCTION__, interrupResp.dataLen);
             return kIOReturnError;
         }
+        if (buf && interrupResp.dataLen > buf_size) {
+            XYLog("%s buf size too small. buflen: %d act: %d\n", __FUNCTION__, buf_size, interrupResp.dataLen);
+        }
         if (buf) {
-            memcpy(buf, mReadBuffer->getBytesNoCopy(), interrupResp.dataLen);
+            memcpy(buf, mReadBuffer->getBytesNoCopy(), min(interrupResp.dataLen, buf_size));
         }
         if (size) {
-            *size = interrupResp.dataLen;
+            *size = min(interrupResp.dataLen, buf_size);
         }
         IOLockUnlock(_hciLock);
     } else {

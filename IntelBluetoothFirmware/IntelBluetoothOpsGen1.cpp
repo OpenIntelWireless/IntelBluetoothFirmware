@@ -192,7 +192,7 @@ hciReset()
         .len = 0,
     };
     
-    return intelSendHCISync(&cmd, NULL, NULL, HCI_INIT_TIMEOUT);
+    return intelSendHCISync(&cmd, NULL, 0, NULL, HCI_INIT_TIMEOUT);
 }
 
 OSData *IntelBluetoothOpsGen1::
@@ -311,7 +311,7 @@ patching(OSData *fwData, const uint8_t **fw_ptr, bool *disablePatch)
     hciCmd->len = cmd->len;
     memcpy(hciCmd->data, cmdParam, hciCmd->len);
     
-    if (!intelSendHCISync(hciCmd, resp, &actRespLen, HCI_INIT_TIMEOUT)) {
+    if (!intelSendHCISync(hciCmd, resp, sizeof(respBuf), &actRespLen, HCI_INIT_TIMEOUT)) {
         XYLog("sending Intel patch command (0x%4.4x) failed\n", hciCmd->opcode);
         return false;
     }

@@ -236,7 +236,7 @@ download:
      * of this device.
      */
     memset(buf, 0, sizeof(buf));
-    ior = m_pUSBDeviceController->interruptPipeRead(resp, &actSize, 5000);
+    ior = m_pUSBDeviceController->interruptPipeRead(resp, sizeof(buf), &actSize, 5000);
     if (ior != kIOReturnSuccess) {
         XYLog("waiting for firmware download done timeout\n");
         resetToBootloader();

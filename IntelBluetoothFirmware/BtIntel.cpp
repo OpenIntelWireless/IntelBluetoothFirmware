@@ -50,7 +50,7 @@ free()
 }
 
 bool BtIntel::
-intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout)
+intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, int timeout)
 {
 //    XYLog("%s cmd: 0x%02x len: %d\n", __PRETTY_FUNCTION__, cmd->opcode, cmd->len);
     IOReturn ret;
@@ -58,7 +58,7 @@ intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout)
         XYLog("%s sendHCIRequest failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
-    if ((ret = m_pUSBDeviceController->interruptPipeRead(event, size, timeout)) != kIOReturnSuccess) {
+    if ((ret = m_pUSBDeviceController->interruptPipeRead(event, eventBufSize, size, timeout)) != kIOReturnSuccess) {
         XYLog("%s interruptPipeRead failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
@@ -66,7 +66,7 @@ intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout)
 }
 
 bool BtIntel::
-intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout)
+intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, int timeout)
 {
 //    XYLog("%s cmd: 0x%02x len: %d\n", __FUNCTION__, cmd->opcode, cmd->len);
     IOReturn ret;
@@ -74,7 +74,7 @@ intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t *size, int timeout)
         XYLog("%s bulkWrite failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
-    if ((ret = m_pUSBDeviceController->bulkPipeRead(event, size, timeout)) != kIOReturnSuccess) {
+    if ((ret = m_pUSBDeviceController->bulkPipeRead(event, eventBufSize, size, timeout)) != kIOReturnSuccess) {
         XYLog("%s bulkPipeRead failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
@@ -97,7 +97,7 @@ securedSend(uint8_t fragmentType, uint32_t len, const uint8_t *fragment)
         hciCommand->data[0] = fragmentType;
         memcpy(hciCommand->data + 1, fragment, fragment_len);
         
-        if (!(ret = intelBulkHCISync(hciCommand, NULL, NULL, HCI_INIT_TIMEOUT))) {
+        if (!(ret = intelBulkHCISync(hciCommand, NULL, 0, NULL, HCI_INIT_TIMEOUT))) {
             XYLog("secure send failed\n");
             return ret;
         }
@@ -183,7 +183,7 @@ intelBoot(uint32_t bootAddr)
      * 1 second. However if that happens, then just fail the setup
      * since something went wrong.
      */
-    IOReturn ret = m_pUSBDeviceController->interruptPipeRead(buf, &actLen, 1000);
+    IOReturn ret = m_pUSBDeviceController->interruptPipeRead(buf, sizeof(buf), &actLen, 1000);
     if (ret != kIOReturnSuccess || actLen <= 0) {
         XYLog("Intel boot failed\n");
         if (ret == kIOReturnTimeout) {
@@ -226,7 +226,7 @@ loadDDCConfig(const char *ddcFileName)
         cmd->opcode = OSSwapHostToLittleInt16(0xfc8b);
         cmd->len = cmd_plen;
         memcpy(cmd->data, fw_ptr, cmd->len);
-        if (!intelSendHCISync(cmd, NULL, NULL, HCI_INIT_TIMEOUT)) {
+        if (!intelSendHCISync(cmd, NULL, 0, NULL, HCI_INIT_TIMEOUT)) {
             XYLog("Failed to send Intel_Write_DDC\n");
             return false;
         }
