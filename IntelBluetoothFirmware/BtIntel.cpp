@@ -55,11 +55,11 @@ intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_
 //    XYLog("%s cmd: 0x%02x len: %d\n", __PRETTY_FUNCTION__, cmd->opcode, cmd->len);
     IOReturn ret;
     if ((ret = m_pUSBDeviceController->sendHCIRequest(cmd, timeout)) != kIOReturnSuccess) {
-        XYLog("%s sendHCIRequest failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
+        XYLog("%s sendHCIRequest failed: %s %d\n", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
     if ((ret = m_pUSBDeviceController->interruptPipeRead(event, eventBufSize, size, timeout)) != kIOReturnSuccess) {
-        XYLog("%s interruptPipeRead failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
+        XYLog("%s interruptPipeRead failed: %s %d\n", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
     return true;
@@ -71,11 +71,11 @@ intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_
 //    XYLog("%s cmd: 0x%02x len: %d\n", __FUNCTION__, cmd->opcode, cmd->len);
     IOReturn ret;
     if ((ret = m_pUSBDeviceController->bulkWrite(cmd, HCI_COMMAND_HDR_SIZE + cmd->len, timeout)) != kIOReturnSuccess) {
-        XYLog("%s bulkWrite failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
+        XYLog("%s bulkWrite failed: %s %d\n", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
     if ((ret = m_pUSBDeviceController->bulkPipeRead(event, eventBufSize, size, timeout)) != kIOReturnSuccess) {
-        XYLog("%s bulkPipeRead failed: %s %d", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
+        XYLog("%s bulkPipeRead failed: %s %d\n", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
         return false;
     }
     return true;
