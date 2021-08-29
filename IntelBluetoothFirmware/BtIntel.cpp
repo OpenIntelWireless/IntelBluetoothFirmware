@@ -66,6 +66,27 @@ intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_
 }
 
 bool BtIntel::
+intelSendHCISyncEvent(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, uint8_t syncEvent, int timeout)
+{
+    IOReturn ret;
+    if ((ret = m_pUSBDeviceController->sendHCIRequest(cmd, timeout)) != kIOReturnSuccess) {
+        XYLog("%s sendHCIRequest failed: %s %d\n", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
+        return false;
+    }
+    do {
+        ret = m_pUSBDeviceController->interruptPipeRead(event, eventBufSize, size, timeout);
+        if (ret != kIOReturnSuccess) {
+            XYLog("%s interruptPipeRead failed: %s %d\n", __FUNCTION__, m_pUSBDeviceController->stringFromReturn(ret), ret);
+            break;
+        }
+        if (*(uint8_t *)event == syncEvent) {
+            return true;
+        }
+    } while (true);
+    return false;
+}
+
+bool BtIntel::
 intelBulkHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, int timeout)
 {
 //    XYLog("%s cmd: 0x%02x len: %d\n", __FUNCTION__, cmd->opcode, cmd->len);
