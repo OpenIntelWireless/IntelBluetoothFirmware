@@ -75,6 +75,8 @@
 		F834E41C237C20FF000CB269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F854148C261EAA240093D94D /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zutil.c; sourceTree = "<group>"; };
 		F854148D261EAA240093D94D /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
+		F897646B2730FE17008D87EF /* ibt-1040-0041.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-0041.sfi"; sourceTree = "<group>"; };
+		F897646C2730FE17008D87EF /* ibt-1040-0041.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-0041.ddc"; sourceTree = "<group>"; };
 		F8B97C91267F58E100AB2229 /* ibt-20-1-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-4.sfi"; sourceTree = "<group>"; };
 		F8B97C92267F58E100AB2229 /* ibt-17-16-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-16-1.ddc"; sourceTree = "<group>"; };
 		F8B97C93267F58E100AB2229 /* ibt-11-5.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-11-5.ddc"; sourceTree = "<group>"; };
@@ -230,6 +232,8 @@
 		F8B97C90267F58E100AB2229 /* fw */ = {
 			isa = PBXGroup;
 			children = (
+				F897646C2730FE17008D87EF /* ibt-1040-0041.ddc */,
+				F897646B2730FE17008D87EF /* ibt-1040-0041.sfi */,
 				F8B97C91267F58E100AB2229 /* ibt-20-1-4.sfi */,
 				F8B97C92267F58E100AB2229 /* ibt-17-16-1.ddc */,
 				F8B97C93267F58E100AB2229 /* ibt-11-5.ddc */,
