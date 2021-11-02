@@ -82,6 +82,11 @@
 		F897646F2730FE99008D87EF /* ibt-0040-2120.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-2120.sfi"; sourceTree = "<group>"; };
 		F89764702730FE99008D87EF /* ibt-0040-0041.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-0041.sfi"; sourceTree = "<group>"; };
 		F89764712730FE99008D87EF /* ibt-0040-0041.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-0041.ddc"; sourceTree = "<group>"; };
+		F89764722730FEED008D87EF /* ibt-0040-1020.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-1020.ddc"; sourceTree = "<group>"; };
+		F89764732730FEED008D87EF /* ibt-1040-2120.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-2120.sfi"; sourceTree = "<group>"; };
+		F89764742730FEED008D87EF /* ibt-1040-1020.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-1020.sfi"; sourceTree = "<group>"; };
+		F89764752730FEED008D87EF /* ibt-1040-1020.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-1020.ddc"; sourceTree = "<group>"; };
+		F89764762730FEED008D87EF /* ibt-0040-1020.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-1020.sfi"; sourceTree = "<group>"; };
 		F8B97C91267F58E100AB2229 /* ibt-20-1-4.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-20-1-4.sfi"; sourceTree = "<group>"; };
 		F8B97C92267F58E100AB2229 /* ibt-17-16-1.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-17-16-1.ddc"; sourceTree = "<group>"; };
 		F8B97C93267F58E100AB2229 /* ibt-11-5.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-11-5.ddc"; sourceTree = "<group>"; };
@@ -237,6 +242,11 @@
 		F8B97C90267F58E100AB2229 /* fw */ = {
 			isa = PBXGroup;
 			children = (
+				F89764722730FEED008D87EF /* ibt-0040-1020.ddc */,
+				F89764762730FEED008D87EF /* ibt-0040-1020.sfi */,
+				F89764752730FEED008D87EF /* ibt-1040-1020.ddc */,
+				F89764742730FEED008D87EF /* ibt-1040-1020.sfi */,
+				F89764732730FEED008D87EF /* ibt-1040-2120.sfi */,
 				F89764712730FE99008D87EF /* ibt-0040-0041.ddc */,
 				F89764702730FE99008D87EF /* ibt-0040-0041.sfi */,
 				F897646E2730FE98008D87EF /* ibt-0040-2120.ddc */,
