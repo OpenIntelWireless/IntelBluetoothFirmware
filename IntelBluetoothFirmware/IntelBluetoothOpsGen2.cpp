@@ -268,9 +268,6 @@ downloadFirmwareData(IntelVersion *ver, OSData *fwData, uint32_t *bootParams)
             /* Skip version checking */
             break;
         default:
-            /* Skip reading firmware file version in bootloader mode */
-            if (ver->fw_variant == 0x06)
-                break;
             
             /* Skip download if firmware has the same version */
             if (firmwareVersion(ver->fw_build_num,
@@ -427,9 +424,10 @@ firmwareVersion(uint8_t num, uint8_t ww, uint8_t yy, OSData *fwData, uint32_t *b
             struct cmd_write_boot_params *params;
 
             params = (struct cmd_write_boot_params *)(fw_ptr + sizeof(*cmd));
-
-            XYLog("Boot Address: 0x%x\n",
-                    OSSwapLittleToHostConstInt32(params->boot_addr));
+            
+            *bootAddr = OSSwapLittleToHostConstInt32(params->boot_addr);
+            
+            XYLog("Boot Address: 0x%x\n", *bootAddr);
 
             XYLog("Firmware Version: %u-%u.%u\n",
                     params->fw_build_num, params->fw_build_ww,

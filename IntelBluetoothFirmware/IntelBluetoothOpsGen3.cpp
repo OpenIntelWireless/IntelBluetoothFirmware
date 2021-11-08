@@ -204,20 +204,17 @@ IOReturn IntelBluetoothOpsGen3::
 downloadFirmwareData(IntelVersionTLV *ver, OSData *fwData, uint32_t *bootParams, uint8_t hwVariant, uint8_t sbeType)
 {
     uint32_t cssHeaderVer;
-    
-    /* Skip reading firmware file version in bootloader mode */
-    if (ver->img_type != 0x01) {
-        /* Skip download if firmware has the same version */
-        if (firmwareVersion(ver->min_fw_build_nn,
-                            ver->min_fw_build_cw,
-                            ver->min_fw_build_yy,
-                            fwData, bootParams)) {
-            XYLog("Firmware already loaded\n");
-            /* Return -EALREADY to indicate that firmware has
-             * already been loaded.
-             */
-            return -EALREADY;
-        }
+
+    /* Skip download if firmware has the same version */
+    if (firmwareVersion(ver->min_fw_build_nn,
+                        ver->min_fw_build_cw,
+                        ver->min_fw_build_yy,
+                        fwData, bootParams)) {
+        XYLog("Firmware already loaded\n");
+        /* Return -EALREADY to indicate that firmware has
+         * already been loaded.
+         */
+        return -EALREADY;
     }
     
     /* The firmware variant determines if the device is in bootloader
