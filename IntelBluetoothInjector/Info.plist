@@ -168,6 +168,21 @@
 			<key>idVendor</key>
 			<integer>32903</integer>
 		</dict>
+		<key>csr</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.apple.iokit.CSRBluetoothHostControllerUSBTransport</string>
+			<key>IOClass</key>
+			<string>CSRBluetoothHostControllerUSBTransport</string>
+			<key>IOProbeScore</key>
+			<integer>3000</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>idProduct</key>
+			<integer>2010</integer>
+			<key>idVendor</key>
+			<integer>32903</integer>
+		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2020 钟先耀. All rights reserved.</string>
