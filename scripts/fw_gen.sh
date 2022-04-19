@@ -21,4 +21,4 @@ do
 done
 
 script_file="${PROJECT_DIR}/scripts/"
-python -c 'import sys;sys.path.append("'$script_file'");from zlib_compress_fw import *;process_files("'${target_file}'", "'$fw_files'")'
+python3 -c 'import sys;sys.path.append("'$script_file'");from zlib_compress_fw import *;process_files("'${target_file}'", "'$fw_files'")'

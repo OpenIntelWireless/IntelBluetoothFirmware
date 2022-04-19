@@ -457,7 +457,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n#  fw_gen.sh\n#  IntelBluetoothFirmware\n#\n#  Created by qcwap on 2020/2/26.\n#  Copyright © 2020 钟先耀. All rights reserved.\n\ntarget_file=\"${PROJECT_DIR}\"/IntelBluetoothFirmware/FwBinary.cpp\nfw_files=\"${PROJECT_DIR}/IntelBluetoothFirmware/fw/\"\n\nrm -rf \"$target_file\"\n\nscript_file=\"${PROJECT_DIR}/scripts/\"\npython -c 'import sys;sys.path.append(\"'$script_file'\");import zlib_compress_fw;zlib_compress_fw.process_files(\"'${target_file}'\", \"'$fw_files'\")'\n";
+			shellScript = "#!/bin/bash\n\n#  fw_gen.sh\n#  IntelBluetoothFirmware\n#\n#  Created by qcwap on 2020/2/26.\n#  Copyright © 2020 钟先耀. All rights reserved.\n\ntarget_file=\"${PROJECT_DIR}\"/IntelBluetoothFirmware/FwBinary.cpp\nfw_files=\"${PROJECT_DIR}/IntelBluetoothFirmware/fw/\"\n\nrm -rf \"$target_file\"\n\nscript_file=\"${PROJECT_DIR}/scripts/\"\npython3 -c 'import sys;sys.path.append(\"'$script_file'\");import zlib_compress_fw;zlib_compress_fw.process_files(\"'${target_file}'\", \"'$fw_files'\")'\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
