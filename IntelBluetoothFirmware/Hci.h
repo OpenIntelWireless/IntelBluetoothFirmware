@@ -119,7 +119,7 @@ typedef struct __attribute__((packed))
 #define HCI_OP_PERIODIC_INQ                 0x0403
 #define HCI_OP_EXIT_PERIODIC_INQ            0x0404
 #define HCI_OP_CREATE_CONN                  0x0405
-#define HCI_OP_DISCONNECT                   0x040
+#define HCI_OP_DISCONNECT                   0x0406
 #define HCI_OP_ADD_SCO                      0x0407
 #define HCI_OP_CREATE_CONN_CANCEL           0x0408
 #define HCI_OP_ACCEPT_CONN_REQ              0x0409
