@@ -72,16 +72,10 @@ bool IntelBluetoothFirmware::start(IOService *provider)
         stop(this);
         return false;
     }
-    switch (currentType) {
-        case kTypeGen1:
-            m_pBTIntel = new IntelBluetoothOpsGen1();
-            break;
-        case kTypeGen2:
-            m_pBTIntel = new IntelBluetoothOpsGen2();
-            break;
-        case kTypeGen3:
-            m_pBTIntel = new IntelBluetoothOpsGen3();
-            break;
+    if (currentType == kTypeGen1) {
+        m_pBTIntel = new IntelBluetoothOpsGen1();
+    } else {
+        m_pBTIntel = new IntelBluetoothOpsGen3();
     }
     if (!m_pBTIntel->initWithDevice(this, m_pDevice)) {
         XYLog("start fail, can not init device\n");

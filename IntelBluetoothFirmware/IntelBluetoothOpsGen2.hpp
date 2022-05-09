@@ -38,6 +38,8 @@ protected:
     
     bool firmwareVersion(uint8_t num, uint8_t ww, uint8_t yy, OSData *fwData, uint32_t *bootAddr);
     
+    bool bootloaderSetup(IntelVersion *ver);
+    
 private:
     
     bool getFirmware(IntelVersion *ver, IntelBootParams *params, char *name, size_t len, const char *suffix);

@@ -12,14 +12,39 @@
 
 OSDefineMetaClassAndStructors(IntelBluetoothOpsGen3, IntelBluetoothOpsGen2)
 
-bool IntelBluetoothOpsGen3::
-setup()
+int IntelBluetoothOpsGen3::
+readVersionTyP(void *version)
 {
-    char ddcname[64];
+    uint8_t buf[CMD_BUF_MAX_SIZE], temp[CMD_BUF_MAX_SIZE];
+    uint actLen = 0;
+    HciCommandHdr *cmd = (HciCommandHdr *)buf;
+    HciResponse *resp = (HciResponse *)temp;
+    
+    memset(temp, 0, sizeof(temp));
+    cmd->opcode = OSSwapHostToLittleInt16(0xfc05);
+    cmd->len = 1;
+    cmd->data[0] = 0xFF;
+    if (!intelSendHCISync(cmd, resp, sizeof(buf), &actLen, HCI_CMD_TIMEOUT)) {
+        XYLog("Reading Intel version information failed\n");
+        return 0;
+    }
+    
+    if (actLen - 5 <= 0 || actLen - 5 > CMD_BUF_MAX_SIZE) {
+        XYLog("Intel version size invalid (act: %d)\n", actLen);
+        return 0;
+    }
+    
+    memcpy(version, resp->data, actLen - 5);
+    
+    return actLen - 5;
+}
+
+bool IntelBluetoothOpsGen3::
+bootloaderSetupTLV(IntelVersionTLV *verTLV)
+{
     uint32_t bootParams;
-    IntelDebugFeatures features;
-    IntelVersionTLV version;
-    bool ret = true;
+    char ddcname[64];
+    IntelVersionTLV newVerTLV;
     
     /* Set the default boot parameter to 0x0 and it is updated to
      * SKU specific boot parameter after reading Intel_Write_Boot_Params
@@ -27,27 +52,13 @@ setup()
      */
     bootParams = 0x00000000;
     
-    /* Read the Intel version information to determine if the device
-     * is in bootloader mode or if it already has operational firmware
-     * loaded.
-     */
-    if (!readVersionTLV(&version)) {
-        XYLog("Intel Read version failed %d\n", __LINE__);
-        return false;
-    }
-    
-    if (!versionInfoTLV(&version)) {
-        XYLog("Intel version check failed\n");
-        return false;
-    }
-    
-    if (!downloadFirmware(&version, &bootParams)) {
+    if (!downloadFirmware(verTLV, &bootParams)) {
         XYLog("Download firmware failed\n");
         return false;
     }
     
     /* check if controller is already having an operational firmware */
-    if (version.img_type == 0x03) {
+    if (verTLV->img_type == 0x03) {
         XYLog("Frimware is already running, finishing\n");
         goto finish;
     }
@@ -57,7 +68,7 @@ setup()
         return false;
     }
     
-    getFirmware(&version, ddcname, sizeof(ddcname), "ddc");
+    getFirmware(verTLV, ddcname, sizeof(ddcname), "ddc");
     
     /* Once the device is running in operational mode, it needs to
      * apply the device configuration (DDC) parameters.
@@ -67,21 +78,13 @@ setup()
      */
     loadDDCConfig(ddcname);
     
-    /* Read the Intel supported features and if new exception formats
-     * supported, need to load the additional DDC config to enable.
-     */
-    readDebugFeatures(&features);
-    
-    /* Set DDC mask for available debug features */
-    setDebugFeatures(&features);
-    
     /* Read the Intel version information after loading the FW  */
-    if (!readVersionTLV(&version)) {
-        XYLog("Intel Read version failed %d\n", __LINE__);
+    if (!readVersionTLV(&newVerTLV)) {
+        XYLog("Intel Read TLV version failed %d\n", __LINE__);
         return false;
     }
     
-    versionInfoTLV(&version);
+    versionInfoTLV(&newVerTLV);
     
 finish:
     /* Set the event mask for Intel specific vendor events. This enables
@@ -93,7 +96,138 @@ finish:
      */
     setEventMask(false);
     
-    return ret;
+    return true;
+}
+
+bool IntelBluetoothOpsGen3::
+setup()
+{
+    uint8_t v[CMD_BUF_MAX_SIZE];
+    IntelVersion *verPtr = reinterpret_cast<IntelVersion *>(v);
+    IntelVersionTLV verTLV;
+    
+    /* Starting from TyP device, the command parameter and response are
+     * changed even though the OCF for HCI_Intel_Read_Version command
+     * remains same. The legacy devices can handle even if the
+     * command has a parameter and returns a correct version information.
+     * So, it uses new format to support both legacy and new format.
+     */
+    int actLen = readVersionTyP(verPtr);
+    
+    if (actLen <= 0) {
+        XYLog("Reading Intel version command failed\n");
+        return false;
+    }
+    
+    /* For Legacy device, check the HW platform value and size */
+    if (actLen == sizeof(IntelVersion)) {
+        XYLog("Read the legacy Intel version information\n");
+        
+        /* Display version information */
+        intelVersionInfo(verPtr);
+        
+        /* Check for supported iBT hardware variants of this firmware
+         * loading method.
+         *
+         * This check has been put in place to ensure correct forward
+         * compatibility options when newer hardware variants come
+         * along.
+         */
+        
+        switch (verPtr->hw_variant) {
+            case 0x0b:      /* SfP */
+            case 0x0c:      /* WsP */
+            case 0x11:      /* JfP */
+            case 0x12:      /* ThP */
+            case 0x13:      /* HrP */
+            case 0x14:      /* CcP */
+                
+                if (!bootloaderSetup(verPtr)) {
+                    return false;
+                }
+                break;
+                
+            default:
+                XYLog("Unsupported Intel hw variant (%u)\n", verPtr->hw_variant);
+                return false;
+        }
+        
+        return true;
+    }
+    
+    /* memset ver_tlv to start with clean state as few fields are exclusive
+     * to bootloader mode and are not populated in operational mode
+     */
+    memset(&verTLV, 0, sizeof(verTLV));
+    
+    if (!parseVersionTLV(&verTLV, v, actLen)) {
+        XYLog("Failed to parse TLV version information\n");
+        return false;
+    }
+    
+    if (INTEL_HW_PLATFORM(verTLV.cnvi_bt) != 0x37) {
+        XYLog("Unsupported Intel hardware platform (0x%2x)\n",
+              INTEL_HW_PLATFORM(verTLV.cnvi_bt));
+        return false;
+    }
+    
+    /* Check for supported iBT hardware variants of this firmware
+     * loading method.
+     *
+     * This check has been put in place to ensure correct forward
+     * compatibility options when newer hardware variants come
+     * along.
+     */
+    switch (INTEL_HW_VARIANT(verTLV.cnvi_bt)) {
+        case 0x11:      /* JfP */
+        case 0x12:      /* ThP */
+        case 0x13:      /* HrP */
+        case 0x14:      /* CcP */
+            
+            XYLog("Legacy bootloader with new firmware\n");
+            
+            /* Some legacy bootloader devices starting from JfP,
+             * the operational firmware supports both old and TLV based
+             * HCI_Intel_Read_Version command based on the command
+             * parameter.
+             *
+             * For upgrading firmware case, the TLV based version cannot
+             * be used because the firmware filename for legacy bootloader
+             * is based on the old format.
+             *
+             * Also, it is not easy to convert TLV based version from the
+             * legacy version format.
+             *
+             * So, as a workaround for those devices, use the legacy
+             * HCI_Intel_Read_Version to get the version information and
+             * run the legacy bootloader setup.
+             */
+            if (!readVersion(verPtr)) {
+                XYLog("Intel Read version failed\n");
+                return false;
+            }
+            
+            if (!bootloaderSetup(verPtr)) {
+                return false;
+            }
+            break;
+        case 0x17:
+        case 0x18:
+        case 0x19:
+            /* Display version information of TLV type */
+            versionInfoTLV(&verTLV);
+            
+            if (!bootloaderSetupTLV(&verTLV)) {
+                return false;
+            }
+            break;
+        default:
+            XYLog("Unsupported Intel hw variant (%u)\n",
+                  INTEL_HW_VARIANT(verTLV.cnvi_bt));
+            return false;
+    }
+    
+    return true;
 }
 
 bool IntelBluetoothOpsGen3::
@@ -338,36 +472,10 @@ ecdsaHeaderSecureSend(OSData *fwData)
 }
 
 bool IntelBluetoothOpsGen3::
-readVersionTLV(IntelVersionTLV *version)
+parseVersionTLV(IntelVersionTLV *version, const uint8_t *versionDataPtr, int len)
 {
-    uint32_t actLen = 0;
-    uint8_t sendBuf[CMD_BUF_MAX_SIZE];
-    uint8_t respBuf[CMD_BUF_MAX_SIZE];
-    HciResponse *resp = (HciResponse *)respBuf;
-    HciCommandHdr *cmd = (HciCommandHdr *)sendBuf;
-    const uint8_t *versionDataPtr;
     IntelTLV *tlv;
-    int len = 0;
-    
-    memset(sendBuf, 0, sizeof(sendBuf));
-    cmd->opcode = OSSwapHostToLittleInt16(0xfc05);
-    cmd->len = 1;
-    cmd->data[0] = 0xFF;
-    
-    memset(respBuf, 0, sizeof(respBuf));
-    if (!intelSendHCISync(cmd, resp, sizeof(respBuf), &actLen, HCI_CMD_TIMEOUT)) {
-        XYLog("Reading Intel version information failed\n");
-        return false;
-    }
-    
-    if (actLen < 5) {
-        XYLog("Invalid size %d\n", actLen);
-        return false;
-    }
-    
-    versionDataPtr = resp->data;
-    len = actLen - 5;
-    
+
     /* Consume Command Complete Status field */
     versionDataPtr++;
     len--;
@@ -452,6 +560,41 @@ readVersionTLV(IntelVersionTLV *version)
         len -= (sizeof(IntelTLV) + tlv->len);
         versionDataPtr += (sizeof(IntelTLV) + tlv->len);
     }
+    
+    return true;
+}
+
+bool IntelBluetoothOpsGen3::
+readVersionTLV(IntelVersionTLV *version)
+{
+    uint32_t actLen = 0;
+    uint8_t sendBuf[CMD_BUF_MAX_SIZE];
+    uint8_t respBuf[CMD_BUF_MAX_SIZE];
+    HciResponse *resp = (HciResponse *)respBuf;
+    HciCommandHdr *cmd = (HciCommandHdr *)sendBuf;
+    const uint8_t *versionDataPtr;
+    int len = 0;
+    
+    memset(sendBuf, 0, sizeof(sendBuf));
+    cmd->opcode = OSSwapHostToLittleInt16(0xfc05);
+    cmd->len = 1;
+    cmd->data[0] = 0xFF;
+    
+    memset(respBuf, 0, sizeof(respBuf));
+    if (!intelSendHCISync(cmd, resp, sizeof(respBuf), &actLen, HCI_CMD_TIMEOUT)) {
+        XYLog("Reading Intel version information failed\n");
+        return false;
+    }
+    
+    if (actLen < 5) {
+        XYLog("Invalid size %d\n", actLen);
+        return false;
+    }
+    
+    versionDataPtr = resp->data;
+    len = actLen - 5;
+    
+    parseVersionTLV(version, versionDataPtr, len);
     
     return true;
 }

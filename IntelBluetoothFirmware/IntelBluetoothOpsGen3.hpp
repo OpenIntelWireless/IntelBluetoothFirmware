@@ -64,11 +64,17 @@ protected:
     
     bool ecdsaHeaderSecureSend(OSData *fwData);
     
+    bool bootloaderSetupTLV(IntelVersionTLV *ver);
+    
 private:
+    
+    int readVersionTyP(void *version);
     
     bool versionInfoTLV(IntelVersionTLV *version);
     
     bool readVersionTLV(IntelVersionTLV *version);
+    
+    bool parseVersionTLV(IntelVersionTLV *version, const uint8_t *versionDataPtr, int len);
     
     bool getFirmware(IntelVersionTLV *tlv, char *name, size_t len, const char *suffix);
     

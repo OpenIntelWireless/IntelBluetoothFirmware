@@ -12,11 +12,10 @@
 OSDefineMetaClassAndStructors(IntelBluetoothOpsGen2, BtIntel)
 
 bool IntelBluetoothOpsGen2::
-setup()
+bootloaderSetup(IntelVersion *ver)
 {
-    IntelVersion ver;
+    IntelVersion newVer;
     IntelBootParams params;
-    IntelDebugFeatures features;
     uint32_t bootParams;
     char ddcname[64];
     
@@ -25,6 +24,59 @@ setup()
      * command while downloading the firmware.
      */
     bootParams = 0x00000000;
+    
+    if (!downloadFirmware(ver, &params, &bootParams)) {
+        return false;
+    }
+    
+    /* controller is already having an operational firmware */
+    if (ver->fw_variant == 0x23) {
+        XYLog("Frimware is already running, finishing\n");
+        goto finish;
+    }
+    
+    if (!intelBoot(bootParams)) {
+        XYLog("Boot failed\n");
+        return false;
+    }
+    
+    if (!getFirmware(ver, &params, ddcname, sizeof(ddcname), "ddc")) {
+        XYLog("Unsupported Intel firmware naming\n");
+    } else {
+        /* Once the device is running in operational mode, it needs to
+         * apply the device configuration (DDC) parameters.
+         *
+         * The device can work without DDC parameters, so even if it
+         * fails to load the file, no need to fail the setup.
+         */
+        loadDDCConfig(ddcname);
+    }
+    
+    /* Read the Intel version information after loading the FW  */
+    if (!readVersion(&newVer)) {
+        return false;
+    }
+    
+    intelVersionInfo(&newVer);
+    
+finish:
+    
+    /* Set the event mask for Intel specific vendor events. This enables
+     * a few extra events that are useful during general operation. It
+     * does not enable any debugging related events.
+     *
+     * The device will function correctly without these events enabled
+     * and thus no need to fail the setup.
+     */
+    setEventMask(false);
+    
+    return true;
+}
+
+bool IntelBluetoothOpsGen2::
+setup()
+{
+    IntelVersion ver;
     
     /* Read the Intel version information to determine if the device
      * is in bootloader mode or if it already has operational firmware
@@ -40,60 +92,7 @@ setup()
         return false;
     }
     
-    if (!downloadFirmware(&ver, &params, &bootParams)) {
-        return false;
-    }
-    
-    /* controller is already having an operational firmware */
-    if (ver.fw_variant == 0x23) {
-        XYLog("Frimware is already running, finishing\n");
-        goto finish;
-    }
-    
-    if (!intelBoot(bootParams)) {
-        XYLog("Boot failed\n");
-        return false;
-    }
-    
-    if (!getFirmware(&ver, &params, ddcname, sizeof(ddcname), "ddc")) {
-        XYLog("Unsupported Intel firmware naming\n");
-    } else {
-        /* Once the device is running in operational mode, it needs to
-         * apply the device configuration (DDC) parameters.
-         *
-         * The device can work without DDC parameters, so even if it
-         * fails to load the file, no need to fail the setup.
-         */
-        loadDDCConfig(ddcname);
-    }
-    
-    /* Read the Intel supported features and if new exception formats
-     * supported, need to load the additional DDC config to enable.
-     */
-    readDebugFeatures(&features);
-    
-    /* Set DDC mask for available debug features */
-    setDebugFeatures(&features);
-    
-    /* Read the Intel version information after loading the FW  */
-    if (!readVersion(&ver)) {
-        return false;
-    }
-    
-    intelVersionInfo(&ver);
-    
-finish:
-    
-    /* Set the event mask for Intel specific vendor events. This enables
-     * a few extra events that are useful during general operation. It
-     * does not enable any debugging related events.
-     *
-     * The device will function correctly without these events enabled
-     * and thus no need to fail the setup.
-     */
-    setEventMask(false);
-    
-    return true;
+    return bootloaderSetup(&ver);
 }
 
 bool IntelBluetoothOpsGen2::
