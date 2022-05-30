@@ -15,7 +15,7 @@ jobs:
     - name: Get Lilu SHA
       id: get-lilu-sha
       run: |
-        echo "::set-output name=hash::$(git ls-remote https://github.com/acidanthera/Lilu.git HEAD | awk '{ print $1}')"
+        echo "::set-output name=hash::$(git ls-remote https://github.com/acidanthera/Lilu.git HEAD | awk '{ print $1 }')"
 
     - name: Cache Lilu
       id: cache-lilu
@@ -34,7 +34,7 @@ jobs:
         git clone --depth=1 https://github.com/acidanthera/Lilu.git
         cd Lilu || exit 1
         ln -s ../MacKernelSDK MacKernelSDK
-        xcodebuild -configuration Debug -arch x86_64 | xcpretty exit ${PIPESTATUS[0]}
+        xcodebuild -configuration Debug -arch x86_64 | xcpretty && exit ${PIPESTATUS[0]}
         if [ ! -d "build/Debug/Lilu.kext" ]; then
           exit 1
         fi
