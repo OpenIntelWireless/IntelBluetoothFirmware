@@ -1,0 +1,80 @@
+name: Bug Report
+description: File a bug report
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: dropdown
+    id: docs
+    attributes:
+      label: Have you read the docs?
+      options:
+        - 'No'
+        - 'Yes'
+    validations:
+      required: true
+
+  - type: input
+    id: macos-ver
+    attributes:
+      label: macOS Version
+      description: Which version of macOS are you using?
+      placeholder: macOS 12
+    validations:
+      required: true
+
+  - type: input
+    id: kext-ver
+    attributes:
+      label: Kext Version
+      description: Which version of the Kext are you using?
+      placeholder: v2.2.0
+    validations:
+      required: true
+
+  - type: input
+    id: card-model
+    attributes:
+      label: Wireless Adapter Model and USB Product ID
+      description: USB Product ID can be obtained from Hackintool when using macOS versions prior to Monterey or only when Bluetooth is working on macOS Monterey and newer.<br/>When bluetooth is not working on macOS Monterey and newer, the only method to obtain the USB Product ID is through IORegistry.
+      placeholder: Intel 9560AC (0xAAA)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is
+    validations:
+      required: true
+
+  - type: textarea
+    id: info
+    attributes:
+      label: Info in System Report - Bluetooth
+      description: Copy and paste all contents with sensitive information removed down below<br/>(Text in this field will be automatically formatted into code, so no need for backticks.)
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Output of `sudo dmesg | grep -i IntelBluetooth` with DebugEnhancer.kext installed.<br/>(Text in this field will be automatically formatted into code, so no need for backticks.)
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: panic-logs
+    attributes:
+      label: Kernel Panic Logs
+      description: In case there is a kernel panic, add `keepsyms=1` in boot-args then paste the panic info below<br/>(Text in this field will be automatically formatted into code, so no need for backticks.)
+      render: shell
+    validations:
+      required: false

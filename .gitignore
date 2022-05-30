@@ -6,4 +6,5 @@ xcshareddata
 project.xcworkspace
 FwBinary.cpp
 MacKernelSDK
+Lilu.kext
 zlib_compress_fw.pyc

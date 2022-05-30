@@ -21,7 +21,7 @@ After several months of public testing, it appears that the Kext is working well
 - [Supported Devices](https://openintelwireless.github.io/IntelBluetoothFirmware/Compat.html)
 - [Installation](https://openintelwireless.github.io/IntelBluetoothFirmware/Installation.html)
 - [Frequently Asked Questions](https://openintelwireless.github.io/IntelBluetoothFirmware/FAQ.html)
-- [Troubleshooting](https://openintelwireless.github.io/IntelBluetoothFirmware/Compat.html)
+- [Troubleshooting](https://openintelwireless.github.io/IntelBluetoothFirmware/Troubleshooting.html)
 
 ## Credits
 

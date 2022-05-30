@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://openintelwireless.github.io/IntelBluetoothFirmware/
+    about: Install guides and FAQ
+  - name: Gitter Chat Room
+    url: https://gitter.im/OpenIntelWireless/IntelBluetoothFirmware
+    about: Community chat room for IntelBluetoothFirmware

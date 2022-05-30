@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
 
@@ -10,11 +10,35 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+
+    - name: Get Lilu SHA
+      id: get-lilu-sha
+      run: |
+        echo "::set-output name=hash::$(git ls-remote https://github.com/acidanthera/Lilu.git HEAD | awk '{ print $1}')"
+
+    - name: Cache Lilu
+      id: cache-lilu
+      uses: actions/cache@v3
+      with:
+        path: Lilu.kext
+        key: Lilu-${{ steps.get-lilu-sha.outputs.hash }}
 
     - name: Install MacKernelSDK
       run: |
         git clone --depth=1 https://github.com/acidanthera/MacKernelSDK.git
+
+    - name: Install Lilu SDK
+      if: steps.cache-lilu.outputs.cache-hit != 'true'
+      run: |
+        git clone --depth=1 https://github.com/acidanthera/Lilu.git
+        cd Lilu || exit 1
+        ln -s ../MacKernelSDK MacKernelSDK
+        xcodebuild -configuration Debug -arch x86_64 | xcpretty exit ${PIPESTATUS[0]}
+        if [ ! -d "build/Debug/Lilu.kext" ]; then
+          exit 1
+        fi
+        cp -R build/Debug/Lilu.kext ../
 
     - name: Debug Build
       run: |

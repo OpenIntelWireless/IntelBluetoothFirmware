@@ -20,7 +20,7 @@ IntelBluetoothFirmware 是一个用于在 macOS 中启用原生蓝牙的固件�
 - [支持列表](https://openintelwireless.github.io/IntelBluetoothFirmware/Compat.html)
 - [安装方法](https://openintelwireless.github.io/IntelBluetoothFirmware/Installation.html)
 - [常见疑问](https://openintelwireless.github.io/IntelBluetoothFirmware/FAQ.html)
-- [排错方法](https://openintelwireless.github.io/IntelBluetoothFirmware/Compat.html)
+- [排错方法](https://openintelwireless.github.io/IntelBluetoothFirmware/Troubleshooting.html)
 
 ## 参考资料
 

@@ -577,7 +577,6 @@
 		17A741EF2677F81B005041A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = IntelBluetoothFirmware;
 			};
 			name = Debug;
@@ -585,7 +584,6 @@
 		17A741F02677F81B005041A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = IntelBluetoothFirmware;
 			};
 			name = Release;
@@ -746,10 +744,8 @@
 		F8CD9CDA2798ED5100EDBD8E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"MODULE_VERSION=$(MODULE_VERSION)",
 					"PRODUCT_NAME=$(PRODUCT_NAME)",
@@ -764,7 +760,6 @@
 				MODULE_START = IntelBTPatcher_kern_start;
 				MODULE_STOP = IntelBTPatcher_kern_stop;
 				MODULE_VERSION = "$(MODULE_VERSION)";
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.IntelBTPatcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -773,7 +768,6 @@
 		F8CD9CDB2798ED5100EDBD8E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CURRENT_PROJECT_VERSION = "$(MODULE_VERSION)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MODULE_VERSION=$(MODULE_VERSION)",
