@@ -186,8 +186,6 @@ public:
     
     OSData *requestFirmwareData(const char *fwName, bool noWarn = false);
     
-    static void printAllByte(void *addr, int size);
-    
 protected:
     
     bool intelSendHCISync(HciCommandHdr *cmd, void *event, uint32_t eventBufSize, uint32_t *size, int timeout);

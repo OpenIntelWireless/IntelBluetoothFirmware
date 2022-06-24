@@ -408,7 +408,6 @@ done:
 bool IntelBluetoothOpsGen2::
 firmwareVersion(uint8_t num, uint8_t ww, uint8_t yy, OSData *fwData, uint32_t *bootAddr)
 {
-    XYLog("%s\n", __FUNCTION__);
     const uint8_t *fw_ptr = (const uint8_t *)fwData->getBytesNoCopy();
     
     while (fw_ptr - (uint8_t *)fwData->getBytesNoCopy() < fwData->getLength()) {

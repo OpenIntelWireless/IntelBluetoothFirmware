@@ -259,20 +259,3 @@ loadDDCConfig(const char *ddcFileName)
     XYLog("Load DDC config done\n");
     return true;
 }
-
-void BtIntel::
-printAllByte(void *addr, int size)
-{
-    unsigned char *ptr = (unsigned char*)addr;
-    int print_bytes = 0;
- 
-    if(NULL == ptr) {
-        return;
-    }
-    
-    while(print_bytes < size) {
-        XYLog("%02x\n", *ptr);
-        ptr++;
-        print_bytes++;
-    }
-}
