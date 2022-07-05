@@ -5,7 +5,7 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
 
   build:
-    
+
     runs-on: macos-latest
 
     steps:
@@ -34,8 +34,8 @@ jobs:
         git clone --depth=1 https://github.com/acidanthera/Lilu.git
         cd Lilu || exit 1
         ln -s ../MacKernelSDK MacKernelSDK
-        xcodebuild -configuration Debug -arch x86_64 | xcpretty && exit ${PIPESTATUS[0]}
-        if [ ! -d "build/Debug/Lilu.kext" ]; then
+        xcodebuild -configuration Debug -arch x86_64 | xcpretty && ret=${PIPESTATUS[0]}
+        if [[ $ret -ne 0 || ! -d build/Debug/Lilu.kext ]]; then
           exit 1
         fi
         cp -R build/Debug/Lilu.kext ../
@@ -49,7 +49,8 @@ jobs:
         xcodebuild -alltargets -configuration Release | xcpretty && exit ${PIPESTATUS[0]}
 
     - name: Upload to Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ github.event.repository.name }}
         path: build/*/*.zip
+        if-no-files-found: error
