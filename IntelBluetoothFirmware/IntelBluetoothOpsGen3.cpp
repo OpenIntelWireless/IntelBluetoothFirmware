@@ -168,7 +168,8 @@ setup()
     if (INTEL_HW_PLATFORM(verTLV.cnvi_bt) != 0x37) {
         XYLog("Unsupported Intel hardware platform (0x%2x)\n",
               INTEL_HW_PLATFORM(verTLV.cnvi_bt));
-        return false;
+        // TODO: We found that the Gen 2 bluetooth may return different size with IntelVersion when in OPERATIONAL mode, then the code will go here, considering we will not attach the really unsupported device to this driver, so we fake it as firmware loaded done here.
+        return true;
     }
     
     /* Check for supported iBT hardware variants of this firmware
