@@ -40,6 +40,8 @@
 	<dict>
 		<key>as.vit9696.Lilu</key>
 		<string>1.2.0</string>
+		<key>com.apple.iokit.IOUSBHostFamily</key>
+		<string>1.2</string>
 		<key>com.apple.kpi.bsd</key>
 		<string>12.0.0</string>
 		<key>com.apple.kpi.dsep</key>
