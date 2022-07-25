@@ -278,7 +278,8 @@ static void asyncIOCompletion(void* owner, void* parameter, IOReturn status, uin
             IOFree((void *)dump, bytesTransferred * 3 + 1);
         }
         HciResponse *resp = (HciResponse *)buffer;
-        if (resp->opcode == 0x200C && resp->data[0]) {
+        // This fake is not needed, after configured the Random Address, the firmware may not generate the error code 0x12 anymore. but we still leave it here
+        if (resp->opcode == HCI_OP_LE_SET_SCAN_ENABLE && resp->data[0]) {
             SYSLOG(DRV_NAME, "[FAKE RESP]: done");
             dataBuffer->writeBytes(0, fakeLEScanEnableResp, 6);
         }
