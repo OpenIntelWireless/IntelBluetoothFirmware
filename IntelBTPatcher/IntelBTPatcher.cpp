@@ -329,7 +329,8 @@ newInitPipe(void *that, StandardUSB::EndpointDescriptor const *descriptor, Stand
                 SYSLOG(DRV_NAME, "GOT YOU Interrupt PIPE");
                 CIntelBTPatcher::_hookPipeInstance = that;
                 if (!CIntelBTPatcher::_interruptPipeAsyncOwner)
-                    CIntelBTPatcher::_interruptPipeAsyncOwner = new AsyncOwnerData;
+                    delete CIntelBTPatcher::_interruptPipeAsyncOwner;
+                CIntelBTPatcher::_interruptPipeAsyncOwner = new AsyncOwnerData;
                 CIntelBTPatcher::_randomAddressInit = false;
             }
         }
