@@ -66,8 +66,6 @@ static KernelPatcher::KextInfo IntelBTPatcher_IOUsbHostInfo {
     KernelPatcher::KextInfo::Unloaded
 };
 
-void *CIntelBTPatcher::_hookPipeInstance = nullptr;
-AsyncOwnerData *CIntelBTPatcher::_interruptPipeAsyncOwner = nullptr;
 bool CIntelBTPatcher::_randomAddressInit = false;
 
 bool CIntelBTPatcher::init()
@@ -128,45 +126,6 @@ void CIntelBTPatcher::processKext(KernelPatcher &patcher, size_t index, mach_vm_
                 SYSLOG(DRV_NAME, "routed %s", hostDeviceRequest.symbol);
             } else {
                 SYSLOG(DRV_NAME, "failed to resolve %s, error = %d", hostDeviceRequest.symbol, patcher.getError());
-                patcher.clearError();
-            }
-            
-            KernelPatcher::RouteRequest asyncIORequest {
-            "__ZN13IOUSBHostPipe2ioEP18IOMemoryDescriptorjP19IOUSBHostCompletionj",
-                newAsyncIO,
-                oldAsyncIO
-            };
-            patcher.routeMultiple(index, &asyncIORequest, 1, address, size);
-            if (patcher.getError() == KernelPatcher::Error::NoError) {
-                SYSLOG(DRV_NAME, "routed %s", asyncIORequest.symbol);
-            } else {
-                SYSLOG(DRV_NAME, "failed to resolve %s, error = %d", asyncIORequest.symbol, patcher.getError());
-                patcher.clearError();
-            }
-            
-            KernelPatcher::RouteRequest initPipeRequest {
-            "__ZN13IOUSBHostPipe28initWithDescriptorsAndOwnersEPKN11StandardUSB18EndpointDescriptorEPKNS0_37SuperSpeedEndpointCompanionDescriptorEP22AppleUSBHostControllerP15IOUSBHostDeviceP18IOUSBHostInterfaceht",
-                newInitPipe,
-                oldInitPipe
-            };
-            patcher.routeMultiple(index, &initPipeRequest, 1, address, size);
-            if (patcher.getError() == KernelPatcher::Error::NoError) {
-                SYSLOG(DRV_NAME, "routed %s", initPipeRequest.symbol);
-            } else {
-                SYSLOG(DRV_NAME, "failed to resolve %s, error = %d", initPipeRequest.symbol, patcher.getError());
-                patcher.clearError();
-            }
-            
-            KernelPatcher::RouteRequest syncIORequest {
-            "__ZN13IOUSBHostPipe2ioEP18IOMemoryDescriptorjRjj",
-                newSyncIO,
-                oldSyncIO
-            };
-            patcher.routeMultiple(index, &syncIORequest, 1, address, size);
-            if (patcher.getError() == KernelPatcher::Error::NoError) {
-                SYSLOG(DRV_NAME, "routed %s", syncIORequest.symbol);
-            } else {
-                SYSLOG(DRV_NAME, "failed to resolve %s, error = %d", syncIORequest.symbol, patcher.getError());
                 patcher.clearError();
             }
         }
@@ -233,12 +192,6 @@ IOReturn CIntelBTPatcher::newHostDeviceRequest(void *that, IOService *provider, 
                 SYSLOG(DRV_NAME, "[PATCH] Resend LE SCAN PARAM HCI %lld", ret);
             }
         }
-#if 0 // We don't need to fake Random address request to Public address, and it is not really fix the issue with Intel fatal firmware error after HCI_OP_LE_SET_SCAN_ENABLE.
-        else if (hdr->opcode == HCI_OP_LE_SET_SCAN_ENABLE) {
-            hdr->data[5] = 0x00;
-            SYSLOG(DRV_NAME, "[FAKE REQ]: RANDOM->PUBLIC done\n");
-        }
-#endif
     } else {
         hdr = (HciCommandHdr *)data;
         hdrLen = request.wLength - 3;
@@ -259,81 +212,4 @@ IOReturn CIntelBTPatcher::newHostDeviceRequest(void *that, IOService *provider, 
 #endif
     }
     return FunctionCast(newHostDeviceRequest, callbackIBTPatcher->oldHostDeviceRequest)(that, provider, request, data, descriptor, length, completion, timeout);
-}
-
-// Succeeded HCI command result of HCI_OP_LE_SET_SCAN_ENABLE, on Monterey+ this will return status 0x12 if we don't set the Random address before
-const uint8_t fakeLEScanEnableResp[6] = {0x0E, 0x04, 0x02, 0x0C, 0x20, 0x00};
-
-static void asyncIOCompletion(void* owner, void* parameter, IOReturn status, uint32_t bytesTransferred)
-{
-    AsyncOwnerData *asyncOwner = (AsyncOwnerData *)owner;
-    IOMemoryDescriptor* dataBuffer = asyncOwner->dataBuffer;
-    DBGLOG(DRV_NAME, "[COMPLETE] status: %d bytesTransferred: %d", status, bytesTransferred);
-    if (dataBuffer && bytesTransferred) {
-        void *buffer = IOMalloc(bytesTransferred);
-        dataBuffer->readBytes(0, buffer, bytesTransferred);
-        const char *dump = _hexDumpHCIData((uint8_t *)buffer, bytesTransferred);
-        if (dump) {
-            DBGLOG(DRV_NAME, "[Response]: %s", dump);
-            IOFree((void *)dump, bytesTransferred * 3 + 1);
-        }
-        HciResponse *resp = (HciResponse *)buffer;
-        // This fake is not needed, after configured the Random Address, the firmware may not generate the error code 0x12 anymore. but we still leave it here
-        if (resp->opcode == HCI_OP_LE_SET_SCAN_ENABLE && resp->data[0]) {
-            SYSLOG(DRV_NAME, "[FAKE RESP]: done");
-            dataBuffer->writeBytes(0, fakeLEScanEnableResp, 6);
-        }
-        IOFree(buffer, bytesTransferred);
-    }
-    if (asyncOwner->action)
-        asyncOwner->action(asyncOwner->owner, parameter, status, bytesTransferred);
-}
-
-IOReturn CIntelBTPatcher::
-newAsyncIO(void *that, IOMemoryDescriptor* dataBuffer, uint32_t dataBufferLength, IOUSBHostCompletion* completion, uint32_t completionTimeoutMs)
-{
-    IOReturn ret = kIOReturnSuccess;
-    if (that == _hookPipeInstance && completion) {
-        _interruptPipeAsyncOwner->action = completion->action;
-        _interruptPipeAsyncOwner->owner = completion->owner;
-        _interruptPipeAsyncOwner->dataBuffer = dataBuffer;
-        completion->action = asyncIOCompletion;
-        completion->owner = _interruptPipeAsyncOwner;
-        ret = FunctionCast(newAsyncIO, callbackIBTPatcher->oldAsyncIO)(that, dataBuffer, dataBufferLength, completion, completionTimeoutMs);
-        if (ret != kIOReturnSuccess)
-            SYSLOG(DRV_NAME, "%s failed ret: %lld", __FUNCTION__, ret);
-        return ret;
-    }
-    return FunctionCast(newAsyncIO, callbackIBTPatcher->oldAsyncIO)(that, dataBuffer, dataBufferLength, completion, completionTimeoutMs);
-}
-
-IOReturn CIntelBTPatcher::
-newSyncIO(void *that, IOMemoryDescriptor *dataBuffer, uint32_t dataBufferLength, uint32_t &bytesTransferred, uint32_t completionTimeoutMs)
-{
-    return FunctionCast(newSyncIO, callbackIBTPatcher->oldSyncIO)(that, dataBuffer, dataBufferLength, bytesTransferred, completionTimeoutMs);
-}
-
-#define VENDOR_USB_INTEL 0x8087
-
-int CIntelBTPatcher::
-newInitPipe(void *that, StandardUSB::EndpointDescriptor const *descriptor, StandardUSB::SuperSpeedEndpointCompanionDescriptor const *superDescriptor, AppleUSBHostController *controller, IOUSBHostDevice *device, IOUSBHostInterface *interface, unsigned char a7, unsigned short a8)
-{
-    int ret = FunctionCast(newInitPipe, callbackIBTPatcher->oldInitPipe)(that, descriptor, superDescriptor, controller, device, interface, a7, a8);
-    if (device) {
-        const StandardUSB::DeviceDescriptor *deviceDescriptor = device->getDeviceDescriptor();
-        if (deviceDescriptor &&
-            deviceDescriptor->idVendor == VENDOR_USB_INTEL) {
-            uint8_t epType = StandardUSB::getEndpointType(descriptor);
-            DBGLOG(DRV_NAME, "GOT YOU Intel bluetooth pid: %d ep type: %d", deviceDescriptor->iProduct, epType);
-            if (epType == kIOUSBEndpointTypeInterrupt) {
-                SYSLOG(DRV_NAME, "GOT YOU Interrupt PIPE");
-                CIntelBTPatcher::_hookPipeInstance = that;
-                if (!CIntelBTPatcher::_interruptPipeAsyncOwner)
-                    delete CIntelBTPatcher::_interruptPipeAsyncOwner;
-                CIntelBTPatcher::_interruptPipeAsyncOwner = new AsyncOwnerData;
-                CIntelBTPatcher::_randomAddressInit = false;
-            }
-        }
-    }
-    return ret;
 }
