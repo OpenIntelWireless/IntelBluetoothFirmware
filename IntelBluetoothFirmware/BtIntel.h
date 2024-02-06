@@ -76,6 +76,7 @@ typedef struct __attribute__((packed)) {
     uint8_t    min_fw_build_yy;
     uint8_t    limited_cce;
     uint8_t    sbe_type;
+    uint32_t   git_sha1;
     bdaddr_t otp_bd_addr;
 } IntelVersionTLV;
 

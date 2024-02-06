@@ -555,6 +555,9 @@ parseVersionTLV(IntelVersionTLV *version, const uint8_t *versionDataPtr, int len
             case INTEL_TLV_OTP_BDADDR:
                 memcpy(&version->otp_bd_addr, tlv->val, tlv->len);
                 break;
+            case INTEL_TLV_GIT_SHA1:
+                version->git_sha1 = get_unaligned_le32(tlv->val);
+                break;
             default:
                 /* Ignore rest of information */
                 break;
@@ -679,6 +682,9 @@ versionInfoTLV(IntelVersionTLV *version)
     XYLog("%s timestamp %u.%u buildtype %u build %u\n", variant,
           2000 + (version->timestamp >> 8), version->timestamp & 0xff,
           version->build_type, version->build_num);
+    
+    if (version->img_type == 0x03)
+        XYLog("Firmware SHA1: 0x%8.8x\n", version->git_sha1);
     
     return true;
 }

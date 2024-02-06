@@ -46,7 +46,8 @@ enum {
     INTEL_TLV_LIMITED_CCE,
     INTEL_TLV_SBE_TYPE,
     INTEL_TLV_OTP_BDADDR,
-    INTEL_TLV_UNLOCKED_STATE
+    INTEL_TLV_UNLOCKED_STATE,
+    INTEL_TLV_GIT_SHA1
 };
 
 class IntelBluetoothOpsGen3 : public IntelBluetoothOpsGen2 {
