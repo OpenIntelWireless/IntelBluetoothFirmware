@@ -215,6 +215,8 @@ setup()
         case 0x17:
         case 0x18:
         case 0x19:
+        case 0x1b:
+        case 0x1c:
             /* Display version information of TLV type */
             versionInfoTLV(&verTLV);
             
@@ -624,6 +626,8 @@ versionInfoTLV(IntelVersionTLV *version)
         case 0x17:    /* TyP */
         case 0x18:    /* Slr */
         case 0x19:    /* Slr-F */
+        case 0x1b:    /* Mgr */
+        case 0x1c:    /* Gale Peak (GaP) */
             break;
         default:
             XYLog("Unsupported Intel hardware variant (0x%x)\n",
