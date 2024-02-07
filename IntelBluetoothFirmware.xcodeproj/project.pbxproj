@@ -170,6 +170,20 @@
 		F8F5DEEF2657B7BF000939CF /* USBDeviceController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = USBDeviceController.hpp; sourceTree = "<group>"; };
 		F8F636112406C4AA00497626 /* IntelBluetoothInjector.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelBluetoothInjector.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8F636172406C4AA00497626 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8FEEB9B2B731D9A00D72655 /* ibt-19-0-3.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-3.sfi"; sourceTree = "<group>"; };
+		F8FEEB9C2B731D9A00D72655 /* ibt-0180-4150.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0180-4150.ddc"; sourceTree = "<group>"; };
+		F8FEEB9D2B731D9A00D72655 /* ibt-0180-1050.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0180-1050.sfi"; sourceTree = "<group>"; };
+		F8FEEB9E2B731D9A00D72655 /* ibt-1040-1050.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-1050.ddc"; sourceTree = "<group>"; };
+		F8FEEB9F2B731D9A00D72655 /* ibt-0040-1050.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-1050.ddc"; sourceTree = "<group>"; };
+		F8FEEBA02B731D9A00D72655 /* ibt-0180-1050.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0180-1050.ddc"; sourceTree = "<group>"; };
+		F8FEEBA12B731D9A00D72655 /* ibt-0180-0041.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0180-0041.sfi"; sourceTree = "<group>"; };
+		F8FEEBA22B731D9A00D72655 /* ibt-1040-1050.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-1040-1050.sfi"; sourceTree = "<group>"; };
+		F8FEEBA32B731D9A00D72655 /* ibt-0180-4150.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0180-4150.sfi"; sourceTree = "<group>"; };
+		F8FEEBA42B731D9A00D72655 /* ibt-0291-0291.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0291-0291.sfi"; sourceTree = "<group>"; };
+		F8FEEBA52B731D9A00D72655 /* ibt-0180-0041.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0180-0041.ddc"; sourceTree = "<group>"; };
+		F8FEEBA62B731D9A00D72655 /* ibt-0291-0291.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0291-0291.ddc"; sourceTree = "<group>"; };
+		F8FEEBA72B731D9A00D72655 /* ibt-0040-1050.sfi */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-0040-1050.sfi"; sourceTree = "<group>"; };
+		F8FEEBA82B731D9A00D72655 /* ibt-19-0-3.ddc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ibt-19-0-3.ddc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +280,20 @@
 		F8B97C90267F58E100AB2229 /* fw */ = {
 			isa = PBXGroup;
 			children = (
+				F8FEEBA82B731D9A00D72655 /* ibt-19-0-3.ddc */,
+				F8FEEB9B2B731D9A00D72655 /* ibt-19-0-3.sfi */,
+				F8FEEB9F2B731D9A00D72655 /* ibt-0040-1050.ddc */,
+				F8FEEBA72B731D9A00D72655 /* ibt-0040-1050.sfi */,
+				F8FEEBA52B731D9A00D72655 /* ibt-0180-0041.ddc */,
+				F8FEEBA12B731D9A00D72655 /* ibt-0180-0041.sfi */,
+				F8FEEBA02B731D9A00D72655 /* ibt-0180-1050.ddc */,
+				F8FEEB9D2B731D9A00D72655 /* ibt-0180-1050.sfi */,
+				F8FEEB9C2B731D9A00D72655 /* ibt-0180-4150.ddc */,
+				F8FEEBA32B731D9A00D72655 /* ibt-0180-4150.sfi */,
+				F8FEEBA62B731D9A00D72655 /* ibt-0291-0291.ddc */,
+				F8FEEBA42B731D9A00D72655 /* ibt-0291-0291.sfi */,
+				F8FEEB9E2B731D9A00D72655 /* ibt-1040-1050.ddc */,
+				F8FEEBA22B731D9A00D72655 /* ibt-1040-1050.sfi */,
 				F89764772730FF4A008D87EF /* ibt-0040-4150.ddc */,
 				F89764782730FF4A008D87EF /* ibt-0040-4150.sfi */,
 				F89764792730FF4A008D87EF /* ibt-1040-4150.ddc */,
