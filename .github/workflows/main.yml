@@ -10,16 +10,16 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Get Lilu SHA
       id: get-lilu-sha
       run: |
-        echo "::set-output name=hash::$(git ls-remote https://github.com/acidanthera/Lilu.git HEAD | awk '{ print $1 }')"
+        echo "hash=$(git ls-remote https://github.com/acidanthera/Lilu.git HEAD | awk '{ print $1 }')" >> "$GITHUB_OUTPUT"
 
     - name: Cache Lilu
       id: cache-lilu
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: Lilu.kext
         key: Lilu-${{ steps.get-lilu-sha.outputs.hash }}
@@ -49,7 +49,7 @@ jobs:
         xcodebuild -alltargets -configuration Release | xcpretty && exit ${PIPESTATUS[0]}
 
     - name: Upload to Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ github.event.repository.name }}
         path: build/*/*.zip
