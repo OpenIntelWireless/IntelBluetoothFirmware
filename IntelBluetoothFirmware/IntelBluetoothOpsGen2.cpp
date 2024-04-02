@@ -357,7 +357,7 @@ rsaHeaderSecureSend(OSData *fwData)
      * as the Sign fragment.
      */
     XYLog("send firmware signature\n");
-    if (!securedSend(0x02, 256, (const uint8_t *)fwData->getBytesNoCopy() + 388)) {
+    if (!securedSend(0x02, 256, (const uint8_t *)fwData->getBytesNoCopy() + 384)) {
         XYLog("Failed to send firmware signature\n");
         return false;
     }
