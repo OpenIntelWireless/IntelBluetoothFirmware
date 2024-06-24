@@ -37,7 +37,7 @@ PluginConfiguration ADDPR(config) {
     bootargBeta,
     arrsize(bootargBeta),
     KernelVersion::MountainLion,
-    KernelVersion::Sonoma,
+    KernelVersion::Sequoia,
     []() {
         ibtPatcher.init();
     }
@@ -165,9 +165,12 @@ IOReturn CIntelBTPatcher::newHostDeviceRequest(void *that, IOService *provider, 
     char hciBuf[MAX_HCI_BUF_LEN] = {0};
     
     if (data == nullptr) {
-        if (descriptor != nullptr && descriptor->getLength() > 0) {
-            descriptor->readBytes(0, hciBuf, min(descriptor->getLength(), MAX_HCI_BUF_LEN));
-            hdrLen = (uint32_t)min(descriptor->getLength(), MAX_HCI_BUF_LEN);
+        if (descriptor != nullptr && !descriptor->prepare(kIODirectionOut)) {
+            if (descriptor->getLength() > 0) {
+                descriptor->readBytes(0, hciBuf, min(descriptor->getLength(), MAX_HCI_BUF_LEN));
+                hdrLen = (uint32_t)min(descriptor->getLength(), MAX_HCI_BUF_LEN);
+            }
+            descriptor->complete(kIODirectionOut);
         }
         hdr = (HciCommandHdr *)hciBuf;
         if (hdr->opcode == HCI_OP_LE_SET_SCAN_PARAM) {
