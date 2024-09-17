@@ -165,12 +165,14 @@ IOReturn CIntelBTPatcher::newHostDeviceRequest(void *that, IOService *provider, 
     char hciBuf[MAX_HCI_BUF_LEN] = {0};
     
     if (data == nullptr) {
-        if (descriptor != nullptr && !descriptor->prepare(kIODirectionOut)) {
+        if (descriptor != nullptr &&
+            (getKernelVersion() < KernelVersion::Sequoia || !descriptor->prepare(kIODirectionOut))) {
             if (descriptor->getLength() > 0) {
                 descriptor->readBytes(0, hciBuf, min(descriptor->getLength(), MAX_HCI_BUF_LEN));
                 hdrLen = (uint32_t)min(descriptor->getLength(), MAX_HCI_BUF_LEN);
             }
-            descriptor->complete(kIODirectionOut);
+            if (getKernelVersion() >= KernelVersion::Sequoia)
+                descriptor->complete(kIODirectionOut);
         }
         hdr = (HciCommandHdr *)hciBuf;
         if (hdr->opcode == HCI_OP_LE_SET_SCAN_PARAM) {
