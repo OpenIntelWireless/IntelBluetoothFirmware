@@ -31,7 +31,7 @@ bootloaderSetup(IntelVersion *ver)
     
     /* controller is already having an operational firmware */
     if (ver->fw_variant == 0x23) {
-        XYLog("Frimware is already running, finishing\n");
+        XYLog("Firmware is already running, finishing\n");
         goto finish;
     }
     
