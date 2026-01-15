@@ -4,7 +4,7 @@
 //
 //  Created by zxystd <zxystd@foxmail.com> on 2021/2/8.
 //
-
+#define __ACIDANTHERA_MAC_SDK 2600
 #include <Headers/kern_api.hpp>
 #include <Headers/kern_util.hpp>
 #include <Headers/plugin_start.hpp>
