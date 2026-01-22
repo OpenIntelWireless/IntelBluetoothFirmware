@@ -59,7 +59,7 @@ bootloaderSetupTLV(IntelVersionTLV *verTLV)
     
     /* check if controller is already having an operational firmware */
     if (verTLV->img_type == 0x03) {
-        XYLog("Frimware is already running, finishing\n");
+        XYLog("Firmware is already running, finishing\n");
         goto finish;
     }
     
