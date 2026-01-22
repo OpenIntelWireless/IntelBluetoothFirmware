@@ -240,7 +240,7 @@ patching(OSData *fwData, const uint8_t **fw_ptr, bool *disablePatch)
      * the firmware file is corrupted and it should stop the patching
      * process.
      */
-    if (remain > HCI_COMMAND_HDR_SIZE && *fw_ptr[0] != 0x01) {
+    if (remain < HCI_COMMAND_HDR_SIZE || *fw_ptr[0] != 0x01) {
         XYLog("Intel fw corrupted: invalid cmd read\n");
         return false;
     }
