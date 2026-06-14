@@ -4,7 +4,7 @@
 //
 //  Created by zxystd <zxystd@foxmail.com> on 2021/2/8.
 //
-
+#define __ACIDANTHERA_MAC_SDK 2600
 #include <Headers/kern_api.hpp>
 #include <Headers/kern_util.hpp>
 #include <Headers/plugin_start.hpp>
@@ -140,6 +140,20 @@ void CIntelBTPatcher::processKext(KernelPatcher &patcher, size_t index, mach_vm_
                 SYSLOG(DRV_NAME, "routed %s", asyncIORequest.symbol);
             } else {
                 SYSLOG(DRV_NAME, "failed to resolve %s, error = %d", asyncIORequest.symbol, patcher.getError());
+                patcher.clearError();
+            }
+
+            // macOS 26.5+: third parameter became ConfigurationDescriptor (was SuperSpeedEndpointCompanionDescriptor)
+            KernelPatcher::RouteRequest initPipeConfigRequest {
+            "__ZN13IOUSBHostPipe28initWithDescriptorsAndOwnersEPKN11StandardUSB18EndpointDescriptorEPKNS0_23ConfigurationDescriptorEP22AppleUSBHostControllerP15IOUSBHostDeviceP18IOUSBHostInterfaceht",
+                newInitPipeConfig,
+                oldInitPipeConfig
+            };
+            patcher.routeMultiple(index, &initPipeConfigRequest, 1, address, size);
+            if (patcher.getError() == KernelPatcher::Error::NoError) {
+                SYSLOG(DRV_NAME, "routed %s", initPipeConfigRequest.symbol);
+            } else {
+                SYSLOG(DRV_NAME, "failed to resolve %s, error = %d", initPipeConfigRequest.symbol, patcher.getError());
                 patcher.clearError();
             }
 
@@ -314,19 +328,30 @@ newAsyncIO(void *that, IOMemoryDescriptor* dataBuffer, uint32_t bytesTransferred
 
 #define VENDOR_USB_INTEL 0x8087
 
+void CIntelBTPatcher::captureIntelInterruptPipe(void *that, StandardUSB::EndpointDescriptor const *descriptor, IOUSBHostDevice *device)
+{
+    if (!device)
+        return;
+    const StandardUSB::DeviceDescriptor *deviceDescriptor = device->getDeviceDescriptor();
+    if (deviceDescriptor && deviceDescriptor->idVendor == VENDOR_USB_INTEL) {
+        uint8_t epType = StandardUSB::getEndpointType(descriptor);
+        if (epType == kIOUSBEndpointTypeInterrupt)
+            CIntelBTPatcher::_hookPipeInstance = that;
+    }
+}
+
 int CIntelBTPatcher::
 newInitPipe(void *that, StandardUSB::EndpointDescriptor const *descriptor, StandardUSB::SuperSpeedEndpointCompanionDescriptor const *superDescriptor, AppleUSBHostController *controller, IOUSBHostDevice *device, IOUSBHostInterface *interface, unsigned char a7, unsigned short a8)
 {
     int ret = FunctionCast(newInitPipe, callbackIBTPatcher->oldInitPipe)(that, descriptor, superDescriptor, controller, device, interface, a7, a8);
-    if (device) {
-        const StandardUSB::DeviceDescriptor *deviceDescriptor = device->getDeviceDescriptor();
-        if (deviceDescriptor &&
-            deviceDescriptor->idVendor == VENDOR_USB_INTEL) {
-            uint8_t epType = StandardUSB::getEndpointType(descriptor);
-            if (epType == kIOUSBEndpointTypeInterrupt) {
-                CIntelBTPatcher::_hookPipeInstance = that;
-            }
-        }
-    }
+    captureIntelInterruptPipe(that, descriptor, device);
+    return ret;
+}
+
+int CIntelBTPatcher::
+newInitPipeConfig(void *that, StandardUSB::EndpointDescriptor const *descriptor, StandardUSB::ConfigurationDescriptor const *configDescriptor, AppleUSBHostController *controller, IOUSBHostDevice *device, IOUSBHostInterface *interface, unsigned char a7, unsigned short a8)
+{
+    int ret = FunctionCast(newInitPipeConfig, callbackIBTPatcher->oldInitPipeConfig)(that, descriptor, configDescriptor, controller, device, interface, a7, a8);
+    captureIntelInterruptPipe(that, descriptor, device);
     return ret;
 }

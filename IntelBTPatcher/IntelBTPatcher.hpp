@@ -77,14 +77,17 @@ public:
     static IOReturn newHostDeviceRequest(void *that, IOService *provider, StandardUSB::DeviceRequest &request, void *data, IOMemoryDescriptor *descriptor, unsigned int &length,IOUSBHostCompletion *completion, unsigned int timeout);
     static IOReturn newAsyncIO(void *that, IOMemoryDescriptor* dataBuffer, uint32_t dataBufferLength, IOUSBHostCompletion* completion, uint32_t completionTimeoutMs);
     static int newInitPipe(void *that, StandardUSB::EndpointDescriptor const *descriptor, StandardUSB::SuperSpeedEndpointCompanionDescriptor const *superDescriptor,AppleUSBHostController *controller, IOUSBHostDevice *device, IOUSBHostInterface *interface, unsigned char, unsigned short);
+    static int newInitPipeConfig(void *that, StandardUSB::EndpointDescriptor const *descriptor, StandardUSB::ConfigurationDescriptor const *configDescriptor, AppleUSBHostController *controller, IOUSBHostDevice *device, IOUSBHostInterface *interface, unsigned char, unsigned short);
 
     
     mach_vm_address_t oldFindQueueRequest {};
     mach_vm_address_t oldHostDeviceRequest {};
     mach_vm_address_t oldAsyncIO {};
     mach_vm_address_t oldInitPipe {};
+    mach_vm_address_t oldInitPipeConfig {};
     
 private:
+    static void captureIntelInterruptPipe(void *that, StandardUSB::EndpointDescriptor const *descriptor, IOUSBHostDevice *device);
     static void *_hookPipeInstance;
     static AsyncOwnerData *_interruptPipeAsyncOwner;
     static bool _randomAddressInit;
