@@ -5,6 +5,9 @@
 - **English**
 - [简体中文](/.github/README-zh_Hans.md)
 
+> [!IMPORTANT]
+> The **LE Data Length Change fix** in this fork — which clears bluetoothd's `LE_READY_WAIT_FOR_LENGTH` stall so BLE HID devices bind on macOS Tahoe ([#514](https://github.com/OpenIntelWireless/IntelBluetoothFirmware/issues/514)) — was **written by Claude, an AI assistant**. It is provided as-is, with no warranty: you are responsible for reviewing, testing, and using it at your own risk.
+
 ## Intro
 
 IntelBluetoothFirmware is a Kernel Extension that uploads Intel Wireless Bluetooth Firmware to provide native Bluetooth in macOS.
